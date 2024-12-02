@@ -1,0 +1,10 @@
+Metastocks is an app that helps you find publicly traded company based on a combination of keywords of the user's choosing. 
+Once a company is chosen, Metastocks presents financial data from publicly traded companies in ways that the average person can easily comprehend (such as interactive and customizable graphs and charts)
+
+When a user successfully searches for a company, a page will be brought up with the following
+    1. Charted financial statements (income statement, balance sheet, statement of cashflows, stockholder's equity)
+    2. Charted history of shares oustanding.
+    3. Map/streetview of company HQ.
+    4. Live chat / message board for each stock.
+
+
