@@ -24,7 +24,7 @@ def get_all_companies():
     except Exception as e:
         return{'error': str(e)}, 404
 
-@app.get('/balance_sheets/<int:cik>')
+@app.route('/balance_sheets/<int:cik>', methods=['GET'])
 def get_balancesheets(cik):
     balance_sheets = BalanceSheet.query.filter(BalanceSheet.company_cik == cik
                                                ).order_by(BalanceSheet.end).all()
@@ -32,7 +32,7 @@ def get_balancesheets(cik):
         return jsonify({"error": "Balance sheets not found"}), 404
     return jsonify([bs.to_dict() for bs in balance_sheets]), 200
 
-@app.get('/income_statements/<int:cik>')
+@app.route('/income_statements/<int:cik>', methods=['GET'])
 def get_income_statements(cik):
     income_statements = IncomeStatement.query.filter(IncomeStatement.company_cik == cik, 
                                                      IncomeStatement.frame.like('%Q%')
@@ -41,7 +41,7 @@ def get_income_statements(cik):
         return jsonify({"error": "Balance sheets not found"}), 404
     return jsonify([income_statement.to_dict() for income_statement in income_statements]), 200
 
-@app.get('/cf_statements/<int:cik>')
+@app.route('/cf_statements/<int:cik>', methods=['GET'])
 def get_cf_statements(cik):
     cf_statements = CashFlowsStatement.query.filter(CashFlowsStatement.company_cik == cik, 
                                                      CashFlowsStatement.frame.like('%Q%')

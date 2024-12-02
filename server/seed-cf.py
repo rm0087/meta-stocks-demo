@@ -15,8 +15,8 @@ with app.app_context():
 
    ## Comment these out if you don't wish to delete table before beginning ##
 
-   # db.session.query(CashFlowsStatement).delete()
-   # db.session.commit()
+   db.session.query(CashFlowsStatement).delete()
+   db.session.commit()
 
    ##########################################################################
    
@@ -34,7 +34,7 @@ with app.app_context():
 
    for company in companies:
       if company.cik not in company_tracker.values():
-         cf_statements = {cf.frame: cf for cf in CashFlowsStatement.query.filter(CashFlowsStatement.company_cik == company.cik).all()}
+         
          print(company.id, company.name, company.cik)
          db.session.refresh(company)
          
@@ -92,11 +92,11 @@ with app.app_context():
                      make_cf(key)
                else:
                   pass
-            
+            co_cf_statements = {cf.frame: cf for cf in cf_statements if cf.company_cik == company.cik}
             for key in inv_cf_keys:
                if gaap.get(key):
                   for x in gaap.get(key, {}).get('units', {}).get('USD', None):
-                     cf_statement = cf_statements.get(x.get('frame'))
+                     cf_statement = co_cf_statements.get(x.get('frame'))
                      if cf_statement:
                         cf_statement.inv_cf = x.get('val')
                         print(cf_statement, key)
@@ -109,7 +109,7 @@ with app.app_context():
             for key in fin_cf_keys:
                if gaap.get(key):
                   for x in gaap.get(key, {}).get('units', {}).get('USD', None):
-                     cf_statement = cf_statements.get(x.get('frame'))
+                     cf_statement = co_cf_statements.get(x.get('frame'))
                      if cf_statement:
                         cf_statement.fin_cf = x.get('val')
                         print(cf_statement, key)
