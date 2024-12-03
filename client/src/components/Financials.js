@@ -180,7 +180,7 @@ export default function Financials({company}){
         return dataObj
     }
 
-    function cfData(labels, data, data2, data3,data4){
+    function cfData(labels, data, data2, data3){
         const dataObj = {
             labels: labels,
             datasets: [{
@@ -204,13 +204,14 @@ export default function Financials({company}){
                 borderColor: 'rgb(255, 0, 0)',
                 tension: 0.1
             },
-            {
-                label: `Net Cashflows`,
-                data: data4,
-                fill: false,
-                borderColor: 'rgb(255, 100, 100)',
-                tension: 0.1
-            }]
+            // {
+            //     label: `Net Cashflows`,
+            //     data: data4,
+            //     fill: false,
+            //     borderColor: 'rgb(255, 100, 100)',
+            //     tension: 0.1
+            // }
+            ]
         }
         
         
@@ -308,7 +309,7 @@ export default function Financials({company}){
                     <Line data={revData(netIncomeLabels, revenueData, netIncomeData)} options={options}/>
                 </div>
                 <div className = "fin-graph border-2 border-black rounded shadow-md">
-                    <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData, netCfData, )} options={options}/>
+                    <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/>
                 </div>
             </div>  
         </>

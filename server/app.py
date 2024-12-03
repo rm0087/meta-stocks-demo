@@ -7,7 +7,7 @@
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
 from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, IncomeStatement, CashFlowsStatement
-from sqlalchemy import not_
+from sqlalchemy import not_, or_
 import json
 import os
 
@@ -57,6 +57,18 @@ def get_companyfacts_ticker(ticker):
     with open(file_path, 'r') as file:
         data = file.read()
     return data, 200, {'Content-Type': 'application/json'}
+
+@app.route('/api/companies/search', methods=['GET'])
+def search_companies():
+    query = request.args.get('query', '')
+    if query:
+        companies = Company.query.filter(
+        or_(
+            Company.ticker.ilike(f'%{query}%'),
+            Company.name.ilike(f'%{query}%')
+        )
+    ).limit(10).all() 
+    return jsonify([]), 400
 
 # @app.post('/companies')
 # def post_companies():

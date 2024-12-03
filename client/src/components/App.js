@@ -10,11 +10,50 @@ import Navbar from "./Navbar";
 export default function App() {
     const[company, setCompany] = useState('')
     const[searchValue, setSearchValue] = useState('')
+    const [query, setQuery] = useState('');  // The current value of the search input
+    const [suggestions, setSuggestions] = useState([]);  // The list of company suggestions
+    const [loading, setLoading] = useState(false);  // Loading state for making requests
+
+    // Function to handle input changes
+    const handleInputChange = (event) => {
+        const searchQuery = event.target.value;
+        setQuery(searchQuery);
+
+        // If the query is empty, clear suggestions
+        if (searchQuery.trim().length === 0) {
+        setSuggestions([]);
+        return;
+        }
+
+        // Fetch matching companies if the query is non-empty
+        fetchSuggestions(searchQuery);
+    };
+
+    // Function to fetch suggestions from the backend
+    const fetchSuggestions = async (searchQuery) => {
+        setLoading(true);
+        try {
+        const response = await fetch(`/api/companies/search?query=${searchQuery}`);
+        
+        // Check if the response is ok (status code 200)
+        if (response.ok) {
+            const data = await response.json();
+            setSuggestions(data);  // Update the suggestions with the response data
+        } else {
+            setSuggestions([]);  // If response is not OK, clear suggestions
+        }
+        } catch (error) {
+        console.error("Error fetching companies", error);
+        setSuggestions([]);  // Clear suggestions in case of error
+        } finally {
+        setLoading(false);
+        }
+    };
     
     /// async fetch request ////
     const fetchCompany = async (e) => {
         e.preventDefault();
-        setSearchValue('');
+        setQuery('');
     
         try {
             const response = await fetch('/companies', {
@@ -23,7 +62,7 @@ export default function App() {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(searchValue)
+                body: JSON.stringify(query)
             });
     
             if (!response.ok) {
@@ -38,7 +77,8 @@ export default function App() {
     };
     useEffect(() => {
         const fetchCompanyJsonTest = async () => {
-            setSearchValue('');
+            setQuery('');
+            setSuggestions([])
         
             try {
                 const response = await fetch(`/companyfacts2/${company.ticker}`);
@@ -68,12 +108,25 @@ export default function App() {
     return(
         <>
             <form id='company-search-form' onSubmit={fetchCompany}>
-                <input id='company-input' type='text' value={searchValue} onChange={(e)=> setSearchValue(e.target.value)} placeholder="(AAPL, BRK-B, NVDA etc...)"/>
+                <input id='company-input' type='text' value={query} onChange={handleInputChange} placeholder="(AAPL, BRK-B, NVDA etc...)" autoComplete="off"/>
+                {loading && <p>Loading...</p>}
+                {suggestions.length > 0 && (
+                    <ul className="list-none mt-2">
+                    {suggestions.map((company) => (
+                        <li key={company.id} className="p-2 border-b" onClick={(e) => fetchCompany(e)}>{company.name} </li>
+                    ))}
+                    </ul>
+                )}
+                {suggestions.length === 0 && query && !loading && (
+                    <p>No companies found.</p>
+                )}
                 <input id='company-submit-button' type='submit' value="Search Company Symbol"/>
                 <h1 id = "co-header">{company && company.name} - ({company && company.ticker} - {company && company.cik})</h1>
             </form>
             <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-100">
+                <p>{query}</p>
                 <Financials company={company}/>
+                <p>{query}</p>
             </div>
         
         </>
