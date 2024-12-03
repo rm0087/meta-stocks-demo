@@ -49,11 +49,37 @@ export default function App() {
         setLoading(false);
         }
     };
+
+    const fetchCompanyDetails = async (companyTicker) => {
+        setQuery('');
+        setSuggestions([])
+    
+        try {
+            const response = await fetch('/companies', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(companyTicker)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to find company');
+            }
+    
+            const data = await response.json();
+            setCompany(data);
+        } catch (error) {
+            console.error('Error searching companies:', error);
+        }
+      };
     
     /// async fetch request ////
     const fetchCompany = async (e) => {
         e.preventDefault();
         setQuery('');
+        setSuggestions([])
     
         try {
             const response = await fetch('/companies', {
@@ -111,9 +137,9 @@ export default function App() {
                 <input id='company-input' type='text' value={query} onChange={handleInputChange} placeholder="(AAPL, BRK-B, NVDA etc...)" autoComplete="off"/>
                 {loading && <p>Loading...</p>}
                 {suggestions.length > 0 && (
-                    <ul className="list-none mt-2">
+                    <ul className="absolute bg-white border border-gray-300 rounded mt-1 z-10 inline-block shadow-lg max-h-40 overflow-y-auto">
                     {suggestions.map((company) => (
-                        <li key={company.id} className="p-2 border-b" onClick={(e) => fetchCompany(e)}>{company.name} </li>
+                        <li key={company.id} className="p-0 hover:bg-gray-200 cursor-pointer whitespace-nowrap" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
                     ))}
                     </ul>
                 )}
@@ -121,12 +147,10 @@ export default function App() {
                     <p>No companies found.</p>
                 )}
                 <input id='company-submit-button' type='submit' value="Search Company Symbol"/>
-                <h1 id = "co-header">{company && company.name} - ({company && company.ticker} - {company && company.cik})</h1>
+                <h1 id = "co-header" className="font-newsCycle">{company && company.name} - ({company && company.ticker} - {company && company.cik})</h1>
             </form>
-            <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-100">
-                <p>{query}</p>
+            <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-100 pb-5">
                 <Financials company={company}/>
-                <p>{query}</p>
             </div>
         
         </>

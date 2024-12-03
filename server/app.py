@@ -63,11 +63,12 @@ def search_companies():
     query = request.args.get('query', '')
     if query:
         companies = Company.query.filter(
-        or_(
-            Company.ticker.ilike(f'%{query}%'),
-            Company.name.ilike(f'%{query}%')
-        )
-    ).limit(10).all() 
+            or_(
+                Company.ticker.ilike(f'%{query}%'),
+                Company.name.ilike(f'%{query}%')
+            )
+        ).limit(10).all()
+        return jsonify([company.to_dict() for company in companies]), 200 
     return jsonify([]), 400
 
 # @app.post('/companies')

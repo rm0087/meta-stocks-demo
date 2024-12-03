@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'newscycle-regular';
+  src: url('/public/newscycle-regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
 
 :root {
   --primary-color: #1e3a8a;

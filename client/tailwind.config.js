@@ -2,8 +2,12 @@
 module.exports = {
   content: ["./src/**/*.js"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        newsCycle: ['newscycle-regular','sans-serif'],
+      },
+    },
   },
   plugins: [],
-}
+};
 
