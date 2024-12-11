@@ -9,12 +9,8 @@
   font-style: normal;
 }
 
-:root {
-  --primary-color: #1e3a8a;
-  --secondary-color: #64748b;
-  --accent-color: #22c55e;
-  --background-color: #f8fafc;
-  --text-color: #1e293b;
+root {
+  background-color: #000000;
   
 
 }
@@ -141,7 +137,7 @@ footer {
 
 body{
   padding: 0px;
-  margin-top: 130px;
+  margin-top: 100px;
   padding-top: 0px;
   width: 100%;
 }

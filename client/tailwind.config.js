@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         newsCycle: ['newscycle-regular','sans-serif'],
+        roboto: ['Roboto', 'sans-serif']
       },
     },
   },

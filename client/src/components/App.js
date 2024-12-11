@@ -132,27 +132,29 @@ export default function App() {
         //     </Switch>
         // </Router>
     return(
-        <>
-            <form id='company-search-form' onSubmit={fetchCompany}>
-                <input id='company-input' type='text' value={query} onChange={handleInputChange} placeholder="(AAPL, BRK-B, NVDA etc...)" autoComplete="off"/>
-                {loading && <p>Loading...</p>}
-                {suggestions.length > 0 && (
-                    <ul className="absolute bg-white border border-gray-300 rounded mt-1 z-10 inline-block shadow-lg max-h-40 overflow-y-auto">
-                    {suggestions.map((company) => (
-                        <li key={company.id} className="p-0 hover:bg-gray-200 cursor-pointer whitespace-nowrap" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
-                    ))}
-                    </ul>
-                )}
-                {suggestions.length === 0 && query && !loading && (
-                    <p>No companies found.</p>
-                )}
-                <input id='company-submit-button' type='submit' value="Search Company Symbol"/>
-                <h1 id = "co-header" className="font-newsCycle">{company && company.name} - ({company && company.ticker} - {company && company.cik})</h1>
-            </form>
-            <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-100 pb-5">
+        <> 
+            <div className="w-full">
+                <form id='company-search-form' className="shadow-md" onSubmit={fetchCompany}>
+                    <input id='company-input' className="border rounded m-1" type='text' value={query} onChange={handleInputChange} placeholder="(AAPL, BRK-B, NVDA etc...)" autoComplete="off"/>
+                    {loading && <p>Loading...</p>}
+                    {suggestions.length > 0 && (
+                        <ul className="absolute bg-white border border-gray-300 rounded mt-1 z-10 inline-block shadow-lg max-h-40 overflow-y-auto">
+                        {suggestions.map((company) => (
+                            <li key={company.id} className="p-0 hover:bg-gray-200 cursor-pointer whitespace-nowrap" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
+                        ))}
+                        </ul>
+                    )}
+                    {suggestions.length === 0 && query && !loading && (
+                        <p>No companies found.</p>
+                    )}
+                    <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
+                    <h1 id = "co-header" className="font-newsCycle font-bold text-xl p-1">{company && company.name} - ({company && company.ticker} - {company && company.cik})</h1>
+                </form>
+            </div>
+            <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-50 pb-5 mt-12">
+                <Keywords company={company} />
                 <Financials company={company}/>
             </div>
-        
         </>
   );
 };
