@@ -9,12 +9,6 @@
   font-style: normal;
 }
 
-root {
-  background-color: #000000;
-  
-
-}
-
 body {
   font-family: 'Arial', sans-serif;
   background-color: var(--background-color);
@@ -79,43 +73,9 @@ footer {
   margin-top: 2rem;
 }
 
-/* #company-input{
- 
-} */
-
-.keyword {
-    background-color: #65a8c7;
-    border: none;
-    color: #000000;
-    font-weight:bold;
-    padding: 8px 16px;
-    text-align: center;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    margin: 16px 0 !important;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 24px;
-    list-style-type: none;
-}
-
-.keywords{
-  width:250px; /* or whatever width you want. */
-   max-width:250px; /* or whatever width you want. */
-   display: inline-block;
-   text-align: center;
-}
-
 .nav-link{
   color:#000000;
 }
-/* 
-#cash-graph-div{
-  display: grid;
-  width: 90%;
-  grid-template-columns: repeat(2, 1fr);
-} */
 
 .fin-graph{
   width: 90%;
@@ -131,25 +91,11 @@ footer {
   padding-top: 10px
 }
 
-#stats{
-  margin-top: 10px;
-}
+
 
 body{
   padding: 0px;
   margin-top: 100px;
   padding-top: 0px;
   width: 100%;
-}
-
-#co-header{
-  margin-bottom: 0px;
-}
-
-/* #wrapper{
-  padding: 10px;
-} */
-
-.figures{
-  margin : 2px 0px 2px 0px;
 }

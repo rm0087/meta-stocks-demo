@@ -212,6 +212,7 @@ export default function Financials({company}){
             //     tension: 0.1
             // }
             ]
+            
         }
         
         
@@ -295,24 +296,43 @@ export default function Financials({company}){
     // ## BAR DATA TEMPLATE ##: function barData(labels, data, dataSetLabel, backgroundColor = 'rgba(75, 192, 192, 0.2)', borderColor = 'rgba(75, 192, 192, 1)', borderWidth = 1)
     return(
         <>  
-            <div id ="stats" className="w-[95%] rounded border mt-11 bg-gray-50">
-                <div className="w-full px-5 py-2">
-                <p className='text-lg font-roboto font-bold'>Key Figures</p>
-                    <span className="flex flex-row"><p className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</p></span>
-                    <span className="flex flex-row "><p className='text-sm font-newsCycle font-bold'>Liabilities:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</p></span>
-                    <span className="flex flex-row"><p className='text-sm font-newsCycle font-bold'>Stockholders Equity:&nbsp;</p> <p className="text-sm content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</p></span>
-                    <span className="flex flex-row"><p className='text-sm font-newsCycle font-bold'>Last reported cash balance:&nbsp;</p><p className="text-sm content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</p></span>
-                    <p className='text-base text-xs font-roboto italic'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
+            <div id ="stats" className="w-[95%] flex flex-row mt-5">
+                <div className="w-[33%] rounded border bg-gray-50 px-5 py-2">
+                        <p className='text-lg font-roboto font-bold'>Key Figures</p>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row "><p className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</p><p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</p></span>
+                            <p className='text-base text-xs font-roboto italic'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
                 </div>
+
+                <div className="w-[33%] rounded border bg-gray-50 px-5 py-2 ml-12">
+                        <p className='text-lg font-roboto font-bold'>Valuation</p>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row "><p className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</p><p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</p></span>
+                            <p className='text-base text-xs font-roboto italic'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
+                </div>
+
+                <div className="w-[33%] rounded border bg-gray-50 px-5 py-2 ml-12">
+                        <p className='text-lg font-roboto font-bold'>Short Info.</p>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row "><p className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</p></span>
+                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</p><p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</p></span>
+                            <p className='text-base text-xs font-roboto italic'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
+                </div>
+
             </div>
-            <div id ="cash-graph-div" className="md:grid grid-cols-2 grid-cols-1 gap-4 place-items-center mt-5 w-full h-full">
-                <div className = "border border-black rounded">
+            <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full">
+                <div className = "border border-black rounded w-[90%] h-full">
                     <Line data={lineData(primaryLabels, assetsData, liabilitiesData, stockholdersData, goodwillData, cashData)} options={options}/>
                 </div>
-                <div className = "border border-black rounded">
+                <div className = "border border-black rounded w-[90%] h-full">
                     <Line data={revData(netIncomeLabels, revenueData, netIncomeData)} options={options}/>
                 </div>
-                <div className = "border border-black rounded">
+                <div className = "border border-black rounded w-[90%] h-full">
                     <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/>
                 </div>
             </div>  

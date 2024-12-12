@@ -101,25 +101,26 @@ export default function App() {
             console.error('Error searching companies:', error);
         }
     };
-    useEffect(() => {
-        const fetchCompanyJsonTest = async () => {
-            setQuery('');
-            setSuggestions([])
+   
+    // useEffect(() => {
+    //     const fetchCompanyJsonTest = async () => {
+    //         setQuery('');
+    //         setSuggestions([])
         
-            try {
-                const response = await fetch(`/companyfacts2/${company.ticker}`);
-                if (!response.ok) {
-                    throw new Error('Failed to find company');
-                }
+    //         try {
+    //             const response = await fetch(`/companyfacts2/${company.ticker}`);
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to find company');
+    //             }
         
-                const data = await response.json();
-                console.log(data);
-            } catch (error) {
-                console.error('Error searching companies:', error);
-            }
-        };
-        fetchCompanyJsonTest()
-    }, [company.ticker]);
+    //             const data = await response.json();
+    //             console.log(data);
+    //         } catch (error) {
+    //             console.error('Error searching companies:', error);
+    //         }
+    //     };
+    //     fetchCompanyJsonTest()
+    // }, [company.ticker]);
    
         // <Router>
         //     <Navbar />
@@ -131,6 +132,7 @@ export default function App() {
         //         <Route path="/map" render={() => <Map company={company} />} /> */}
         //     </Switch>
         // </Router>
+        
     return(
         <> 
             <div className="w-full">
