@@ -120,35 +120,40 @@ export default function Financials({company}){
                 data: data,
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(75, 192, 192)',
+                tension: 0.4
             },
             {
                 label: 'Liabilities',
                 data: data2,
                 fill: false,
                 borderColor: 'rgb(255, 0, 0)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(255, 0, 0)',
+                tension: 0.4
             },
             {
                 label: `Stockholders' Equity`,
                 data: data3,
                 fill: false,
                 borderColor: 'rgb(0, 0, 0)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(0, 0, 0)',
+                tension: 0.4
             },
             {
                 label: `Cash and Equivalents`,
                 data: data5,
                 fill: false,
                 borderColor: 'rgb(0, 128, 0)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(0, 128, 0)',
+                tension: 0.4
             },
             {
                 label: `Goodwill`,
                 data: data4,
                 fill: false,
                 borderColor: 'rgb(255, 255, 0)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(255, 255, 0)',
+                tension: 0.4
             },
             
             ]
@@ -165,14 +170,16 @@ export default function Financials({company}){
                 data: data2,
                 fill: false,
                 borderColor: 'rgb(255, 0, 0)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(255, 0, 0)',
+                tension: 0.4
             }, 
             {
                 label: 'Revenue',
                 data: data,
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(75, 192, 192)',
+                tension: 0.4
             },
             
             ]
@@ -188,21 +195,24 @@ export default function Financials({company}){
                 data: data,
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(75, 192, 162)',
+                tension: 0.3
             },
             {
                 label: 'Investing Cashflows',
                 data: data2,
                 fill: false,
                 borderColor: 'rgb(0, 0, 0)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(0, 0, 0)',
+                tension: 0.3
             },
             {
                 label: `Financing Cashflows`,
                 data: data3,
                 fill: false,
                 borderColor: 'rgb(255, 0, 0)',
-                tension: 0.1
+                pointBackgroundColor: 'rgb(255, 0, 0)',
+                tension: 0.3
             },
             // {
             //     label: `Net Cashflows`,
@@ -224,19 +234,30 @@ export default function Financials({company}){
         responsive: true,
         elements: {
             line: {
-                borderWidth: 5,
+                borderWidth: 4,
                 capBezierPoints: false,
                 lineJoin: 'round',
 
             },
             point:{
-                // pointStyle: false,
+                pointStyle: true,
+                radius: 2,
+                hoverRadius: 4
             },
         },
 
         plugins: {
             legend: {
+                display: true,
                 position: 'top',
+                labels: {
+                    color: '#000000',
+                    usePointStyle: true,
+                    pointStyle: 'rect',
+                    font: {
+                        family: 'Arial',
+                    },
+                }
             },
             tooltip: {
                 callbacks: {
@@ -249,9 +270,17 @@ export default function Financials({company}){
           },
           
         },
-        scales:{
-            y:{
+        scales: {
+            x: {
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.0)' // Adjust alpha (opacity) here
+                }
             },
+            y: {
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.03)' // Adjust alpha (opacity) here
+                }
+            }
         },
     }
     
@@ -296,43 +325,62 @@ export default function Financials({company}){
     // ## BAR DATA TEMPLATE ##: function barData(labels, data, dataSetLabel, backgroundColor = 'rgba(75, 192, 192, 0.2)', borderColor = 'rgba(75, 192, 192, 1)', borderWidth = 1)
     return(
         <>  
-            <div id ="stats" className="w-[95%] flex flex-row mt-5">
-                <div className="w-[33%] rounded border bg-gray-50 px-5 py-2">
-                        <p className='text-lg font-roboto font-bold'>Key Figures</p>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row "><p className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</p><p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</p></span>
-                            <p className='text-base text-xs font-roboto italic'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
+            <div id ="stats" className="w-[95%] flex flex-row mt-5 ">
+                <div className="w-[50%] rounded border bg-gray-50 px-5 py-2 ">
+                        <p className='text-lg font-roboto font-bold'>🔑 Key Figures</p>
+                        
+                        <div className="flex flex-row justify-evenly">
+                            <table>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Assets:&nbsp;</th> <th className="text-sm font-roboto text-right text-green-700 font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Liabilities:&nbsp;</th> <th className="text-sm font-roboto text-right text-red-500 font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Stockholders Equity:&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Last reported cash balance:&nbsp;</th><th className="text-sm font-roboto text-right text-green-700 font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</th></tr>
+                            </table>
+                            <table>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Assets:&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Liabilities:&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Stockholders Equity:&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Last reported cash balance:&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</th></tr>
+                            </table>
+                        
+                        </div>
+                            <p className='text-base text-xs font-roboto italic p-1 text-center'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
+                        
                 </div>
 
                 <div className="w-[33%] rounded border bg-gray-50 px-5 py-2 ml-12">
-                        <p className='text-lg font-roboto font-bold'>Valuation</p>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row "><p className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</p><p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</p></span>
-                            <p className='text-base text-xs font-roboto italic'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
+                        <p className='text-lg font-roboto font-bold'>📊 Valuation</p>
+                        <table>
+                            <tr className="flex flex-row"><th className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</th> <th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</th></tr>
+                            <tr className="flex flex-row "><th className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</th> <th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</th></tr>
+                            <tr className="flex flex-row"><th className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</th> <th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</th></tr>
+                            <tr className="flex flex-row"><th className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</th><th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</th></tr>
+                        </table>
                 </div>
 
                 <div className="w-[33%] rounded border bg-gray-50 px-5 py-2 ml-12">
-                        <p className='text-lg font-roboto font-bold'>Short Info.</p>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row "><p className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</p> <p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</p></span>
-                            <span className="flex flex-row"><p className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</p><p className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</p></span>
+                        <p className='text-lg font-roboto font-bold'>🩳 Short Info.</p>
+                        <table>
+                            <tr className="flex flex-row"><th className='text-sm font-roboto font-bold align-middle'>Assets:&nbsp;</th> <th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1]) : ''}</th></tr>
+                            <tr className="flex flex-row "><th className='text-sm font-roboto font-bold'>Liabilities:&nbsp;</th> <th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1]) : ''}</th></tr>
+                            <tr className="flex flex-row"><th className='text-sm font-roboto font-bold'>Stockholders Equity:&nbsp;</th> <th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1]) : ''}</th></tr>
+                            <tr className="flex flex-row"><th className='text-sm font-roboto font-bold'>Last reported cash balance:&nbsp;</th><th className="text-sm font-roboto content-center">{incApi.length > 0 ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1]) : ''}</th></tr>
+                        </table>
                             <p className='text-base text-xs font-roboto italic'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
                 </div>
 
             </div>
             <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full">
                 <div className = "border border-black rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Balance Sheet History</h2>
                     <Line data={lineData(primaryLabels, assetsData, liabilitiesData, stockholdersData, goodwillData, cashData)} options={options}/>
                 </div>
                 <div className = "border border-black rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Income Statement History</h2>
                     <Line data={revData(netIncomeLabels, revenueData, netIncomeData)} options={options}/>
                 </div>
                 <div className = "border border-black rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Cashflows History</h2>
                     <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/>
                 </div>
             </div>  
