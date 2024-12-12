@@ -615,6 +615,14 @@ video {
   margin-left: 3rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -673,6 +681,10 @@ video {
 
 .w-\[47\%\] {
   width: 47%;
+}
+
+.w-\[75\%\] {
+  width: 75%;
 }
 
 .cursor-pointer {

@@ -69,8 +69,6 @@ with app.app_context():
 
                   end_count += 1
                   end_dates[end_count] = x.get('end')
-
-
                else:
                   pass
             
