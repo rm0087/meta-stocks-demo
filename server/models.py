@@ -33,47 +33,11 @@ class Company(db.Model, SerializerMixin):
     keywords = db.relationship('Keyword', back_populates='companies', secondary = company_keyword_assoc)
     notes = db.relationship('Note', back_populates='company')
 
+    ###################
+
     __table_args__ = (
         Index('idx_ticker', 'ticker'),
     )
-
-    # @validates('keywords')
-    # def validate_keywords(self, key, keyword):
-    #     if not isinstance(keyword, Keyword):
-    #         raise ValueError("Entry must be a valid Keyword class member")
-    #     return keyword
-    
-    # @validates('balance_sheets')
-    # def validate_balance_sheets(self, key, balance_sheet):
-    #     if not isinstance(balance_sheet, BalanceSheet):
-    #         raise ValueError("Entry must be a valid BalanceSheet class member")
-    #     return balance_sheet
-    
-    # @validates('notes')
-    # def validate_notes(self, key, note):
-    #     if not isinstance(note, Note):
-    #         raise ValueError("Entry must be a valid Note class member")
-    #     return note
-
-    # @property
-    # def name(self):
-    #     return self.name
-
-    # @name.setter
-    # def name(self, name):
-    #     if not isinstance(name, str):
-    #         raise ValueError("Name must be a string.")
-    #     self._name = name
-
-    # @property
-    # def sic(self):
-    #     return self.sic
-    
-    # @sic.setter
-    # def sic(self, sic):
-    #     if not isinstance(sic, int):
-    #         raise ValueError("SIC must be an integer.")
-    #     self._sic = sic
     
 
 class BalanceSheet(db.Model, SerializerMixin):
