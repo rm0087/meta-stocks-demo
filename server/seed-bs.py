@@ -43,34 +43,42 @@ with app.app_context():
                'Cash', 
                'CashAndCashEquivalentsAtCarryingValue', 
                'CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents',
-               'IntangibleAssetsNetExcludingGoodwill'
+               'IntangibleAssetsNetExcludingGoodwill',
+               'Assets',
+               'Liabilities',
+               'Equity',
+               'CurrentAssets',
+               'CurrentLiabilities',
+               'NoncurrentAssets',
+               'NoncurrentLiabilities'
                ]
    
    def make_bs(key:str, x):
-               global end_count, bs_count
-               if x.get('frame') and x.get('end') not in end_dates.values():
-                  new_bs=BalanceSheet(
-                     company_cik = company.cik,
-                     start = x.get('start'),
-                     end =  x.get('end'),
-                     total_assets = x.get('val'),
-                     form = x.get('form'),
-                     filed = x.get('filed'),
-                     accn = x.get('accn'),
-                     fp = x.get('fp'),
-                     fy = x.get('fy'),
-                     frame = x.get('frame'),
-                  )
-                  all_bs.append(new_bs)
-                  bs_count += 1
-                  print(bs_count, key)
+      global end_count, bs_count
+      if x.get('frame') and x.get('end') not in end_dates.values():
+         new_bs=BalanceSheet(
+            company_cik = company.cik,
+            start = x.get('start'),
+            end =  x.get('end'),
+            total_assets = x.get('val'),
+            form = x.get('form'),
+            filed = x.get('filed'),
+            accn = x.get('accn'),
+            fp = x.get('fp'),
+            fy = x.get('fy'),
+            frame = x.get('frame'),
+         )
+         all_bs.append(new_bs)
+         bs_count += 1
+         print(bs_count, key)
 
-                  end_count += 1
-                  end_dates[end_count] = x.get('end')
-               else:
-                  pass
+         end_count += 1
+         end_dates[end_count] = x.get('end')
+      else:
+         pass
 
    def amend_bs(key:str, bs):
+      #GAAP
       if key == 'AssetsCurrent':
          bs.assets_current = x.get('val')
       if key == 'AssetsNoncurrent':
@@ -97,6 +105,21 @@ with app.app_context():
          bs.cash_all = x.get('val')
       if key == 'IntangibleAssetsNetExcludingGoodwill':
          bs.intangible_assets = x.get('val')
+      #IFRS
+      if key == 'Assets': 
+         bs.total_assets = x.get('val')
+      if key == 'Liabilities':
+         bs.total_liabilities = x.get('val')
+      if key == 'Equity':
+         bs.total_stockholders_equity = x.get('val')
+      if key == 'CurrentAssets':
+         bs.assets_current = x.get('val')
+      if key == 'CurrentLiabilities':
+         bs.liabilities_current = x.get('val')
+      if key == 'NoncurrentAssets':
+         bs.assets_noncurrent = x.get('val')
+      if key == 'NoncurrentLiabilities':
+         bs.liabilities_noncurrent = x.get('val')
       print(bs, key)
 
    for company in companies:

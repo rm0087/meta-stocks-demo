@@ -6,6 +6,7 @@ import Financials from "./Financials"
 // import Note from "./Note"
 import Keywords from "./Keywords";
 import Navbar from "./Navbar";
+import CompanyInfo from "./CompanyInfo";
 
 export default function App() {
     const[company, setCompany] = useState('')
@@ -102,25 +103,25 @@ export default function App() {
         }
     };
    
-    // useEffect(() => {
-    //     const fetchCompanyJsonTest = async () => {
-    //         setQuery('');
-    //         setSuggestions([])
+    useEffect(() => {
+        const fetchCompanyJsonTest = async () => {
+            setQuery('');
+            setSuggestions([])
         
-    //         try {
-    //             const response = await fetch(`/companyfacts2/${company.ticker}`);
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to find company');
-    //             }
+            try {
+                const response = await fetch(`/companyfacts2/${company.ticker}`);
+                if (!response.ok) {
+                    throw new Error('Failed to find company');
+                }
         
-    //             const data = await response.json();
-    //             console.log(data);
-    //         } catch (error) {
-    //             console.error('Error searching companies:', error);
-    //         }
-    //     };
-    //     fetchCompanyJsonTest()
-    // }, [company.ticker]);
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.error('Error searching companies:', error);
+            }
+        };
+        fetchCompanyJsonTest()
+    }, [company.ticker]);
    
         // <Router>
         //     <Navbar />
@@ -148,10 +149,11 @@ export default function App() {
                     )}
                     
                     <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
-                    <h1 id = "co-header" className="font-roboto font-bold text-xl p-1">{company && company.name} - ({company && company.ticker} - {company && company.cik})</h1>
+                    <h1 id = "co-header" className="font-roboto font-bold text-xl p-1">{company ? `${company.ticker} - ${company.name}` : "Search for a company"}</h1>
                 </form>
             </div>
             <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-50 pb-5 mt-12">
+                <CompanyInfo company={company} />
                 <Keywords company={company} />
                 <Financials company={company}/>
             </div>

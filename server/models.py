@@ -23,6 +23,11 @@ class Company(db.Model, SerializerMixin):
     cik = db.Column(db.Integer, nullable=False)
     exchange = db.Column(db.String)
     cik_10 = db.Column(db.String)
+    sic = db.Column(db.Integer)
+    sic_description = db.Column(db.String)
+    owner_org = db.Column(db.String)
+    entity_type = db.Column(db.String)
+    country = db.Column(db.String)
 
     # balance_sheets = db.relationship('BalanceSheet', backref='company', lazy=True)
     keywords = db.relationship('Keyword', back_populates='companies', secondary = company_keyword_assoc)
@@ -49,6 +54,26 @@ class Company(db.Model, SerializerMixin):
     #     if not isinstance(note, Note):
     #         raise ValueError("Entry must be a valid Note class member")
     #     return note
+
+    # @property
+    # def name(self):
+    #     return self.name
+
+    # @name.setter
+    # def name(self, name):
+    #     if not isinstance(name, str):
+    #         raise ValueError("Name must be a string.")
+    #     self._name = name
+
+    # @property
+    # def sic(self):
+    #     return self.sic
+    
+    # @sic.setter
+    # def sic(self, sic):
+    #     if not isinstance(sic, int):
+    #         raise ValueError("SIC must be an integer.")
+    #     self._sic = sic
     
 
 class BalanceSheet(db.Model, SerializerMixin):
