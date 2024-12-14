@@ -9,59 +9,39 @@ export default function Financials({company}){
     let assetsData, liabilitiesData, stockholdersData, revenueData,revenueLabels, cashData, opCfData, opCfLabels, invCfData, invCfLabels, finCfData, finCfLabels, netCfData, netCfLabels, goodwillData, goodwillLabels, netIncomeData, netIncomeLabels; // declare chart/bar data
     let assetsLabels, primaryLabels; // declare chart/bar labels
 
-    const[api, setApi] = useState([])
-    const[incApi, setIncApi] = useState([])
-    const[cfApi, setCfApi] = useState([])
+    const[api, setApi] = useState([]);
+    const[incApi, setIncApi] = useState([]);
+    const[cfApi, setCfApi] = useState([]);
 
     useEffect(() =>{
-        const fetchBs = async () => {
-            try {
-                const response = await fetch(`/balance_sheets/${company.cik}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setApi(data)
-                } else {
-                    setApi([])
-                    console.error('Failed to fetch balance sheets:', response.status);
+        if (company) {
+            const fetchStatements = async () => {
+                try {
+                    const response = await fetch(`/balance_sheets/${company.cik}`);
+                    const response2 = await fetch(`/income_statements/${company.cik}`);
+                    const response3 = await fetch(`/cf_statements/${company.cik}`);
+                    
+                    if (response.ok && response2.ok && response3.ok) {
+                        const data = await response.json();
+                        const data2 = await response2.json();
+                        const data3 = await response3.json();
+                        setApi(data);
+                        setIncApi(data2);
+                        setCfApi(data3);
+                    } else {
+                        setApi([])
+                        setIncApi([])
+                        setCfApi([])
+                        
+                        console.error('Failed to fetch financial statements:', response.status, response2.status, response3.status);
+                    }
+                } catch (error) {
+                    console.error('Error fetching financial statements:', error);
                 }
-            } catch (error) {
-                console.error('Error fetching balance sheets:', error);
-            }
-        };
-
-        const fetchInc = async () => {
-            try {
-                const response = await fetch(`/income_statements/${company.cik}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setIncApi(data)
-                } else {
-                    setIncApi([])
-                    console.error('Failed to fetch income statements:', response.status);
-                }
-            } catch (error) {
-                console.error('Error fetching income statements:', error);
-            }
-        };
-
-        const fetchCf = async () => {
-            try {
-                const response = await fetch(`/cf_statements/${company.cik}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setCfApi(data)
-                } else {
-                    setCfApi([])
-                    console.error('Failed to fetch cashflow statements:', response.status);
-                }
-            } catch (error) {
-                console.error('Error fetching cashflow statements:', error);
-            }
-        };
-
-        fetchBs()
-        fetchInc()
-        fetchCf()
+            };
+        
+            fetchStatements()
+        }
     },[company])
 
 //// 1.) Create data and labels for bar and other charts ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -284,7 +264,7 @@ export default function Financials({company}){
                     callback: function(label, index, values) {
                     
                         
-                        return "$" + "" + formatNumber(label,0);
+                        return "$" + "" + formatNumber(label,1);
                     },
                 },
                 grid: {
@@ -336,21 +316,25 @@ export default function Financials({company}){
     return(
         <>  
             <div id ="stats" className="w-[95%] flex flex-row mt-5 ">
-                <div className="w-[50%] rounded border bg-gray-50 px-5 py-2 ">
+                <div className="w-[33%] rounded border bg-gray-50 px-5 py-2 ">
                         <p className='text-lg font-roboto font-bold'>🔑 Financials</p>
                         
                         <div className="flex flex-row justify-left">
                             <table>
-                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Assets:&nbsp;</th> <th className="text-sm font-roboto text-right text-green-700 font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Liabilities:&nbsp;</th> <th className="text-sm font-roboto text-right text-red-500 font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Stockholders Equity:&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
+                                <tbody>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Assets:&nbsp;</th><th className="text-sm font-roboto text-right text-green-700 font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Liabilities:&nbsp;</th><th className="text-sm font-roboto text-right text-red-500 font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Stockholders Equity:&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
                                 <tr className=""><th className='text-sm font-roboto font-bold text-right'>Cash:&nbsp;</th><th className="text-sm font-roboto text-right text-green-700 font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1], 3) : ''}</th></tr>
+                                </tbody>
                             </table>
                             <table className="ml-5">
-                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Revenue (Q):&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && revenueData.length > 0 ? formatNumber(revenueData[revenueData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Net Income (Q):&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && netIncomeData.length > 0 ? formatNumber(netIncomeData[netIncomeData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Revenue (TTM):&nbsp;</th> - <th className="text-sm font-roboto text-right font-medium"></th></tr>
-                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Net Income (TTM):&nbsp;</th> - <th className="text-sm font-roboto text-right font-medium"></th></tr>
+                            <tbody>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Revenue (Q):&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && revenueData.length > 0 ? formatNumber(revenueData[revenueData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Net Income (Q):&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && netIncomeData.length > 0 ? formatNumber(netIncomeData[netIncomeData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Revenue (TTM):&nbsp;</th>-<th className="text-sm font-roboto text-right font-medium"></th></tr>
+                                <tr className=""><th className='text-sm font-roboto font-bold text-right'>Net Income (TTM):&nbsp;</th>-<th className="text-sm font-roboto text-right font-medium"></th></tr>
+                                </tbody>
                             </table>
                         
                         </div>
@@ -361,20 +345,24 @@ export default function Financials({company}){
                 <div className="w-[33%] rounded border bg-gray-50 px-5 py-2 ml-12">
                         <p className='text-lg font-roboto font-bold'>📊 Valuation</p>
                         <table className="w-[50%]">
-                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Market Capitalization:&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
-                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Earnings per Share (EPS):&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
-                            <tr className=" "><th className='text-sm font-roboto font-bold text-right'>Price-to-Earnings (P/E):&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
-                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Price-to-Sales (P/S):&nbsp;</th> <th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
+                        <tbody>
+                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Market Capitalization:&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
+                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Earnings per Share (EPS):&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
+                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Price-to-Earnings (P/E):&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
+                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Price-to-Sales (P/S):&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
                             <tr className=""><th className='text-sm font-roboto font-bold text-right'>Enterprise Value (EV):&nbsp;</th><th className="text-sm font-roboto text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr>
+                            </tbody>
                         </table>
                 </div>
 
                 <div className="w-[33%] rounded border bg-gray-50 px-5 py-2 ml-12">
                         <p className='text-lg font-roboto font-bold'>🩳 Short Info.</p>
                         <table>
-                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Shares Available:&nbsp;</th> <th className="text-sm font-roboto content-center"></th></tr>
-                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Borrow Rate %:&nbsp;</th> <th className="text-sm font-roboto content-center"></th></tr>
-                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Short Float %:&nbsp;</th> <th className="text-sm font-roboto content-center"></th></tr>
+                        <tbody>
+                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Shares Available:&nbsp;</th><th className="text-sm font-roboto content-center"></th></tr>
+                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Borrow Rate %:&nbsp;</th><th className="text-sm font-roboto content-center"></th></tr>
+                            <tr className=""><th className='text-sm font-roboto font-bold text-right'>Short Float %:&nbsp;</th><th className="text-sm font-roboto content-center"></th></tr>
+                        </tbody>
                         </table>
                 </div>
 
