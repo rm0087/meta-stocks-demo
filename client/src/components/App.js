@@ -16,15 +16,8 @@ export default function App() {
     const [loading, setLoading] = useState(false);  // Loading state for making requests
     const [quotes, setQuotes] = useState([]);
     
+
     
-    const quoteOptions = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          'APCA-API-KEY-ID': 'PK28C1IX5GA5YGO8PUC1',
-          'APCA-API-SECRET-KEY': '82uB25KPmQD09O7abyr5U5ZYFdb02tQC11aOUlgL'
-        }
-      };
 
     // Function to handle input changes
     const handleInputChange = (event) => {
@@ -92,25 +85,25 @@ export default function App() {
         };
 
    
-    useEffect(()=>{
-        const fetchQuotes = async () => {
-            try {
-                const response = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
+    // useEffect(()=>{
+    //     const fetchQuotes = async () => {
+    //         try {
+    //             const response = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
 
-                if (!response.ok) {
-                    throw new Error('Failed to retrieve quote')
-                }
-                const data = await response.json()
-                setQuotes(data)
-                console.log(data)
-            } catch (error) {
-                console.error('Error retrieving quotes', error)
-            }
-        };
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to retrieve quote')
+    //             }
+    //             const data = await response.json()
+    //             setQuotes(data)
+    //             console.log(data)
+    //         } catch (error) {
+    //             console.error('Error retrieving quotes', error)
+    //         }
+    //     };
 
-        fetchQuotes()
+    //     fetchQuotes()
 
-    },[company])
+    // },[company])
     /// async fetch request ////
     
     
@@ -128,16 +121,16 @@ export default function App() {
                 },
                 body: JSON.stringify(query)
             });
-            const quoteApi = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
+            // const quoteApi = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
             
             if (!response.ok) {
                 throw new Error('Failed to find company');
             }
     
             const data = await response.json();
-            const data2 = await quoteApi.json()
+            // const data2 = await quoteApi.json()
             setCompany(data);
-            setQuotes(data2)
+            // setQuotes(data2)
             
             
         } catch (error) {
@@ -208,8 +201,8 @@ export default function App() {
                     
                     <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
                     <div className="flex flex-row w-full pl-2">
-                        <h1 id = "co-header" className="font-roboto font-bold text-xl">{company ? `${company.ticker} - ${company.name} - $${company && quotes?.bars?.[company.ticker]?.[0]?.c}` : "Search for a company"}</h1>
-                        <span className="flex flex-row"><p className="flex text-xs items-center">&nbsp;- ({formatTimestamp(company && quotes?.bars?.[company.ticker]?.[0]?.t)} closing price)</p></span>
+                        <h1 id = "co-header" className="font-roboto font-bold text-xl">{company ? `${company.ticker}` : "Search for a company"}</h1>
+                        <span className="flex flex-row"></span>
                     </div>
                 </form>
             </div>
@@ -222,10 +215,4 @@ export default function App() {
   );
 };
 
-
-
-
-
-
-
-
+// ${company.name} - $${company && quotes?.bars?.[company.ticker]?.[0]?.c}
