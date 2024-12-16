@@ -28,79 +28,40 @@ class Company(db.Model, SerializerMixin):
     owner_org = db.Column(db.String)
     entity_type = db.Column(db.String)
     country = db.Column(db.String)
-
-    # balance_sheets = db.relationship('BalanceSheet', backref='company', lazy=True)
     keywords = db.relationship('Keyword', back_populates='companies', secondary = company_keyword_assoc)
     notes = db.relationship('Note', back_populates='company')
+    # balance_sheets = db.relationship('BalanceSheet', back_populates='company')
+    # income_statements = db.relationship('IncomeStatement', back_populates='company')
+    # cash_flows_statements = db.relationship('CashFlowsStatement', back_populates='company')
+
+    # serialize_rules = ('-balance_sheets.company', '-income_statements.company', '-cash_flows_statements.company')
+
+    ###################
 
     __table_args__ = (
         Index('idx_ticker', 'ticker'),
     )
-
-    # @validates('keywords')
-    # def validate_keywords(self, key, keyword):
-    #     if not isinstance(keyword, Keyword):
-    #         raise ValueError("Entry must be a valid Keyword class member")
-    #     return keyword
-    
-    # @validates('balance_sheets')
-    # def validate_balance_sheets(self, key, balance_sheet):
-    #     if not isinstance(balance_sheet, BalanceSheet):
-    #         raise ValueError("Entry must be a valid BalanceSheet class member")
-    #     return balance_sheet
-    
-    # @validates('notes')
-    # def validate_notes(self, key, note):
-    #     if not isinstance(note, Note):
-    #         raise ValueError("Entry must be a valid Note class member")
-    #     return note
-
-    # @property
-    # def name(self):
-    #     return self.name
-
-    # @name.setter
-    # def name(self, name):
-    #     if not isinstance(name, str):
-    #         raise ValueError("Name must be a string.")
-    #     self._name = name
-
-    # @property
-    # def sic(self):
-    #     return self.sic
-    
-    # @sic.setter
-    # def sic(self, sic):
-    #     if not isinstance(sic, int):
-    #         raise ValueError("SIC must be an integer.")
-    #     self._sic = sic
     
 
 class BalanceSheet(db.Model, SerializerMixin):
     __tablename__ = "bs_table"
 
     id = db.Column(db.Integer, primary_key=True)
-    company_cik = db.Column(db.Integer, db.ForeignKey('companies_table.id'), nullable=False)
-    
+    company_cik = db.Column(db.Integer, db.ForeignKey('companies_table.cik'), nullable=False)
     total_assets = db.Column(db.Integer)
     assets_current = db.Column(db.Integer)
     assets_noncurrent = db.Column(db.Integer)
-
     total_liabilities = db.Column(db.Integer)
     liabilities_current = db.Column(db.Integer)
     liabilities_noncurrent = db.Column(db.Integer)
     total_liabilities_and_stockholders_equity = db.Column(db.Integer)
-
     total_stockholders_equity = db.Column(db.Integer)
     total_stockholders_equity_nci = db.Column(db.Integer)
-    
     cash = db.Column(db.Integer)
     cash_and_equiv = db.Column(db.Integer)
     cash_all = db.Column(db.Integer)
     goodwill = db.Column(db.Integer)
     intangible_assets = db.Column(db.Integer)
-    
-
     accn = db.Column(db.String)
     start = db.Column(db.String)
     end = db.Column(db.String)
@@ -110,6 +71,10 @@ class BalanceSheet(db.Model, SerializerMixin):
     frame = db.Column(db.String)
     fy = db.Column(db.Integer)
 
+    # company = db.relationship('Company', back_populates='balance_sheets')
+
+    # serialize_rules = ('-company.balance_sheets',)
+
     __table_args__ = (
         Index('idx_company_cik', 'company_cik'),
     )
@@ -118,8 +83,7 @@ class IncomeStatement(db.Model, SerializerMixin):
     __tablename__ = "inc_table"
 
     id = db.Column(db.Integer, primary_key=True)
-    company_cik = db.Column(db.Integer, db.ForeignKey('companies_table.id'), nullable=False)
-
+    company_cik = db.Column(db.Integer, db.ForeignKey('companies_table.cik'), nullable=False)
     total_revenue = db.Column(db.Integer)
     rev_from_ceat = db.Column(db.Integer)
     rev_net_of_ie = db.Column(db.Integer)
@@ -130,7 +94,6 @@ class IncomeStatement(db.Model, SerializerMixin):
     interest_and_div_inc_op = db.Column(db.Integer)
     net_income = db.Column(db.Integer)
     ifrs_revenue = db.Column(db.Integer)
-
     accn = db.Column(db.String)
     start = db.Column(db.String)
     end = db.Column(db.String)
@@ -141,22 +104,21 @@ class IncomeStatement(db.Model, SerializerMixin):
     fy = db.Column(db.Integer)
     currency = db.Column(db.Integer)
     accounting_standard = db.Column(db.String)
-    
-
     key = db.Column(db.String)
     rev_key = db.Column(db.String)
+
+    # company = db.relationship('Company', back_populates='income_statements')
+    # serialize_rules = ('-company.income_statements',)
 
 class CashFlowsStatement(db.Model, SerializerMixin):
     __tablename__ = "cf_table"
 
     id = db.Column(db.Integer, primary_key=True)
-    company_cik = db.Column(db.Integer, db.ForeignKey('companies_table.id'), nullable=False)
-
+    company_cik = db.Column(db.Integer, db.ForeignKey('companies_table.cik'), nullable=False)
     opr_cf = db.Column(db.Integer)
     inv_cf = db.Column(db.Integer)
     fin_cf = db.Column(db.Integer)
     net_cf = db.Column(db.Integer)
-
     accn = db.Column(db.String)
     start = db.Column(db.String)
     end = db.Column(db.String)
@@ -165,10 +127,12 @@ class CashFlowsStatement(db.Model, SerializerMixin):
     fp = db.Column(db.String)
     frame = db.Column(db.String)
     fy = db.Column(db.Integer)
-
     op_cf_key = db.Column(db.String)
     inv_cf_key = db.Column(db.String)
     fin_cf_key = db.Column(db.String)
+
+    company = db.relationship('Company', backref='cash_flows_statements')
+    serialize_rules = ('-company.cash_flows_statements', '-company.cik', '-company.cik_10', '-company.country', '-company.entity_type', '-company.exchange', '-company.keywords', '-company.notes', '-company.owner_org', '-company.sic', '-company.sic_description')
 
 class Keyword(db.Model, SerializerMixin):
     __tablename__ = "keywords_table"
