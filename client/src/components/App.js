@@ -14,6 +14,10 @@ export default function App() {
     const [query, setQuery] = useState('');  // The current value of the search input
     const [suggestions, setSuggestions] = useState([]);  // The list of company suggestions
     const [loading, setLoading] = useState(false);  // Loading state for making requests
+    const [quotes, setQuotes] = useState([]);
+    
+
+    
 
     // Function to handle input changes
     const handleInputChange = (event) => {
@@ -34,49 +38,75 @@ export default function App() {
     const fetchSuggestions = async (searchQuery) => {
         setLoading(true);
         try {
-        const response = await fetch(`/api/companies/search?query=${searchQuery}`);
+            const response = await fetch(`/api/companies/search?query=${searchQuery}`);
         
         // Check if the response is ok (status code 200)
-        if (response.ok) {
-            const data = await response.json();
-            setSuggestions(data);  // Update the suggestions with the response data
-        } else {
-            setSuggestions([]);  // If response is not OK, clear suggestions
-        }
+            if (response.ok) {
+                const data = await response.json();
+                setSuggestions(data);  // Update the suggestions with the response data
+            } else {
+                setSuggestions([]);  // If response is not OK, clear suggestions
+            }
         } catch (error) {
-        console.error("Error fetching companies", error);
-        setSuggestions([]);  // Clear suggestions in case of error
+            console.error("Error fetching companies", error);
+            setSuggestions([]);  // Clear suggestions in case of error
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
+    
 
-    const fetchCompanyDetails = async (companyTicker) => {
-        setQuery('');
-        setSuggestions([])
-    
-        try {
-            const response = await fetch('/companies', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(companyTicker)
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to find company');
+        const fetchCompanyDetails = async (companyTicker) => {
+            setQuery('');
+            setSuggestions([])
+        
+            try {
+                const response = await fetch('/companies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(companyTicker)
+                });
+                
+        
+                if (!response.ok) {
+                    throw new Error('Failed to find company');
+                }
+        
+                const data = await response.json();
+       
+                setCompany(data);
+          
+            } catch (error) {
+                console.error('Error searching companies:', error);
             }
-    
-            const data = await response.json();
-            setCompany(data);
-        } catch (error) {
-            console.error('Error searching companies:', error);
-        }
-      };
-    
+        };
+
+   
+    // useEffect(()=>{
+    //     const fetchQuotes = async () => {
+    //         try {
+    //             const response = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
+
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to retrieve quote')
+    //             }
+    //             const data = await response.json()
+    //             setQuotes(data)
+    //             console.log(data)
+    //         } catch (error) {
+    //             console.error('Error retrieving quotes', error)
+    //         }
+    //     };
+
+    //     fetchQuotes()
+
+    // },[company])
     /// async fetch request ////
+    
+    
     const fetchCompany = async (e) => {
         e.preventDefault();
         setQuery('');
@@ -91,37 +121,58 @@ export default function App() {
                 },
                 body: JSON.stringify(query)
             });
-    
+            // const quoteApi = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
+            
             if (!response.ok) {
                 throw new Error('Failed to find company');
             }
     
             const data = await response.json();
+            // const data2 = await quoteApi.json()
             setCompany(data);
+            // setQuotes(data2)
+            
+            
         } catch (error) {
             console.error('Error searching companies:', error);
         }
     };
+
+    const formatTimestamp = (timestamp) => {
+        const date = new Date(timestamp);
+      
+        // Extract date components
+        const month = String(date.getMonth()).padStart(2, '0'); // Months are 0-based
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+      
+        // Extract time components
+        const hours = String(date.getHours()+5).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+      
+        // Format as MM/DD/YYYY @HH:mm:ss
+        return `${month}/${day}/${year}`;
+      };
    
-    useEffect(() => {
-        const fetchCompanyJsonTest = async () => {
-            setQuery('');
-            setSuggestions([])
+    // useEffect(() => {
+    //     const fetchCompanyJsonTest = async () => {
+    //         setQuery('');
+    //         setSuggestions([])
         
-            try {
-                const response = await fetch(`/companyfacts2/${company.ticker}`);
-                if (!response.ok) {
-                    throw new Error('Failed to find company');
-                }
+    //         try {
+    //             const response = await fetch(`/companyfacts2/${company.ticker}`);
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to find company');
+    //             }
         
-                const data = await response.json();
-                console.log(data);
-            } catch (error) {
-                console.error('Error searching companies:', error);
-            }
-        };
-        fetchCompanyJsonTest()
-    }, [company.ticker]);
+    //             const data = await response.json();
+    //         } catch (error) {
+    //             console.error('Error searching companies:', error);
+    //         }
+    //     };
+    //     fetchCompanyJsonTest()
+    // }, [company.ticker]);
    
         // <Router>
         //     <Navbar />
@@ -149,7 +200,10 @@ export default function App() {
                     )}
                     
                     <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
-                    <h1 id = "co-header" className="font-roboto font-bold text-xl p-1">{company ? `${company.ticker} - ${company.name}` : "Search for a company"}</h1>
+                    <div className="flex flex-row w-full pl-2">
+                        <h1 id = "co-header" className="font-roboto font-bold text-xl">{company ? `${company.ticker}` : "Search for a company"}</h1>
+                        <span className="flex flex-row"></span>
+                    </div>
                 </form>
             </div>
             <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-50 pb-5 mt-12">
@@ -161,10 +215,4 @@ export default function App() {
   );
 };
 
-
-
-
-
-
-
-
+// ${company.name} - $${company && quotes?.bars?.[company.ticker]?.[0]?.c}
