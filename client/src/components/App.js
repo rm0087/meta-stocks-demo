@@ -7,6 +7,7 @@ import Financials from "./Financials"
 import Keywords from "./Keywords";
 import Navbar from "./Navbar";
 import CompanyInfo from "./CompanyInfo";
+// import dotenv from 'dotenv';
 
 export default function App() {
     const[company, setCompany] = useState('')
@@ -14,10 +15,23 @@ export default function App() {
     const [query, setQuery] = useState('');  // The current value of the search input
     const [suggestions, setSuggestions] = useState([]);  // The list of company suggestions
     const [loading, setLoading] = useState(false);  // Loading state for making requests
-    const [quotes, setQuotes] = useState([]);
+    const [price, setPrice] = useState(0);
+    const [shares, setShares] = useState(0);
     
+    
+    // dotenv.config();
+    // const apiKey = process.env.API_KEY;
+    // const apiSec = process.env.API_SECRET;
 
-    
+
+    const quoteOptions = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          'APCA-API-KEY-ID': "PK28C1IX5GA5YGO8PUC1",
+          'APCA-API-SECRET-KEY': "82uB25KPmQD09O7abyr5U5ZYFdb02tQC11aOUlgL"
+        }
+      };
 
     // Function to handle input changes
     const handleInputChange = (event) => {
@@ -56,56 +70,84 @@ export default function App() {
     };
     
 
-        const fetchCompanyDetails = async (companyTicker) => {
-            setQuery('');
-            setSuggestions([])
+    const fetchCompanyDetails = async (companyTicker) => {
+        setQuery('');
+        setSuggestions([])
+    
+        try {
+            const response = await fetch('/companies', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(companyTicker)
+            });
+            
+    
+            if (!response.ok) {
+                throw new Error('Failed to find company');
+            }
+    
+            const data = await response.json();
+    
+            setCompany(data);
         
+        } catch (error) {
+            console.error('Error searching companies:', error);
+        }
+    };
+
+    useEffect(()=>{
+        const fetchPrice = async () => {
             try {
-                const response = await fetch('/companies', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(companyTicker)
-                });
-                
-        
+                const response = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
+
                 if (!response.ok) {
-                    throw new Error('Failed to find company');
+                    setPrice(0)
+                    throw new Error('Failed to retrieve quote')
+                    
                 }
-        
-                const data = await response.json();
-       
-                setCompany(data);
-          
+                const data = await response.json()
+                setPrice(data.bars?.[company.ticker]?.[0]?.c)
             } catch (error) {
-                console.error('Error searching companies:', error);
+                console.error('Error retrieving price', error)
             }
         };
 
-   
-    // useEffect(()=>{
-    //     const fetchQuotes = async () => {
-    //         try {
-    //             const response = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
+        const fetchShares = async () => {
+            setQuery('');
+            setSuggestions([])
+            if (company){
+                try {
+                    const response = await fetch(`/shares/${company.id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to find shares');
+                    }
+            
+                    const data = await response.json();
+            
+                    setShares(data[0]?.historical_shares);
+                
+                } catch (error) {
+                    console.error('Error searching shares:', error);
+                }
+            }
+        };
 
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to retrieve quote')
-    //             }
-    //             const data = await response.json()
-    //             setQuotes(data)
-    //             console.log(data)
-    //         } catch (error) {
-    //             console.error('Error retrieving quotes', error)
-    //         }
-    //     };
+        fetchPrice()
+        fetchShares()
 
-    //     fetchQuotes()
-
-    // },[company])
-    /// async fetch request ////
     
+
+    },[company])
     
     const fetchCompany = async (e) => {
         e.preventDefault();
@@ -130,7 +172,7 @@ export default function App() {
             const data = await response.json();
             // const data2 = await quoteApi.json()
             setCompany(data);
-            // setQuotes(data2)
+            // setPrice(data2)
             
             
         } catch (error) {
@@ -201,7 +243,7 @@ export default function App() {
                     
                     <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
                     <div className="flex flex-row w-full pl-2">
-                        <h1 id = "co-header" className="font-roboto font-bold text-xl">{company ? `${company.ticker}` : "Search for a company"}</h1>
+                        <h1 id = "co-header" className="font-roboto font-bold text-xl">{company ? `${company.ticker} - ${company.name} - $${price}` : "Search for a company"}</h1>
                         <span className="flex flex-row"></span>
                     </div>
                 </form>
@@ -209,10 +251,8 @@ export default function App() {
             <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-50 pb-5 mt-12">
                 <CompanyInfo company={company} />
                 <Keywords company={company} />
-                <Financials company={company}/>
+                <Financials company={company} shares={shares} price={price}/>
             </div>
         </>
   );
 };
-
-// ${company.name} - $${company && quotes?.bars?.[company.ticker]?.[0]?.c}

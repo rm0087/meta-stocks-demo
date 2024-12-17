@@ -43,7 +43,9 @@ def clean_text(text):
 def extract_keywords(text, n=10):
     global vectorizor
     vectorizer1 = TfidfVectorizer(max_features=n,
-                                  ngram_range=(1, 3),
+                                  ngram_range=(1, 3),  # Unigrams, bigrams, trigrams
+                                    max_df=0.85,         # Ignore overly common terms
+                                    min_df=2,            # Ignore rare terms
                                     stop_words='english',
                                     sublinear_tf=True)
     vectorizor = vectorizer1
