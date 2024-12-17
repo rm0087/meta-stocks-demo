@@ -4,7 +4,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import validates
 from sqlalchemy import func, Index
 from datetime import datetime
-
 from config import db
 
 
@@ -13,6 +12,7 @@ company_keyword_assoc = db.Table(
     db.Column('company_id', db.Integer, db.ForeignKey('companies_table.id')),
     db.Column('keyword_id', db.Integer, db.ForeignKey('keywords_table.id'))
 )
+
 
 class Company(db.Model, SerializerMixin):
     __tablename__ = "companies_table"
@@ -79,6 +79,7 @@ class BalanceSheet(db.Model, SerializerMixin):
         Index('idx_company_cik', 'company_cik'),
     )
 
+
 class IncomeStatement(db.Model, SerializerMixin):
     __tablename__ = "inc_table"
 
@@ -106,9 +107,12 @@ class IncomeStatement(db.Model, SerializerMixin):
     accounting_standard = db.Column(db.String)
     key = db.Column(db.String)
     rev_key = db.Column(db.String)
+    preferred_dividends = db.Column(db.Integer)
+    eps = db.Column(db.Integer)
 
     # company = db.relationship('Company', back_populates='income_statements')
     # serialize_rules = ('-company.income_statements',)
+
 
 class CashFlowsStatement(db.Model, SerializerMixin):
     __tablename__ = "cf_table"
@@ -131,8 +135,9 @@ class CashFlowsStatement(db.Model, SerializerMixin):
     inv_cf_key = db.Column(db.String)
     fin_cf_key = db.Column(db.String)
 
-    company = db.relationship('Company', backref='cash_flows_statements')
-    serialize_rules = ('-company.cash_flows_statements', '-company.cik', '-company.cik_10', '-company.country', '-company.entity_type', '-company.exchange', '-company.keywords', '-company.notes', '-company.owner_org', '-company.sic', '-company.sic_description')
+    # company = db.relationship('Company', backref='cash_flows_statements')
+    # serialize_rules = ('-company.cash_flows_statements', '-company.cik', '-company.cik_10', '-company.country', '-company.entity_type', '-company.exchange', '-company.keywords', '-company.notes', '-company.owner_org', '-company.sic', '-company.sic_description')
+
 
 class Keyword(db.Model, SerializerMixin):
     __tablename__ = "keywords_table"
@@ -161,15 +166,12 @@ class Note(db.Model, SerializerMixin):
     serialize_rules = ('-company',)
 
 
-# class Shares(db.Model, SerializerMixin):
-#     __tablename__ = "shares_table"
+class CommonShares(db.Model, SerializerMixin):
+    __tablename__ = "common_shares_table"
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     company_id = db.Column(db.Integer, db.ForeignKey('companies_table.id'), nullable=False)
-#     date = db.Column(db.String)
-#     historical_shares = db.Column(db.Integer)
-#     split_coefficient = db.Column(db.Integer)
-#     adjusted_shares = db.Column(db.Integer)
-
-
-    
+    id = db.Column(db.Integer, primary_key=True)
+    company_id = db.Column(db.Integer, db.ForeignKey('companies_table.id'), nullable=False)
+    date = db.Column(db.String)
+    historical_shares = db.Column(db.Integer)
+    split_coefficient = db.Column(db.Integer)
+    adjusted_shares = db.Column(db.Integer)

@@ -19,7 +19,6 @@
 
 1. **Clone the repository**:
    ```bash
-   fork MetaStocks to your repo
    git clone git@github.com:USERNAME/meta-stocks-demo.git
    cd meta-stocks-demo
    ```
