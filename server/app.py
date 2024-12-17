@@ -6,7 +6,7 @@
 # from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
-from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, IncomeStatement, CashFlowsStatement
+from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, IncomeStatement, CashFlowsStatement, CommonShares
 from sqlalchemy import not_, or_
 import json
 import os
@@ -23,6 +23,13 @@ def get_all_companies():
         return jsonify(company.to_dict()), 200
     except Exception as e:
         return{'error': str(e)}, 404
+    
+@app.route('/shares/<int:id>', methods=['GET'])
+def get_shares(id):
+    shares = CommonShares.query.filter(CommonShares.company_id == id).all()
+    if not shares:
+        return jsonify({"error": "Shares not found"}), 404
+    return jsonify([sh.to_dict() for sh in shares]), 200
 
 @app.route('/balance_sheets/<int:cik>', methods=['GET'])
 def get_balancesheets(cik):

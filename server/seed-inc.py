@@ -60,6 +60,10 @@ def amend_inc(key:str, inc, x):
       inc.total_revenue = x.get('val')
    if key =='OperatingLeaseLeaseIncome':
       inc.total_revenue = x.get('val')
+   if key =='PreferredStockDividendsIncomeStatementImpact':
+      inc.preferred_dividends = x.get('val')
+   if key =='EarningsPerShareBasic':
+      inc.eps = x.get('val')
    inc.rev_key = key
    print(inc, key, inc.currency)
    
@@ -96,6 +100,13 @@ def xyz(path):
                   amend_inc(key, inc, x)
                else:
                   pass
+         elif path_units.get('USD/shares'):
+            for x in path_units['USD/shares']:
+               inc = co_inc_dict.get(x.get('frame'))
+               if inc:
+               
+                  amend_inc(key, inc, x)
+
          else:
             for cur in curs:
                if path_units.get(cur):
@@ -131,6 +142,8 @@ all_keys =  [  'Revenues',
                         'Revenue',
                         'RevenueFromContractsWithCustomers',
                         # 'OperatingLeaseLeaseIncome',
+                        'PreferredStockDividendsIncomeStatementImpact',
+                        'EarningsPerShareBasic'
                         ]
 
 max = 10165
@@ -147,7 +160,7 @@ with app.app_context():
 
    ##########################################################################
 
-   companies = Company.query.filter(Company.id <= max)
+   companies = Company.query.all()
    
    for company in companies:
       if company.cik not in company_tracker.values():
