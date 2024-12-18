@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 # Local imports
 from config import app, db, api
 
-load_dotenv()
+
 @app.post('/companies')
 def get_all_companies():
     data = request.json
@@ -83,6 +83,7 @@ def search_companies():
 
 @app.route('/quotes/<string:ticker>', methods=['GET'])
 def get_quotes(ticker):
+    load_dotenv()
     f_ticker = ticker.replace("-", ".")
     print(f_ticker)
     headers = {
@@ -92,8 +93,13 @@ def get_quotes(ticker):
             'APCA-API-SECRET-KEY': os.getenv('APCA_API_SECRET_KEY')
         }
 
-    r = requests.get(f'https://data.alpaca.markets/v2/stocks/bars?symbols={f_ticker}&timeframe=1Day&limit=5&adjustment=raw&feed=sip&sort=desc', headers=headers)
-       
+
+    start = datetime.now() - timedelta(hours=72)
+    print(start)
+    f_start = start.strftime('%Y-%m-%dT%H%%3A%M%%3A%SZ')
+    print(f_start)
+    r = requests.get(f'https://data.alpaca.markets/v2/stocks/bars?symbols={f_ticker}&timeframe=1Day&start={f_start}&limit=1000&adjustment=raw&feed=sip&sort=desc', headers=headers)
+    print(r.reason)
     return jsonify(r.json()), r.status_code
 
 # @app.post('/companies')

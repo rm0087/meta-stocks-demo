@@ -95,6 +95,7 @@ export default function App() {
                 }
                 const data = await response.json()
                 setPrice(data.bars?.[company.ticker?.replace("-", ".")]?.[0]?.c)
+              
             } catch (error) {
                 console.error('Error retrieving price', error)
             }
