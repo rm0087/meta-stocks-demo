@@ -104,7 +104,6 @@ def xyz(path):
             for x in path_units['USD/shares']:
                inc = co_inc_dict.get(x.get('frame'))
                if inc:
-               
                   amend_inc(key, inc, x)
 
          else:
