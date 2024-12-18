@@ -71,4 +71,6 @@ server/backup
 server/z-*.*
 server/.env
 client/src/.env
+server/instance
+server/submissions
 
