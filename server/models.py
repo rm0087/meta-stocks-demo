@@ -175,3 +175,5 @@ class CommonShares(db.Model, SerializerMixin):
     historical_shares = db.Column(db.Integer)
     split_coefficient = db.Column(db.Integer)
     adjusted_shares = db.Column(db.Integer)
+    historical_shares_diluted = db.Column(db.Integer)
+    adjusted_shares_diluted = db.Column(db.Integer)

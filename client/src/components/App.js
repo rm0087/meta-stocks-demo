@@ -7,7 +7,6 @@ import Financials from "./Financials"
 import Keywords from "./Keywords";
 import Navbar from "./Navbar";
 import CompanyInfo from "./CompanyInfo";
-// import dotenv from 'dotenv';
 
 export default function App() {
     const[company, setCompany] = useState('')
@@ -18,21 +17,7 @@ export default function App() {
     const [price, setPrice] = useState(0);
     const [shares, setShares] = useState(0);
     
-    
-    // dotenv.config();
-    // const apiKey = process.env.API_KEY;
-    // const apiSec = process.env.API_SECRET;
-
-
-    const quoteOptions = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          'APCA-API-KEY-ID': "PK28C1IX5GA5YGO8PUC1",
-          'APCA-API-SECRET-KEY': "82uB25KPmQD09O7abyr5U5ZYFdb02tQC11aOUlgL"
-        }
-      };
-
+   
     // Function to handle input changes
     const handleInputChange = (event) => {
         const searchQuery = event.target.value;
@@ -101,7 +86,7 @@ export default function App() {
     useEffect(()=>{
         const fetchPrice = async () => {
             try {
-                const response = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
+                const response = await fetch(`/quotes/${company.ticker}`)
 
                 if (!response.ok) {
                     setPrice(0)
@@ -109,7 +94,7 @@ export default function App() {
                     
                 }
                 const data = await response.json()
-                setPrice(data.bars?.[company.ticker]?.[0]?.c)
+                setPrice(data.bars?.[company.ticker?.replace("-", ".")]?.[0]?.c)
             } catch (error) {
                 console.error('Error retrieving price', error)
             }
@@ -133,7 +118,6 @@ export default function App() {
                     }
             
                     const data = await response.json();
-            
                     setShares(data[0]?.historical_shares);
                 
                 } catch (error) {
@@ -163,7 +147,6 @@ export default function App() {
                 },
                 body: JSON.stringify(query)
             });
-            // const quoteApi = await fetch(`https://data.alpaca.markets/v2/stocks/bars?symbols=${company.ticker}&timeframe=1Day&start=2024-12-11T00%3A00%3A00Z&end=2024-12-14T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=desc`, quoteOptions)
             
             if (!response.ok) {
                 throw new Error('Failed to find company');

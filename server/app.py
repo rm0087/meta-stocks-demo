@@ -10,11 +10,14 @@ from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, 
 from sqlalchemy import not_, or_
 import json
 import os
+from datetime import datetime, timedelta
+import requests
+from dotenv import load_dotenv
 
 # Local imports
 from config import app, db, api
 
-
+load_dotenv()
 @app.post('/companies')
 def get_all_companies():
     data = request.json
@@ -77,6 +80,21 @@ def search_companies():
         ).limit(10).all()
         return jsonify([company.to_dict() for company in companies]), 200 
     return jsonify([]), 400
+
+@app.route('/quotes/<string:ticker>', methods=['GET'])
+def get_quotes(ticker):
+    f_ticker = ticker.replace("-", ".")
+    print(f_ticker)
+    headers = {
+            "Content-Type" : "application/json",
+            "Accept" : "application/json",
+            'APCA-API-KEY-ID': os.getenv('APCA_API_KEY_ID'),
+            'APCA-API-SECRET-KEY': os.getenv('APCA_API_SECRET_KEY')
+        }
+
+    r = requests.get(f'https://data.alpaca.markets/v2/stocks/bars?symbols={f_ticker}&timeframe=1Day&limit=5&adjustment=raw&feed=sip&sort=desc', headers=headers)
+       
+    return jsonify(r.json()), r.status_code
 
 # @app.post('/companies')
 # def post_companies():
