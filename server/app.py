@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 # Local imports
 from config import app, db, api
 
+load_dotenv()
 
 @app.post('/companies')
 def get_all_companies():
@@ -82,10 +83,12 @@ def search_companies():
     return jsonify([]), 400
 
 @app.route('/quotes/<string:ticker>', methods=['GET'])
-def get_quotes(ticker):
-    load_dotenv()
+def get_quotes(ticker: str):
+    
+    
     f_ticker = ticker.replace("-", ".")
     print(f_ticker)
+    
     headers = {
             "Content-Type" : "application/json",
             "Accept" : "application/json",
@@ -93,14 +96,56 @@ def get_quotes(ticker):
             'APCA-API-SECRET-KEY': os.getenv('APCA_API_SECRET_KEY')
         }
 
-
     start = datetime.now() - timedelta(hours=72)
-    print(start)
-    f_start = start.strftime('%Y-%m-%dT%H%%3A%M%%3A%SZ')
-    print(f_start)
+    f_start = start.isoformat() + "Z"
+   
     r = requests.get(f'https://data.alpaca.markets/v2/stocks/bars?symbols={f_ticker}&timeframe=1Day&start={f_start}&limit=1000&adjustment=raw&feed=sip&sort=desc', headers=headers)
-    print(r.reason)
+    
+    if not r.ok:
+        return "Quote could not be retrieved", r.status_code
     return jsonify(r.json()), r.status_code
+
+
+app.route('/news', methods=['GET'])
+def get_news():
+    news_key = os.getenv('NEWS_API')
+    
+    proxies = {
+        'http':os.getenv('PROXY_2')
+    }
+
+    headers = {
+        'Accept': 'content/json',
+        'Content-Type': 'content/json',
+        'x-api-key':news_key
+    }
+
+    try:
+        r = requests.get(f'https://newsapi.org/v2/top-headalines?country=us&pageSize=100', proxies=proxies, headers=headers)
+        
+        if not r.ok:
+            return jsonify({
+                'statusCode': r.status_code,
+                'message': r.json()
+            })
+    except Exception as e:
+        print(str(e))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # @app.post('/companies')
 # def post_companies():
