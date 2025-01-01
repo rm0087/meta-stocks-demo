@@ -232,7 +232,7 @@ export default function App() {
                     </div>
                 </form>
             </div>
-            <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-orange-50 pb-5 mt-12">
+            <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-gray-800 pb-5 mt-12">
                 <CompanyInfo company={company} />
                 <Keywords company={company} />
                 <Financials company={company} shares={shares} price={price}/>
