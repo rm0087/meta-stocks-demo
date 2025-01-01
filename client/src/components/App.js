@@ -213,26 +213,26 @@ export default function App() {
         
     return(
         <> 
-            <div className="w-full">
-                <form id='company-search-form' className="shadow-md" onSubmit={fetchCompany}>
-                    <input id='company-input' className="border rounded m-1" type='text' value={query} onChange={handleInputChange} placeholder="(AAPL, BRK-B, NVDA etc...)" autoComplete="off"/>
+            
+                <form id='company-search-form' className="shadow-md px-10 bg-gray-500" onSubmit={fetchCompany}>
+                    <input id='company-input' className="border rounded m-1 font-mono tracking-tighter px-2 bg-gray-200" type='text' value={query} onChange={handleInputChange} placeholder="Company or Ticker" autoComplete="off"/>
                 
                     {suggestions.length > 0 && (
                         <ul className="absolute bg-white border border-gray-300 rounded mt-1 z-10 inline-block shadow-lg max-h-100 overflow-y-auto">
                         {suggestions.map((company) => (
-                            <li key={company.id} className="p-1 hover:bg-gray-200 cursor-pointer whitespace-nowrap font-roboto text-base" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
+                            <li key={company.id} className="p-1 hover:bg-gray-200 cursor-pointer whitespace-nowrap font-mono text-base" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
                         ))}
                         </ul>
                     )}
                     
                     <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
                     <div className="flex flex-row w-full pl-2">
-                        <h1 id = "co-header" className="font-roboto font-bold text-xl">{company ? `${company.ticker} - ${company.name} - $${price}` : "Search for a company"}</h1>
+                        <h1 id = "co-header" className="font-mono font-bold text-xl">{company ? `${company.ticker} - ${company.name} - $${price}` : "Search for a company"}</h1>
                         <span className="flex flex-row"></span>
                     </div>
                 </form>
-            </div>
-            <div id="wrapper" className="flex flex-col items-center w-full h-full border rounded bg-gray-800 pb-5 mt-12">
+            
+            <div id="wrapper" className="flex flex-col items-center w-full h-full bg-gray-800 pb-5">
                 <CompanyInfo company={company} />
                 <Keywords company={company} />
                 <Financials company={company} shares={shares} price={price}/>
