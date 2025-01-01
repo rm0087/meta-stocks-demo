@@ -14,7 +14,7 @@ export default function Keywords({ company }) {
     return (
         <>
             <div className="w-[95%]">
-                <div className="w-[47%] border rounded mt-5 bg-gray-50">
+                <div className="w-[47%] mt-5 text-lime-400 font-mono tracking-tight">
                     <div className="px-5 py-2">
                         <h2 className="font-roboto text-lg font-bold">🖇️ MetaTags</h2>
                         <li className="flex flex-row">
