@@ -12,8 +12,6 @@ proxies = {
 def get_news():
     news_key = os.getenv('NEWS_API')
         
-    
-
     headers = {
         'Accept': 'content/json',
         'Content-Type': 'content/json',
