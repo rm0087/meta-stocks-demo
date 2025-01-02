@@ -376,12 +376,12 @@ export default function Financials({company, shares, price}){
                 </div>
 
                 <div className="w-[33%] px-5 py-2 ml-12 text-gray-50 font-mono tracking-tight text-xs">
-                        <p className='text-lg font-bold tracking-normal'>🩳 Short Info.</p>
+                        <p className='text-lg font-bold tracking-normal'>Shares Info.</p>
                         <table>
                         <tbody>
-                            <tr className=""><th className='font-bold text-left'>Shares Available:&nbsp;</th><th className="content-center"></th></tr>
-                            <tr className=""><th className='font-bold text-left'>Borrow Rate %:&nbsp;</th><th className="content-center"></th></tr>
-                            <tr className=""><th className='font-bold text-left'>Short Float %:&nbsp;</th><th className="content-center"></th></tr>
+                            <tr className=""><th className='font-bold text-left'>Shares Outstanding:&nbsp;</th><th className="text-right font-medium">{shares && formatNumber(shares)}</th></tr>
+                            {/* <tr className=""><th className='font-bold text-left'>Borrow Rate %:&nbsp;</th><th className="content-center"></th></tr>
+                            <tr className=""><th className='font-bold text-left'>Short Float %:&nbsp;</th><th className="content-center"></th></tr> */}
                         </tbody>
                         </table>
                 </div>
