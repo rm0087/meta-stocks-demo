@@ -10,8 +10,18 @@ from config import db
 company_keyword_assoc = db.Table(
     'company_keyword_assoc', db.metadata,
     db.Column('company_id', db.Integer, db.ForeignKey('companies_table.id')),
-    db.Column('keyword_id', db.Integer, db.ForeignKey('keywords_table.id'))
+    db.Column('keyword_id', db.Integer, db.ForeignKey('keywords_table.id')),
+    db.Column('context', db.String)
 )
+
+class CoKeyAssoc(db.Model):
+    __tablename__ = 'co_keyword_table'
+    company_id = db.Column(db.Integer, db.ForeignKey('companies_table.id'), primary_key=True)
+    keyword_id = db.Column(db.Integer, db.ForeignKey('keywords_table.id'), primary_key=True)
+    context = db.Column(db.String)
+    
+    company = db.relationship("Company", back_populates="keyword_associations")
+    keyword = db.relationship("Keyword", back_populates="company_associations")
 
 
 class Company(db.Model, SerializerMixin):
@@ -28,8 +38,9 @@ class Company(db.Model, SerializerMixin):
     owner_org = db.Column(db.String)
     entity_type = db.Column(db.String)
     country = db.Column(db.String)
-    keywords = db.relationship('Keyword', back_populates='companies', secondary = company_keyword_assoc)
     notes = db.relationship('Note', back_populates='company')
+    keyword_associations = db.relationship("CoKeyAssoc", back_populates="company")
+
     # balance_sheets = db.relationship('BalanceSheet', back_populates='company')
     # income_statements = db.relationship('IncomeStatement', back_populates='company')
     # cash_flows_statements = db.relationship('CashFlowsStatement', back_populates='company')
@@ -146,8 +157,9 @@ class Keyword(db.Model, SerializerMixin):
     word = db.Column(db.String, nullable=False)
     type = db.Column(db.String)
     description = db.Column(db.String)
+    co_assoc = db.Column(db.String)
     
-    companies = db.relationship('Company', back_populates = 'keywords', secondary = company_keyword_assoc)
+    company_associations = db.relationship("CoKeyAssoc", back_populates="keyword")
 
     serialize_rules = ('-companies',)
 
