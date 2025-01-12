@@ -2,13 +2,20 @@ import React from "react";
 
 export default function Keywords({ company }) {
     // Ensure company and company.comments are defined
-    if (!company || !company.keywords) {
+    if (!company || !company.keyword_associations) {
         return null;
     }
 
     // Create list items for each comment
-    const keywordElements = company.keywords.map((keyword, index) => (
-        <li key={index}>{keyword.word}</li>
+    const keywordElements = company.keyword_associations.map((assoc, index) => (
+        <>
+            <li 
+                key={index}
+            >
+                    {assoc.keyword.word}
+                    {assoc.context.map((con) => (<li>{con}</li>)) }
+            </li>
+        </>
     ));
 
     return (
