@@ -10,8 +10,20 @@ from config import db
 company_keyword_assoc = db.Table(
     'company_keyword_assoc', db.metadata,
     db.Column('company_id', db.Integer, db.ForeignKey('companies_table.id')),
-    db.Column('keyword_id', db.Integer, db.ForeignKey('keywords_table.id'))
+    db.Column('keyword_id', db.Integer, db.ForeignKey('keywords_table.id')),
+    db.Column('context', db.String)
 )
+
+class CoKeyAssoc(db.Model, SerializerMixin):
+    __tablename__ = 'co_keyword_table'
+    company_id = db.Column(db.Integer, db.ForeignKey('companies_table.id'), primary_key=True)
+    keyword_id = db.Column(db.Integer, db.ForeignKey('keywords_table.id'), primary_key=True)
+    context = db.Column(db.JSON)
+    
+    company = db.relationship("Company", back_populates="keyword_associations")
+    keyword = db.relationship("Keyword", back_populates="company_associations")
+
+    serialize_rules = ('-company.keyword_associations', '-keyword.company_associations')
 
 
 class Company(db.Model, SerializerMixin):
@@ -28,13 +40,14 @@ class Company(db.Model, SerializerMixin):
     owner_org = db.Column(db.String)
     entity_type = db.Column(db.String)
     country = db.Column(db.String)
-    keywords = db.relationship('Keyword', back_populates='companies', secondary = company_keyword_assoc)
     notes = db.relationship('Note', back_populates='company')
+    keyword_associations = db.relationship("CoKeyAssoc", back_populates="company")
+
     # balance_sheets = db.relationship('BalanceSheet', back_populates='company')
     # income_statements = db.relationship('IncomeStatement', back_populates='company')
     # cash_flows_statements = db.relationship('CashFlowsStatement', back_populates='company')
 
-    # serialize_rules = ('-balance_sheets.company', '-income_statements.company', '-cash_flows_statements.company')
+    serialize_rules = ('-balance_sheets.company', '-income_statements.company', '-cash_flows_statements.company', '-keyword_associations.company', '-keyword_associations.keyword_id', '-keyword_associations.company_id')
 
     ###################
 
@@ -146,8 +159,9 @@ class Keyword(db.Model, SerializerMixin):
     word = db.Column(db.String, nullable=False)
     type = db.Column(db.String)
     description = db.Column(db.String)
+    co_assoc = db.Column(db.String)
     
-    companies = db.relationship('Company', back_populates = 'keywords', secondary = company_keyword_assoc)
+    company_associations = db.relationship("CoKeyAssoc", back_populates="keyword")
 
     serialize_rules = ('-companies',)
 
@@ -177,3 +191,35 @@ class CommonShares(db.Model, SerializerMixin):
     adjusted_shares = db.Column(db.Integer)
     historical_shares_diluted = db.Column(db.Integer)
     adjusted_shares_diluted = db.Column(db.Integer)
+
+
+
+
+# # String types
+# db.String(length)      # Variable-length string with max length
+# db.Text               # Unlimited-length text
+# db.Unicode(length)    # Variable-length Unicode string
+# db.UnicodeText       # Unlimited-length Unicode text
+
+# # Numeric types
+# db.Integer           # Regular integer
+# db.BigInteger        # Large integer
+# db.Float            # Floating-point number
+# db.Numeric(p, s)    # Decimal number with precision and scale
+# db.Boolean          # True/False value
+
+# # Date and Time types
+# db.DateTime         # Date and time
+# db.Date            # Date only
+# db.Time            # Time only
+# db.Interval        # Time interval
+
+# # Binary types
+# db.LargeBinary     # Binary blob
+# db.Binary          # Fixed-length binary data
+
+# # Specialized types
+# db.Enum(*items)    # List of string values
+# db.JSON            # JSON-encoded data
+# db.PickleType      # Automatically pickled Python objects
+# db.ARRAY(type)     # Array of another type

@@ -2,13 +2,23 @@ import React from "react";
 
 export default function Keywords({ company }) {
     // Ensure company and company.comments are defined
-    if (!company || !company.keywords) {
+    if (!company || !company.keyword_associations) {
         return null;
     }
 
     // Create list items for each comment
-    const keywordElements = company.keywords.map((keyword, index) => (
-        <li key={index}>{keyword.word}</li>
+    const keywordElements = company.keyword_associations.map((assoc, index) => (
+        <>
+            <li 
+                key={index}
+                className="font-bold"
+            >
+                    {assoc.keyword.word}
+                    {assoc.context.map((con) => (
+                        <li className="font-normal list-inside list-disc">{con}</li>
+                    )) }
+            </li>
+        </>
     ));
 
     return (
@@ -20,7 +30,7 @@ export default function Keywords({ company }) {
                         <h2 className="text-lg font-bold">🖇️ MetaTags</h2>
                         <li className="flex flex-row">
                             {keywordElements.length > 0 ? (
-                                keywordElements.map((keyword, index) => <ul className="mr-2 overflow-x-visible tracking-tighter flex"key={index}>{keyword}{index < keywordElements.length - 1 && ','}</ul>)
+                                keywordElements.map((keyword, index) => <ul className="mr-2 overflow-x-visible tracking-tighter flex"key={index}>{keyword}{index < keywordElements.length - 1 && ''}</ul>)
                             ) : (
                                 <h2 className="text-sm font-mono text-xs mr-2">No MetaTags for this company yet.</h2>
                             )}
