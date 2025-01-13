@@ -616,10 +616,6 @@ video {
   margin-top: 1.25rem;
 }
 
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-
 .inline-block {
   display: inline-block;
 }
@@ -670,6 +666,14 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.list-inside {
+  list-style-position: inside;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .grid-cols-2 {
@@ -843,6 +847,10 @@ video {
 
 .font-medium {
   font-weight: 500;
+}
+
+.font-normal {
+  font-weight: 400;
 }
 
 .italic {

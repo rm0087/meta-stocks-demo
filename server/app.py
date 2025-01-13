@@ -28,6 +28,14 @@ def get_all_companies():
     except Exception as e:
         return{'error': str(e)}, 404
     
+@app.get('/companies/<string:ticker>')
+def get_company(ticker):
+    try:
+        company = Company.query.filter(Company.ticker == ticker.upper()).first()
+        return jsonify(company.to_dict()), 200
+    except Exception as e:
+        return{'error': str(e)}, 404
+    
 @app.route('/shares/<int:id>', methods=['GET'])
 def get_shares(id):
     shares = CommonShares.query.filter(CommonShares.company_id == id).all()
