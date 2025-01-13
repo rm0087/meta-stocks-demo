@@ -11,9 +11,12 @@ export default function Keywords({ company }) {
         <>
             <li 
                 key={index}
+                className="font-bold"
             >
                     {assoc.keyword.word}
-                    {assoc.context.map((con) => (<li>{con}</li>)) }
+                    {assoc.context.map((con) => (
+                        <li className="font-normal list-inside list-disc">{con}</li>
+                    )) }
             </li>
         </>
     ));
@@ -27,7 +30,7 @@ export default function Keywords({ company }) {
                         <h2 className="text-lg font-bold">🖇️ MetaTags</h2>
                         <li className="flex flex-row">
                             {keywordElements.length > 0 ? (
-                                keywordElements.map((keyword, index) => <ul className="mr-2 overflow-x-visible tracking-tighter flex"key={index}>{keyword}{index < keywordElements.length - 1 && ','}</ul>)
+                                keywordElements.map((keyword, index) => <ul className="mr-2 overflow-x-visible tracking-tighter flex"key={index}>{keyword}{index < keywordElements.length - 1 && ''}</ul>)
                             ) : (
                                 <h2 className="text-sm font-mono text-xs mr-2">No MetaTags for this company yet.</h2>
                             )}
