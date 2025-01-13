@@ -1,16 +1,23 @@
 from app import app
 from models import db, Company, Keyword, CoKeyAssoc
-from k_lists.alzheimers import keyword as kw, companies as cos
+# from k_lists.alzheimers import keyword as kw, companies as cos
+# from k_lists.diabetes import keyword as kw, companies as cos
+# from k_lists.weight_loss_obesity import keyword as kw, companies as cos
+# from k_lists.hyperinsulinemic_hypoglycemia import keyword as kw, companies as cos
+from k_lists.hypertension import keyword as kw, companies as cos
 
 
 
 
 with app.app_context():
-    db.session.query(CoKeyAssoc).delete()
-    db.session.commit()
+    # db.session.query(CoKeyAssoc).delete()
+    # db.session.commit()
     
     kw_id = kw['id']
     k1 = Keyword.query.filter(Keyword.id == kw_id).first()
+
+    CoKeyAssoc.query.filter(CoKeyAssoc.keyword_id == kw_id).delete()
+    db.session.commit()
 
     batch = []
     exceptions = []
@@ -26,10 +33,12 @@ with app.app_context():
     
     db.session.add_all(batch)
     db.session.commit()
-    print()
-    print("THE FOLLOWING WERE NOT ENTERED INTO THE DATABASE:")
-    for ex in exceptions:
-        print(ex)
+
+    if len(exceptions) > 0:
+        print()
+        print("THE FOLLOWING WERE NOT ENTERED INTO THE DATABASE:")
+        for ex in exceptions:
+            print(ex)
         
         
 
