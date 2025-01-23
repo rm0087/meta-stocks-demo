@@ -16,5 +16,12 @@ companies = [
             'DehydraTECH-GLP-1 (drug candidate)',
             'DehydraTech-CBD (drug candidate)'
         ]
-    )
+    ),
+    (
+        'CRNX',
+        [
+            'Oral GLP-1 Nonpeptide (drug candidate)',
+            'Oral GIP Nonpeptide (drug candidate)'
+        ]
+    ),
 ]

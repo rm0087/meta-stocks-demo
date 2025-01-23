@@ -3,10 +3,9 @@ from models import db, Company, Keyword, CoKeyAssoc
 # from k_lists.alzheimers import keyword as kw, companies as cos
 # from k_lists.diabetes import keyword as kw, companies as cos
 # from k_lists.weight_loss_obesity import keyword as kw, companies as cos
-# from k_lists.hyperinsulinemic_hypoglycemia import keyword as kw, companies as cos
-from k_lists.hypertension import keyword as kw, companies as cos
-
-
+# from k_lists.hypoglycemia import keyword as kw, companies as cos
+# from k_lists.hypertension import keyword as kw, companies as cos
+from k_lists.neuroblastoma import keyword as kw, companies as cos
 
 
 with app.app_context():

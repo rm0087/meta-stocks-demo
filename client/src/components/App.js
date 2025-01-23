@@ -7,6 +7,7 @@ import Financials from "./Financials"
 import Keywords from "./Keywords";
 import Navbar from "./Navbar";
 import CompanyInfo from "./CompanyInfo";
+import KeywordTool from "./KeywordTool";
 
 export default function App() {
     const[company, setCompany] = useState('')
@@ -211,31 +212,49 @@ export default function App() {
         //     </Switch>
         // </Router>
         
+        const CompanyPage = ({ company, shares, price }) => (
+            <>
+              <CompanyInfo company={company}/> 
+              <Keywords company={company} />
+              <Financials company={company} shares={shares} price={price}/>
+            </>
+          );
+
+          const NotFound = () => (
+            <div>
+              <h1>404 - Page Not Found</h1>
+              <p>The page you're looking for doesn't exist.</p>
+            </div>
+          );
+          
     return(
-        <> 
+        <>
+            <form id='company-search-form' className="shadow-md px-10 bg-gray-500" onSubmit={fetchCompany}>
+                <input id='company-input' className="border rounded m-1 font-mono tracking-tighter px-2 bg-gray-200" type='text' value={query} onChange={handleInputChange} placeholder="Company or Ticker" autoComplete="off"/>
             
-                <form id='company-search-form' className="shadow-md px-10 bg-gray-500" onSubmit={fetchCompany}>
-                    <input id='company-input' className="border rounded m-1 font-mono tracking-tighter px-2 bg-gray-200" type='text' value={query} onChange={handleInputChange} placeholder="Company or Ticker" autoComplete="off"/>
+                {suggestions.length > 0 && (
+                    <ul className="absolute bg-white border border-gray-300 rounded mt-1 z-10 inline-block shadow-lg max-h-100 overflow-y-auto">
+                    {suggestions.map((company) => (
+                        <li key={company.id} className="p-1 hover:bg-gray-200 cursor-pointer whitespace-nowrap font-mono text-base" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
+                    ))}
+                    </ul>
+                )}
                 
-                    {suggestions.length > 0 && (
-                        <ul className="absolute bg-white border border-gray-300 rounded mt-1 z-10 inline-block shadow-lg max-h-100 overflow-y-auto">
-                        {suggestions.map((company) => (
-                            <li key={company.id} className="p-1 hover:bg-gray-200 cursor-pointer whitespace-nowrap font-mono text-base" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
-                        ))}
-                        </ul>
-                    )}
-                    
-                    <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
-                    <div className="flex flex-row w-full pl-2">
-                        <h1 id = "co-header" className="font-mono font-bold text-xl">{company ? `${company.ticker} - ${company.name} - $${price}` : "Search for a company"}</h1>
-                        <span className="flex flex-row"></span>
-                    </div>
-                </form>
+                <input id='company-submit-button' className="m-1 border border-black text-sm px-1" type='submit' value="Search"/>
+                <div className="flex flex-row w-full pl-2">
+                    <h1 id = "co-header" className="font-mono font-bold text-xl">{company ? `${company.ticker} - ${company.name} - $${price}` : "Search for a company"}</h1>
+                    <span className="flex flex-row"></span>
+                </div>
+            </form>
             
             <div id="wrapper" className="flex flex-col items-center w-full h-full bg-gray-800 pb-5">
-                <CompanyInfo company={company} />
-                <Keywords company={company} />
-                <Financials company={company} shares={shares} price={price}/>
+                <Router>
+                    <Switch>
+                        <Route exact path="/" render={()=> <CompanyPage company={company} shares={shares} price={price} />}/>
+                        <Route path="/keyword-tool" render={<KeywordTool/>} />
+                        <Route render={() => <NotFound />} />
+                    </Switch>
+                </Router>
             </div>
         </>
   );
