@@ -1,0 +1,67 @@
+{
+    "bozo": false,
+    "entries": [
+        {
+            "title": "Ericsson reports fourth quarter results and full-year results 2024",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.prnewswire.com/apac/rss/news-releases-list.rss",
+                "value": "Ericsson reports fourth quarter results and full-year results 2024"
+            },
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.prnewswire.com/apac/news-releases/ericsson-reports-fourth-quarter-results-and-full-year-results-2024-302359496.html"
+                }
+            ],
+            "link": "https://www.prnewswire.com/apac/news-releases/ericsson-reports-fourth-quarter-results-and-full-year-results-2024-302359496.html",
+            "id": "https://www.prnewswire.com/apac/news-releases/ericsson-reports-fourth-quarter-results-and-full-year-results-2024-302359496.html",
+            "guidislink": false,
+            "published": "Fri, 24 Jan 2025 07:20:00 +0000",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                20,
+                0,
+                4,
+                24,
+                0
+            ],
+            "summary": "<p>STOCKHOLM, Jan. 24, 2025 /PRNewswire/ -- Strategic highlights \u2013 continuing to deliver on strategic and operational priorities Maintaining leadership in programmable networks, with new 5G Advanced software launched in October. Growing interest in network APIs, with financial fraud...</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.prnewswire.com/apac/rss/news-releases-list.rss",
+                "value": "<p>STOCKHOLM, Jan. 24, 2025 /PRNewswire/ -- Strategic highlights \u2013 continuing to deliver on strategic and operational priorities Maintaining leadership in programmable networks, with new 5G Advanced software launched in October. Growing interest in network APIs, with financial fraud...</p>"
+            },
+            "prn_industry": "NET",
+            "prn_subject": "Earnings",
+            "tags": [
+                {
+                    "term": "ERN",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "ACC",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Ericsson"
+                }
+            ],
+            "language": "en-US",
+            "publisher": "PR Newswire Association LLC.",
+            "publisher_detail": {
+                "name": "PR Newswire Association LLC."
+            }
+        }
+    ]
+}
