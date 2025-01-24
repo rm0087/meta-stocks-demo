@@ -193,7 +193,18 @@ class CommonShares(db.Model, SerializerMixin):
     adjusted_shares_diluted = db.Column(db.Integer)
 
 
+class Article(db.Model, SerializerMixin):
+    __tablename__ = "articles_table"
 
+    id = db.Column(db.Integer, primary_key=True)
+    date_time = db.Column(db.DateTime)
+    companies = db.Column(db.JSON)
+    source = db.Column(db.String)
+    source_url = db.Column(db.String)
+    title = db.Column(db.String)
+    content = db.Column(db.Text)
+    
+    
 
 # # String types
 # db.String(length)      # Variable-length string with max length

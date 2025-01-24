@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link, Outlet} from 'react-router-dom';
-// import Map from "./Map";
-import Shares from "./Shares";
-import Financials from "./Financials"
-// import Note from "./Note"
-import Keywords from "./Keywords";
-import Navbar from "./Navbar";
-import CompanyInfo from "./CompanyInfo";
-import KeywordTool from "./KeywordTool";
+import Routes from "./Routes";
 
 export default function App() {
     const[company, setCompany] = useState('')
@@ -131,8 +124,6 @@ export default function App() {
         fetchPrice()
         fetchShares()
 
-    
-
     },[company])
     
     const fetchCompany = async (e) => {
@@ -200,33 +191,7 @@ export default function App() {
     //     };
     //     fetchCompanyJsonTest()
     // }, [company.ticker]);
-   
-        // <Router>
-        //     <Navbar />
-            
-        //     <Switch>
-        //         <Route path="/financials" render={() => <Financials apiInfo={apiInfo}/>} />
-        //         <Route path="/keywords" render={() => <Keywords company={company} />} />
-        //         {/* <Route path="/comments" render={() => <Note company={company} />} />
-        //         <Route path="/map" render={() => <Map company={company} />} /> */}
-        //     </Switch>
-        // </Router>
-        
-        const CompanyPage = ({ company, shares, price }) => (
-            <>
-              <CompanyInfo company={company}/> 
-              <Keywords company={company} />
-              <Financials company={company} shares={shares} price={price}/>
-            </>
-          );
-
-          const NotFound = () => (
-            <div>
-              <h1>404 - Page Not Found</h1>
-              <p>The page you're looking for doesn't exist.</p>
-            </div>
-          );
-          
+       
     return(
         <>
             <form id='company-search-form' className="shadow-md px-10 bg-gray-500" onSubmit={fetchCompany}>
@@ -248,13 +213,7 @@ export default function App() {
             </form>
             
             <div id="wrapper" className="flex flex-col items-center w-full h-full bg-gray-800 pb-5">
-                <Router>
-                    <Switch>
-                        <Route exact path="/" render={()=> <CompanyPage company={company} shares={shares} price={price} />}/>
-                        <Route path="/keyword-tool" render={<KeywordTool/>} />
-                        <Route render={() => <NotFound />} />
-                    </Switch>
-                </Router>
+                <Routes company={company} shares={shares} price={price}/>
             </div>
         </>
   );

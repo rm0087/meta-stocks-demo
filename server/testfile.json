@@ -1,0 +1,1884 @@
+{
+    "bozo": false,
+    "entries": [
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014725/0/en/Form-8-5-EPT-RI-Alliance-Pharma-plc.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014725/0/en/Form-8-5-EPT-RI-Alliance-Pharma-plc.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014725/0/en/Form-8-5-EPT-RI-Alliance-Pharma-plc.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "LSE:INVP",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "GB00B17BBQ50",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Other News",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Form 8.5 (EPT/RI) - Alliance Pharma plc",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Form 8.5 (EPT/RI) - Alliance Pharma plc"
+            },
+            "summary": "<p align=\"end\"><strong>FORM 8.5 (EPT/RI) </strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p align=\"end\"><strong>FORM 8.5 (EPT/RI) </strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 08:22 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                8,
+                22,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014725",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "INVESTEC BANK PLC"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 08:22 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014723/0/en/Municipality-Finance-issues-RON-106-5-million-notes-under-its-MTN-programme.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014723/0/en/Municipality-Finance-issues-RON-106-5-million-notes-under-its-MTN-programme.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014723/0/en/Municipality-Finance-issues-RON-106-5-million-notes-under-its-MTN-programme.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "LSE:IRSH",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "SWX:KUNTA",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Helsinki:KUNTA",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Irish:IRSH",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "XS1170414921",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH1244321779",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0100128369",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0361533125",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0251885791",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0203695629",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0185907083",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0126116539",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0110994776",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "XS1692485912",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "XS1498532271",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "XS1299724911",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "7113",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Regulatory information",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Other News",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Municipality Finance issues RON 106,5 million notes under its MTN programme",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Municipality Finance issues RON 106,5 million notes under its MTN programme"
+            },
+            "summary": "<p>Municipality Finance Plc<br />Stock exchange release <br />24 January 2025 at 10:00 am (EET)</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p>Municipality Finance Plc<br />Stock exchange release <br />24 January 2025 at 10:00 am (EET)</p>"
+            },
+            "published": "Fri, 24 Jan 2025 08:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                8,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014723",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Municipality Finance Plc"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 08:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014723/0/fi/Kuntarahoitus-laskee-liikkeeseen-106-5-miljoonan-Romanian-leun-joukkovelkakirjalainan-osana-joukkovelkakirjalainaohjelmaa.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014723/0/fi/Kuntarahoitus-laskee-liikkeeseen-106-5-miljoonan-Romanian-leun-joukkovelkakirjalainan-osana-joukkovelkakirjalainaohjelmaa.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014723/0/fi/Kuntarahoitus-laskee-liikkeeseen-106-5-miljoonan-Romanian-leun-joukkovelkakirjalainan-osana-joukkovelkakirjalainaohjelmaa.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "LSE:IRSH",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "SWX:KUNTA",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Helsinki:KUNTA",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Irish:IRSH",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "XS1170414921",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH1244321779",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0100128369",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0361533125",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0251885791",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0203695629",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0185907083",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0126116539",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "CH0110994776",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "XS1692485912",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "XS1498532271",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "XS1299724911",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "7113",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Regulatory information",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Other News",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Kuntarahoitus laskee liikkeeseen 106,5 miljoonan Romanian leun joukkovelkakirjalainan osana joukkovelkakirjalainaohjelmaa",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Kuntarahoitus laskee liikkeeseen 106,5 miljoonan Romanian leun joukkovelkakirjalainan osana joukkovelkakirjalainaohjelmaa"
+            },
+            "summary": "<p>Kuntarahoitus Oyj<br />P\u00f6rssitiedote<br />24.1.2025 klo 10.00</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p>Kuntarahoitus Oyj<br />P\u00f6rssitiedote<br />24.1.2025 klo 10.00</p>"
+            },
+            "published": "Fri, 24 Jan 2025 08:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                8,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014723",
+            "language": "fi",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Kuntarahoitus Oyj"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 08:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014720/0/da/%C3%86ndring-i-direktionen.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014720/0/da/%C3%86ndring-i-direktionen.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014720/0/da/%C3%86ndring-i-direktionen.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Copenhagen:KLEE B",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "DK0010129089",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Directors and Officers",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "\u00c6ndring i direktionen",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "\u00c6ndring i direktionen"
+            },
+            "summary": "<p>\u00c6ndring i direktionen</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p>\u00c6ndring i direktionen</p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:39 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                39,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014720",
+            "language": "da",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Brd. Klee A/S"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:40 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/en/Bekaert-Update-on-the-Share-Buyback-Program-and-the-Liquidity-Agreement.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/en/Bekaert-Update-on-the-Share-Buyback-Program-and-the-Liquidity-Agreement.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/en/Bekaert-Update-on-the-Share-Buyback-Program-and-the-Liquidity-Agreement.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Brussels:BEKB",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "BE0974258874",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "2667",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Law & Legal Issues",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Changes in share capital and votes",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Bekaert - Update on the Share Buyback Program and the Liquidity Agreement",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Bekaert - Update on the Share Buyback Program and the Liquidity Agreement"
+            },
+            "summary": "<p align=\"justify\"><strong>Update on the Share Buyback Program and the Liquidity Agreement</strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p align=\"justify\"><strong>Update on the Share Buyback Program and the Liquidity Agreement</strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:30 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                30,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014718",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Bekaert"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:30 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/nl/Bekaert-Update-over-het-Inkoopprogramma-van-Eigen-Aandelen-en-de-Liquiditeitsovereenkomst.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/nl/Bekaert-Update-over-het-Inkoopprogramma-van-Eigen-Aandelen-en-de-Liquiditeitsovereenkomst.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/nl/Bekaert-Update-over-het-Inkoopprogramma-van-Eigen-Aandelen-en-de-Liquiditeitsovereenkomst.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Brussels:BEKB",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "BE0974258874",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "2667",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Law & Legal Issues",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Changes in share capital and votes",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Bekaert - Update over het Inkoopprogramma van Eigen Aandelen en de Liquiditeitsovereenkomst",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Bekaert - Update over het Inkoopprogramma van Eigen Aandelen en de Liquiditeitsovereenkomst"
+            },
+            "summary": "<p><strong>Update over het Inkoopprogramma van Eigen Aandelen en de Liquiditeitsovereenkomst </strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p><strong>Update over het Inkoopprogramma van Eigen Aandelen en de Liquiditeitsovereenkomst </strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:30 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                30,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014718",
+            "language": "nl",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Bekaert"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:30 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/fr/Bekaert-Mise-%C3%A0-jour-relative-au-Programme-de-Rachat-d-Actions-et-au-Contrat-de-liquidit%C3%A9.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/fr/Bekaert-Mise-%C3%A0-jour-relative-au-Programme-de-Rachat-d-Actions-et-au-Contrat-de-liquidit%C3%A9.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014718/0/fr/Bekaert-Mise-%C3%A0-jour-relative-au-Programme-de-Rachat-d-Actions-et-au-Contrat-de-liquidit%C3%A9.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Brussels:BEKB",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "BE0974258874",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "2667",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Law & Legal Issues",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Changes in share capital and votes",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Bekaert - Mise \u00e0 jour relative au Programme de Rachat d'Actions et au Contrat de liquidit\u00e9",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Bekaert - Mise \u00e0 jour relative au Programme de Rachat d'Actions et au Contrat de liquidit\u00e9"
+            },
+            "summary": "<p><br /><strong>Mise \u00e0 jour relative au Programme de Rachat d'Actions et au Contrat de liquidit\u00e9</strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p><br /><strong>Mise \u00e0 jour relative au Programme de Rachat d'Actions et au Contrat de liquidit\u00e9</strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:30 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                30,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014718",
+            "language": "fr",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Bekaert"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:30 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/en/Bekaert-Notice-of-Extraordinary-General-Meeting-of-Shareholders.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/en/Bekaert-Notice-of-Extraordinary-General-Meeting-of-Shareholders.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/en/Bekaert-Notice-of-Extraordinary-General-Meeting-of-Shareholders.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Brussels:BEKB",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "BE0974258874",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "2666",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Annual Meetings & Shareholder Rights",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Bekaert: Notice of Extraordinary General Meeting of Shareholders",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Bekaert: Notice of Extraordinary General Meeting of Shareholders"
+            },
+            "summary": "<p><strong>Notice of Extraordinary General Meeting of Shareholders</strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p><strong>Notice of Extraordinary General Meeting of Shareholders</strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:15 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                15,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014717",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Bekaert"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:16 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/nl/Bekaert-Oproeping-tot-de-Buitengewone-Algemene-Vergadering-van-Aandeelhouders.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/nl/Bekaert-Oproeping-tot-de-Buitengewone-Algemene-Vergadering-van-Aandeelhouders.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/nl/Bekaert-Oproeping-tot-de-Buitengewone-Algemene-Vergadering-van-Aandeelhouders.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Brussels:BEKB",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "BE0974258874",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "2666",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Annual Meetings & Shareholder Rights",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Bekaert: Oproeping tot de Buitengewone Algemene Vergadering van Aandeelhouders",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Bekaert: Oproeping tot de Buitengewone Algemene Vergadering van Aandeelhouders"
+            },
+            "summary": "<p><strong>Oproeping tot de Buitengewone Algemene Vergadering van Aandeelhouders</strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p><strong>Oproeping tot de Buitengewone Algemene Vergadering van Aandeelhouders</strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:15 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                15,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014717",
+            "language": "nl",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Bekaert"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:16 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/fr/Bekaert-Convocation-%C3%A0-l-Assembl%C3%A9e-G%C3%A9n%C3%A9rale-Extraordinaire-des-Actionnaires.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/fr/Bekaert-Convocation-%C3%A0-l-Assembl%C3%A9e-G%C3%A9n%C3%A9rale-Extraordinaire-des-Actionnaires.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014717/0/fr/Bekaert-Convocation-%C3%A0-l-Assembl%C3%A9e-G%C3%A9n%C3%A9rale-Extraordinaire-des-Actionnaires.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Brussels:BEKB",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "BE0974258874",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "2666",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Annual Meetings & Shareholder Rights",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Bekaert: Convocation \u00e0 l'Assembl\u00e9e G\u00e9n\u00e9rale Extraordinaire des Actionnaires",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Bekaert: Convocation \u00e0 l'Assembl\u00e9e G\u00e9n\u00e9rale Extraordinaire des Actionnaires"
+            },
+            "summary": "<p><strong>Convocation \u00e0 l'Assembl\u00e9e G\u00e9n\u00e9rale Extraordinaire des Actionnaires</strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p><strong>Convocation \u00e0 l'Assembl\u00e9e G\u00e9n\u00e9rale Extraordinaire des Actionnaires</strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:15 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                15,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014717",
+            "language": "fr",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Bekaert"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:16 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014715/0/fr/Aduro-Clean-Technologies-franchit-une-%C3%A9tape-cl%C3%A9-dans-la-conception-de-l-usine-pilote.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014715/0/fr/Aduro-Clean-Technologies-franchit-une-%C3%A9tape-cl%C3%A9-dans-la-conception-de-l-usine-pilote.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014715/0/fr/Aduro-Clean-Technologies-franchit-une-%C3%A9tape-cl%C3%A9-dans-la-conception-de-l-usine-pilote.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "CNSX:ACT.CN",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Nasdaq:ADUR",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Frankfurt:9D5",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Other OTC:ACTHF",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "CA0074082060",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Product / Services Announcement",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Aduro Clean Technologies franchit une \u00e9tape cl\u00e9 dans la conception de l\u2019usine pilote",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Aduro Clean Technologies franchit une \u00e9tape cl\u00e9 dans la conception de l\u2019usine pilote"
+            },
+            "summary": "Ach\u00e8vement de l\u2019ing\u00e9nierie de base de l\u2019usine pilote exploitant la technologie Hydrochemolytic\u2122 Technology <pre>Ach\u00e8vement de l\u2019ing\u00e9nierie de base de l\u2019usine pilote exploitant la technologie Hydrochemolytic\u2122 Technology</pre>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Ach\u00e8vement de l\u2019ing\u00e9nierie de base de l\u2019usine pilote exploitant la technologie Hydrochemolytic\u2122 Technology <pre>Ach\u00e8vement de l\u2019ing\u00e9nierie de base de l\u2019usine pilote exploitant la technologie Hydrochemolytic\u2122 Technology</pre>"
+            },
+            "published": "Fri, 24 Jan 2025 07:03 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                3,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014715",
+            "language": "fr",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Aduro Clean Technologies Inc."
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:04 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014715/0/de/Aduro-Clean-Technologies-erreicht-wichtigen-Meilenstein-bei-der-Entwicklung-einer-Pilotanlage.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014715/0/de/Aduro-Clean-Technologies-erreicht-wichtigen-Meilenstein-bei-der-Entwicklung-einer-Pilotanlage.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014715/0/de/Aduro-Clean-Technologies-erreicht-wichtigen-Meilenstein-bei-der-Entwicklung-einer-Pilotanlage.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "CNSX:ACT.CN",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Nasdaq:ADUR",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Frankfurt:9D5",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Other OTC:ACTHF",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "CA0074082060",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Product / Services Announcement",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Aduro Clean Technologies erreicht wichtigen Meilenstein bei der Entwicklung einer Pilotanlage",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Aduro Clean Technologies erreicht wichtigen Meilenstein bei der Entwicklung einer Pilotanlage"
+            },
+            "summary": "Fertigstellung des Basisdesigns f\u00fcr die Pilotanlage der Hydrochemolytic\u2122-Technologie <pre>Fertigstellung des Basisdesigns f\u00fcr die Pilotanlage der Hydrochemolytic\u2122-Technologie</pre>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Fertigstellung des Basisdesigns f\u00fcr die Pilotanlage der Hydrochemolytic\u2122-Technologie <pre>Fertigstellung des Basisdesigns f\u00fcr die Pilotanlage der Hydrochemolytic\u2122-Technologie</pre>"
+            },
+            "published": "Fri, 24 Jan 2025 07:03 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                3,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014715",
+            "language": "de",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Aduro Clean Technologies Inc."
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:04 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014710/0/en/Transaction-in-own-shares.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014710/0/en/Transaction-in-own-shares.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014710/0/en/Transaction-in-own-shares.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "LSE:OSB",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "GB00BLDRH360",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "MyWeb",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Changes in company's own shares",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Transaction in own shares",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Transaction in own shares"
+            },
+            "summary": "<p><strong>OSB GROUP PLC</strong>\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0<br /><strong>ISIN: GB00BLDRH360</strong><br /><strong>24 January 2025</strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p><strong>OSB GROUP PLC</strong>\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0<br /><strong>ISIN: GB00BLDRH360</strong><br /><strong>24 January 2025</strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014710",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "OSB GROUP PLC"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014711/0/en/Transaction-in-Own-Shares.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014711/0/en/Transaction-in-Own-Shares.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014711/0/en/Transaction-in-Own-Shares.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "LSE:PAY",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "GB00B02QND93",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Reg",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Changes in company's own shares",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Transaction in Own Shares",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Transaction in Own Shares"
+            },
+            "summary": "<p>24<sup>th</sup> January 2025</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p>24<sup>th</sup> January 2025</p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014711",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "PayPoint plc"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014712/0/en/Tryg-shares-are-traded-ex-dividend.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014712/0/en/Tryg-shares-are-traded-ex-dividend.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014712/0/en/Tryg-shares-are-traded-ex-dividend.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Oslo:TRYG02",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Copenhagen:TRYG07 VP",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Oslo:TRYG06",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Copenhagen:TRYG05 VP",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Oslo:TRYG01 PRO",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Copenhagen:TRYG",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "NO0010751837",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "DK0030488101",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "NO0010995723",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "DK0030484621",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "NO0010672355",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "DK0060636678",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Press releases",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Tryg shares are traded ex-dividend",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Tryg shares are traded ex-dividend"
+            },
+            "summary": "<p>Today, 24 January 2025, Tryg shares are traded ex-dividend of DKK 1.95.</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p>Today, 24 January 2025, Tryg shares are traded ex-dividend of DKK 1.95.</p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014712",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Tryg A/S"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014712/0/da/Tryg-aktier-handles-eksklusive-udbytte.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014712/0/da/Tryg-aktier-handles-eksklusive-udbytte.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014712/0/da/Tryg-aktier-handles-eksklusive-udbytte.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Oslo:TRYG02",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Copenhagen:TRYG07 VP",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Oslo:TRYG06",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Copenhagen:TRYG05 VP",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Oslo:TRYG01 PRO",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "Copenhagen:TRYG",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "NO0010751837",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "DK0030488101",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "NO0010995723",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "DK0030484621",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "NO0010672355",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "DK0060636678",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Press releases",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Tryg-aktier handles eksklusive udbytte",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Tryg-aktier handles eksklusive udbytte"
+            },
+            "summary": "<p align=\"justify\">Tryg-aktier handles i dag den 24. januar 2025 eksklusive udbytte p\u00e5 1,95 DKK.</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p align=\"justify\">Tryg-aktier handles i dag den 24. januar 2025 eksklusive udbytte p\u00e5 1,95 DKK.</p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014712",
+            "language": "da",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Tryg A/S"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014713/0/en/Changes-in-the-Management-Board-of-AS-Ekspress-Grupp.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014713/0/en/Changes-in-the-Management-Board-of-AS-Ekspress-Grupp.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014713/0/en/Changes-in-the-Management-Board-of-AS-Ekspress-Grupp.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Tallinn:EEG1T",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "EE3100016965",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Directors and Officers",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Changes in the Management Board of AS Ekspress Grupp",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Changes in the Management Board of AS Ekspress Grupp"
+            },
+            "summary": "<p align=\"justify\">The Supervisory Board of AS Ekspress Grupp has elected Mrs. Lili Kirikal as a new member of the Management Board and the Chief Financial Officer until January 30, 2028. Her diverse and long-term experience from the transaction advisory side of Ernst &amp; Young, combined with her later position as CFO at Sunly provides a unique combination that allows to contribute to the development of Ekspress Grupp.</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p align=\"justify\">The Supervisory Board of AS Ekspress Grupp has elected Mrs. Lili Kirikal as a new member of the Management Board and the Chief Financial Officer until January 30, 2028. Her diverse and long-term experience from the transaction advisory side of Ernst &amp; Young, combined with her later position as CFO at Sunly provides a unique combination that allows to contribute to the development of Ekspress Grupp.</p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014713",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Ekspress Grupp"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014713/0/et/Muudatused-AS-Ekspress-Grupp-juhatuses.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014713/0/et/Muudatused-AS-Ekspress-Grupp-juhatuses.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014713/0/et/Muudatused-AS-Ekspress-Grupp-juhatuses.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Tallinn:EEG1T",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "EE3100016965",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Directors and Officers",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Muudatused AS Ekspress Grupp juhatuses",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Muudatused AS Ekspress Grupp juhatuses"
+            },
+            "summary": "<p align=\"justify\">ASi Ekspress Grupp n\u00f5ukogu otsustas valida uueks juhatuse liikmeks ja finantsjuhiks Lili Kirikali t\u00e4htajaga 30. jaanuar 2028. Lili Kirikali mitmek\u00fclgne ja pikaajaline kogemus Ernst &amp; Youngi tehingute n\u00f5ustamise poolelt koos hilisema finantsjuhi positsiooniga Sunlys loob hea kombinatsiooni, mis v\u00f5imaldab panustada Ekspress Grupi arengusse. \u00a0</p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p align=\"justify\">ASi Ekspress Grupp n\u00f5ukogu otsustas valida uueks juhatuse liikmeks ja finantsjuhiks Lili Kirikali t\u00e4htajaga 30. jaanuar 2028. Lili Kirikali mitmek\u00fclgne ja pikaajaline kogemus Ernst &amp; Youngi tehingute n\u00f5ustamise poolelt koos hilisema finantsjuhi positsiooniga Sunlys loob hea kombinatsiooni, mis v\u00f5imaldab panustada Ekspress Grupi arengusse. \u00a0</p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014713",
+            "language": "et",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Ekspress Grupp"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014714/0/en/Falcon-Oil-Gas-Ltd-Beetaloo-Operational-Update-Stimulation-Campaign-Remaining-Shenandoah-South-Pilot-Project.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014714/0/en/Falcon-Oil-Gas-Ltd-Beetaloo-Operational-Update-Stimulation-Campaign-Remaining-Shenandoah-South-Pilot-Project.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014714/0/en/Falcon-Oil-Gas-Ltd-Beetaloo-Operational-Update-Stimulation-Campaign-Remaining-Shenandoah-South-Pilot-Project.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "LSE:FOG",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "TSX-V:FO",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "CA3060711015",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "Other News",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Falcon Oil & Gas Ltd. - Beetaloo Operational Update \u2013 Stimulation Campaign & Remaining Shenandoah South Pilot Project",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Falcon Oil & Gas Ltd. - Beetaloo Operational Update \u2013 Stimulation Campaign & Remaining Shenandoah South Pilot Project"
+            },
+            "summary": "<p align=\"center\"><strong>Falcon Oil &amp; Gas Ltd.</strong></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p align=\"center\"><strong>Falcon Oil &amp; Gas Ltd.</strong></p>"
+            },
+            "published": "Fri, 24 Jan 2025 07:00 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                7,
+                0,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014714",
+            "language": "en",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Falcon Oil & Gas Ltd."
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 07:00 GMT"
+        },
+        {
+            "id": "https://www.globenewswire.com/news-release/2025/01/24/3014709/0/sv/Sparbanken-V%C3%A4stra-M%C3%A4lardalen-har-ing%C3%A5tt-ett-villkorat-samg%C3%A5endeavtal-med-Sparbanken-Rekarne.html",
+            "guidislink": true,
+            "link": "https://www.globenewswire.com/news-release/2025/01/24/3014709/0/sv/Sparbanken-V%C3%A4stra-M%C3%A4lardalen-har-ing%C3%A5tt-ett-villkorat-samg%C3%A5endeavtal-med-Sparbanken-Rekarne.html",
+            "links": [
+                {
+                    "rel": "alternate",
+                    "type": "text/html",
+                    "href": "https://www.globenewswire.com/news-release/2025/01/24/3014709/0/sv/Sparbanken-V%C3%A4stra-M%C3%A4lardalen-har-ing%C3%A5tt-ett-villkorat-samg%C3%A5endeavtal-med-Sparbanken-Rekarne.html"
+                }
+            ],
+            "tags": [
+                {
+                    "term": "Stockholm:SPVM 1",
+                    "scheme": "https://www.globenewswire.com/rss/stock",
+                    "label": null
+                },
+                {
+                    "term": "SE0007982459",
+                    "scheme": "https://www.globenewswire.com/rss/ISIN",
+                    "label": null
+                },
+                {
+                    "term": "7123",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "7124",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "Regulatory information",
+                    "scheme": null,
+                    "label": null
+                },
+                {
+                    "term": "European Regulatory News",
+                    "scheme": null,
+                    "label": null
+                }
+            ],
+            "title": "Sparbanken V\u00e4stra M\u00e4lardalen har ing\u00e5tt ett villkorat samg\u00e5endeavtal med Sparbanken Rekarne",
+            "title_detail": {
+                "type": "text/plain",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "Sparbanken V\u00e4stra M\u00e4lardalen har ing\u00e5tt ett villkorat samg\u00e5endeavtal med Sparbanken Rekarne"
+            },
+            "summary": "<p><em>Sparbanken V\u00e4stra M\u00e4lardalen har idag den 24 januari 2025 ing\u00e5tt ett villkorat samg\u00e5endeavtal med Sparbanken Rekarne. Styrelserna i Sparbanken V\u00e4stra M\u00e4lardalen och Sparbanken Rekarne rekommenderar samg\u00e5endet. Den sammanslagna sparbanken blir en av Sveriges st\u00f6rsta med en aff\u00e4rsvolym p\u00e5 drygt 85 miljarder, cirka 118 000 kunder och verksamhetsomr\u00e5de i fem kommuner.</em></p>",
+            "summary_detail": {
+                "type": "text/html",
+                "language": null,
+                "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+                "value": "<p><em>Sparbanken V\u00e4stra M\u00e4lardalen har idag den 24 januari 2025 ing\u00e5tt ett villkorat samg\u00e5endeavtal med Sparbanken Rekarne. Styrelserna i Sparbanken V\u00e4stra M\u00e4lardalen och Sparbanken Rekarne rekommenderar samg\u00e5endet. Den sammanslagna sparbanken blir en av Sveriges st\u00f6rsta med en aff\u00e4rsvolym p\u00e5 drygt 85 miljarder, cirka 118 000 kunder och verksamhetsomr\u00e5de i fem kommuner.</em></p>"
+            },
+            "published": "Fri, 24 Jan 2025 06:45 GMT",
+            "published_parsed": [
+                2025,
+                1,
+                24,
+                6,
+                45,
+                0,
+                4,
+                24,
+                0
+            ],
+            "dc_identifier": "3014709",
+            "language": "sv",
+            "publisher": "GlobeNewswire Inc.",
+            "publisher_detail": {
+                "name": "GlobeNewswire Inc."
+            },
+            "contributors": [
+                {
+                    "name": "Sparbanken V\u00e4stra M\u00e4lardalen"
+                }
+            ],
+            "dc_modified": "Fri, 24 Jan 2025 06:45 GMT"
+        }
+    ],
+    "feed": {
+        "title": "GlobeNewswire - News about Public Companies",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+            "value": "GlobeNewswire - News about Public Companies"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies"
+            }
+        ],
+        "link": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+        "subtitle": "Contains the last 20 releases",
+        "subtitle_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+            "value": "Contains the last 20 releases"
+        },
+        "authors": [
+            {
+                "name": "NewsDesk",
+                "email": "newsdesk@globenewswire.com"
+            }
+        ],
+        "author": "newsdesk@globenewswire.com (NewsDesk)",
+        "author_detail": {
+            "name": "NewsDesk",
+            "email": "newsdesk@globenewswire.com"
+        },
+        "updated": "Fri, 24 Jan 2025 08:22:10 GMT",
+        "updated_parsed": [
+            2025,
+            1,
+            24,
+            8,
+            22,
+            10,
+            4,
+            24,
+            0
+        ],
+        "publisher": "webmaster@globenewswire.com (Webmaster)",
+        "publisher_detail": {
+            "name": "Webmaster",
+            "email": "webmaster@globenewswire.com"
+        }
+    },
+    "headers": {
+        "content-type": "application/rss+xml; charset=utf-8",
+        "last-modified": "Fri, 24 Jan 2025 08:53:54 GMT",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "access-control-allow-origin": "*",
+        "context": "UI",
+        "version": "cloud",
+        "data-source": "SC",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "content-encoding": "gzip",
+        "content-length": "4273",
+        "cache-control": "public, max-age=30",
+        "date": "Fri, 24 Jan 2025 08:54:24 GMT",
+        "connection": "close",
+        "vary": "Accept-Encoding"
+    },
+    "updated": "Fri, 24 Jan 2025 08:53:54 GMT",
+    "updated_parsed": [
+        2025,
+        1,
+        24,
+        8,
+        53,
+        54,
+        4,
+        24,
+        0
+    ],
+    "href": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+    "status": 200,
+    "encoding": "utf-8",
+    "version": "rss20",
+    "namespaces": {
+        "dc": "http://dublincore.org/documents/dcmi-namespace/",
+        "media": "http://search.yahoo.com/mrss/"
+    }
+}
