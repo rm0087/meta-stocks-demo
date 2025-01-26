@@ -1421,7 +1421,7 @@
         ]
     },
     "headers": {
-        "date": "Fri, 24 Jan 2025 21:39:08 GMT",
+        "date": "Sun, 26 Jan 2025 02:19:34 GMT",
         "content-type": "text/xml;charset=utf-8",
         "transfer-encoding": "chunked",
         "connection": "close",
@@ -1432,13 +1432,13 @@
         "access-control-allow-origin": "https://app.zoominfo.com; *.prnewswire.com; *.multivu.com; *.vocusdr.com; *.prweb.com",
         "last-modified": "Fri, 24 Jan 2025 10:57:06 GMT",
         "cf-cache-status": "HIT",
-        "age": "33513",
-        "expires": "Sat, 25 Jan 2025 05:39:08 GMT",
+        "age": "136739",
+        "expires": "Sun, 26 Jan 2025 10:19:34 GMT",
         "cache-control": "public, max-age=28800",
-        "set-cookie": "__cf_bm=eVg6JVGzTHwZ2wTSF9k_V2aoO977AiLE9Y6YxJSlOKA-1737754748-1.0.1.1-rCvC43BOAFQnSZoySmmwRWjJW3VYStmUBfDX82wceUW70sxyrIIKzYU.CowJp._NMEv_fivIF9znjtnUIAYUCA; path=/; expires=Fri, 24-Jan-25 22:09:08 GMT; domain=.www.prnewswire.com; HttpOnly; Secure; SameSite=None",
+        "set-cookie": "__cf_bm=7GRnqptyiN9YgzMnFYGbldrEftDcg9W0qJAiVEGp8.8-1737857974-1.0.1.1-zuS_ouq3lvV5vWyjUjkb26BYmhobWVHkUAoYCOdqBlD9VyA6XeHbxYyWsDfNT8oYT0oW1JzJY_92xwvKvJDoGQ; path=/; expires=Sun, 26-Jan-25 02:49:34 GMT; domain=.www.prnewswire.com; HttpOnly; Secure; SameSite=None",
         "vary": "Accept-Encoding",
         "server": "cloudflare",
-        "cf-ray": "90732ca8c87080cd-EWR",
+        "cf-ray": "907d04d3dc7c4369-EWR",
         "content-encoding": "gzip"
     },
     "updated": "Fri, 24 Jan 2025 10:57:06 GMT",
