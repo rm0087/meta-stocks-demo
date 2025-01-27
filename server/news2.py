@@ -1,7 +1,7 @@
 import feedparser as fp
 import json
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from app import app
 from models import db, Company, Article
 
@@ -27,8 +27,7 @@ while True:
             hour = entry.published_parsed[3]
             minute = entry.published_parsed[4]
             second = entry.published_parsed[5]
-            published = datetime(year, month, day, hour, minute, second)
-            str_time = f"({hour:02d}:{minute:02d}:{second:02d})"
+            published = datetime(year, month, day, hour, minute, second) - timedelta(hours=5)
             
             article = Article(
                         title = entry.title,
@@ -49,7 +48,7 @@ while True:
                         article_exists = True
                         break
                 if not article_exists:  # Only add if article doesn't exist
-                    print(str_time, article.companies, article.title)
+                    print(published, article.companies, article.title)
                     articles.append(article)
         
         if len(articles) > 0:
