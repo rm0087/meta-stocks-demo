@@ -1,12 +1,25 @@
 import feedparser as fp
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 from json import JSONDecodeError
 from app import app
 from models import db, Company, Article
 
 articles = []
+
+def get_time(time:list):
+    try:
+        year = time[0]
+        month = time[1]
+        day = time[2]
+        hour = time[3]
+        minute = time[4]
+        second = time[5]
+        return datetime(year, month, day, hour, minute, second) - timedelta(hours=5)
+    except IndexError:
+        print("Index out of range")
+        return datetime(0, 0, 0, 0, 0, 0)
 
 while True:
     start = time.time()
@@ -21,28 +34,19 @@ while True:
         # db.session.commit()
 
         for entry in feed.entries:
+            article = Article()
+            
             try:
-                year = entry.published_parsed[0]
-                month = entry.published_parsed[1]
-                day = entry.published_parsed[2]
-                hour = entry.published_parsed[3]
-                minute = entry.published_parsed[4]
-                second = entry.published_parsed[5]
-                published = datetime(year, month, day, hour, minute, second)
-                str_time = f"({hour:02d}:{minute:02d}:{second:02d})"
-            except IndexError:
-                published = datetime(0, 0, 0, 0, 0, 0)
-                str_time = "Time error"
-                print("Index out of range")
+                article.title = entry.title
+                article.source = entry.publisher
+                article.source_url = entry.id
+                article.companies = []
+                article.date_time = get_time(entry.published_parsed)
+                if entry.updated_parsed:
+                    article.update_time = get_time(entry.updated_parsed)
+            except AttributeError:
+                print("Attribute Error")
                 pass
-
-            article = Article(
-                        title = entry.title,
-                        source = entry.publisher,
-                        source_url = entry.id,
-                        companies = [],
-                        date_time = published
-                    )
             
             for tag in entry.tags:
                 if any(exchange.lower() in tag.term.lower() for exchange in ('Nasdaq', 'Nyse')):
@@ -58,7 +62,7 @@ while True:
                         article_exists = True
                         break
                 if not article_exists:  # Only add if article doesn't exist
-                    print("Published:", str_time, article.companies, article.title)
+                    print(article.date_time, article.companies, article.title)
                     articles.append(article)
         
         if len(articles) > 0:

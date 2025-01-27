@@ -198,6 +198,7 @@ class Article(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     date_time = db.Column(db.DateTime)
+    update_time = db.Column(db.DateTime)
     companies = db.Column(db.JSON)
     source = db.Column(db.String)
     source_url = db.Column(db.String)
