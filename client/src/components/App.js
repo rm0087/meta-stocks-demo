@@ -57,13 +57,13 @@ export default function App() {
         setSuggestions([])
     
         try {
-            const response = await fetch('/companies', {
-                method: 'POST',
+            const response = await fetch(`/companies/${companyTicker}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(companyTicker)
+                
             });
             
     
@@ -135,13 +135,12 @@ export default function App() {
         setSuggestions([])
     
         try {
-            const response = await fetch('/companies', {
-                method: 'POST',
+            const response = await fetch(`/companies/${e.target.value}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(query)
             });
             
             if (!response.ok) {
@@ -203,7 +202,7 @@ export default function App() {
                 {suggestions.length > 0 && (
                     <ul className="absolute bg-white border border-gray-300 rounded mt-1 z-10 inline-block shadow-lg max-h-100 overflow-y-auto">
                     {suggestions.map((company) => (
-                        <li key={company.id} className="p-1 hover:bg-gray-200 cursor-pointer whitespace-nowrap font-mono text-base" onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
+                        <li key={company.id} className="p-1 hover:bg-gray-200 cursor-pointer whitespace-nowrap font-mono text-base" value onClick={() => fetchCompanyDetails(company.ticker)}>{company.name} - ({company.ticker}) </li>
                     ))}
                     </ul>
                 )}
