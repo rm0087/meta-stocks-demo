@@ -1,5 +1,6 @@
 import feedparser as fp
 import json
+from datetime import datetime, timedelta
 import time
 from json import JSONDecodeError
 from app import app
@@ -7,24 +8,46 @@ from models import db, Company, Article
 
 articles = []
 
+def get_time(time:list):
+    try:
+        year = time[0]
+        month = time[1]
+        day = time[2]
+        hour = time[3]
+        minute = time[4]
+        second = time[5]
+        return datetime(year, month, day, hour, minute, second) - timedelta(hours=5)
+    except IndexError:
+        print("Index out of range")
+        return datetime(0, 0, 0, 0, 0, 0)
+
 while True:
     start = time.time()
-    print("Fetching...")
+    curr_time = time.strftime("%H:%M:%S", time.localtime())
+    print(f"({curr_time}) Fetching GlobeNewsWire...")
     url = "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies"
     feed = fp.parse(url)
     
     with app.app_context():
     
-    #     # db.session.query(Article).delete()
-    #     # db.session.commit()
+        # db.session.query(Article).delete()
+        # db.session.commit()
 
         for entry in feed.entries:
-            article = Article(
-                        title = entry.title,
-                        source = entry.publisher,
-                        source_url = entry.id,
-                        companies = []
-                    )
+            article = Article()
+            
+            try:
+                article.title = entry.title
+                article.source = entry.publisher
+                article.source_url = entry.id
+                article.companies = []
+                article.date_time = get_time(entry.published_parsed)
+                if entry.updated_parsed:
+                    article.update_time = get_time(entry.updated_parsed)
+            except AttributeError:
+                print("Attribute Error")
+                pass
+            
             for tag in entry.tags:
                 if any(exchange.lower() in tag.term.lower() for exchange in ('Nasdaq', 'Nyse')):
                     try:
@@ -39,7 +62,7 @@ while True:
                         article_exists = True
                         break
                 if not article_exists:  # Only add if article doesn't exist
-                    print(article.companies, article.title)
+                    print(article.date_time, article.companies, article.title)
                     articles.append(article)
         
         if len(articles) > 0:
@@ -49,8 +72,8 @@ while True:
                     
     end = time.time()
     # print (end - start)
-    # test_file = open("testfile.json", "w")
-    # dump = json.dump(feed, test_file, indent = 4)
+    test_file = open("testfile.json", "w")
+    dump = json.dump(feed, test_file, indent = 4)
     time.sleep(15)
 
 

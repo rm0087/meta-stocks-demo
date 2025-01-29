@@ -112,6 +112,21 @@ def get_quotes(ticker: str):
     if not r.ok:
         return "Quote could not be retrieved", r.status_code
     return jsonify(r.json()), r.status_code
+@app.route('/keywords', methods=['GET'])
+def get_all_keywords():
+    
+    
+    keywords = Keyword.query.all()
+    
+    if not keywords:
+        return jsonify({'error': 'keywords not found'}), 404
+    keyword_list = sorted([keyword.to_dict() for keyword in keywords], key=lambda x:x['word'].lower())
+    
+    return jsonify(keyword_list), 200
+
+
+
+
 
 
 app.route('/news', methods=['GET'])

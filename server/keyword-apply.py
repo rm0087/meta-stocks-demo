@@ -15,8 +15,8 @@ with app.app_context():
     kw_id = kw['id']
     k1 = Keyword.query.filter(Keyword.id == kw_id).first()
 
-    CoKeyAssoc.query.filter(CoKeyAssoc.keyword_id == kw_id).delete()
-    db.session.commit()
+    # CoKeyAssoc.query.filter(CoKeyAssoc.keyword_id == kw_id).delete()
+    # db.session.commit()
 
     batch = []
     exceptions = []
