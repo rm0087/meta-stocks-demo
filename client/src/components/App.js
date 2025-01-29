@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link, Outlet} from 'react-router-dom';
 import Routes from "./Routes";
+import CompanyInfo from "./CompanyInfo";
+import Financials from "./Financials";
+import Keywords from "./Keywords";
 
 export default function App() {
     const[company, setCompany] = useState('')
@@ -213,7 +216,9 @@ export default function App() {
             </form>
             
             <div id="wrapper" className="flex flex-col items-center w-full h-full bg-gray-800 pb-5">
-                <Routes company={company} shares={shares} price={price}/>
+                <CompanyInfo company={company}/> 
+                <Keywords company={company} />
+                <Financials company={company} shares={shares} price={price}/>
             </div>
         </>
   );

@@ -163,7 +163,7 @@ class Keyword(db.Model, SerializerMixin):
     
     company_associations = db.relationship("CoKeyAssoc", back_populates="keyword")
 
-    serialize_rules = ('-companies',)
+    serialize_rules = ('-company_associations.keyword', '-company_associations.company')
 
 
 class Note(db.Model, SerializerMixin):
