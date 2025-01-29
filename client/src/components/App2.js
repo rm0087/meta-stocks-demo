@@ -8,6 +8,7 @@ export default function App(){
     const [newDesc, setNewDesc] = useState('')
     const [dbKeywords, setDbKeywords] = useState([])
     const [selectedKeyword, setSelectedKeyword] = useState('') //uses keyword id
+    const [context, setContext] = useState('')
 
     const handleTicker = (e) => {
         const input = e.target.value
@@ -24,9 +25,17 @@ export default function App(){
         setNewDesc(input)
     }
 
+    const handleContext = (e) => {
+        const input = e.target.value;
+        setContext(input)
+    }
+
     
-    const fetchTicker = async (e) => {
-        e.preventDefault();
+    const fetchTicker = async (e, ticker) => {
+        if (e){
+            e.preventDefault();
+        }
+        
         try {
             const res = await fetch(`/companies/${ticker.toUpperCase()}`, {
                 method:'GET',
@@ -46,9 +55,11 @@ export default function App(){
         } catch (error) {
             console.error('Error searching companies:', error);
         }
+        setTicker("")
     }
 
-    const fetchKeywordsDb = async () => {
+    const fetchKeywordsDb = async (e) => {
+        
         try {
             const res = await fetch(`/keywords`, {
                 method:'GET',
@@ -69,6 +80,31 @@ export default function App(){
         }
     }
 
+    const setAssoc = async (e) => {
+        e.preventDefault()
+        const payload = [co.id, selectedKeyword, context]
+        try {
+            const res = await fetch(`/association`, {
+                method:'POST',
+                headers: {
+                    'Content-Type':'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                throw new Error('Failed to fetch keywords');
+            }
+            const data = await res.json()
+            console.log(data)
+            setContext("")
+            fetchTicker(null, co.ticker)
+        } catch (error) {
+            console.error('Error searching keywords:', error);
+        }
+    }
+
     useEffect(()=>{
         fetchKeywordsDb()
     },[])
@@ -76,13 +112,17 @@ export default function App(){
 
     
     const keywordsMap = co && coKeywords.length > 0 ? coKeywords.map((assoc, index) => (
-                <span key={index} className="m-1 col-span-1">
+                <span 
+                    key={index} 
+                    className="m-1 col-span-1"
+                >
                     <h2 className="font-bold ">
                         {assoc.keyword.word}
                     </h2>
 
                     {assoc.context.map((con,index)=> (
-                        <li key={index}
+                        <li 
+                            key={index}
                             className="text-sm list-disc list-inside"
                         >
                             {con}
@@ -96,19 +136,31 @@ export default function App(){
     )) : null
         
     return(
-        <>  
-            <div className="mb-10">
+        <div className="p-5">  
+            <div className="mb-10 w-full flex flex-row justify-end">
                 <form className="">
-                    <input type="text" placeholder="new keyword" value={newKeyword} onChange={handleNewKeyword}/>
-                    <input type="text" placeholder="description" value={newDesc} onChange={handleNewDesc}/>
+                    <input 
+                        type="text" 
+                        placeholder="enter new keyword" 
+                        value={newKeyword} 
+                        onChange={handleNewKeyword}
+                        className="border m-1"
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="keyword description" 
+                        value={newDesc} 
+                        onChange={handleNewDesc}
+                        className="w-96 border m-1"
+                    />
                 </form>
             </div>
 
-            <div className="flex flex-row w-full ">
-                <form className="" onSubmit={fetchTicker}>
-                    <input type="text" placeholder="ticker" value={ticker} onChange={handleTicker}/>
+            <div className="flex flex-col w-full">
+                <form className="" onSubmit={(e)=>fetchTicker(e, ticker)}>
+                    <input type="text" placeholder="enter ticker" value={ticker} onChange={handleTicker}/>
                 </form>
-                <h1>{co.name} ({co.ticker}) - {co.id} / {co.cik_10}</h1>
+                <h1 className="font-bold">{co.name} ({co.ticker}) - {co.id} / {co.cik_10}</h1>
             </div>
 
             <div className="flex flex-row w-full">
@@ -122,19 +174,22 @@ export default function App(){
                 <p>keyword id: {selectedKeyword}</p>
             </div>
                 
-            <form className="w-16">
+            <form className="w-16" onSubmit={(e)=>setAssoc(e)}>
                 <textarea type="text" 
                     placeholder="context" 
-                    value={newDesc} 
-                    onChange={handleNewDesc}
+                    value={context} 
+                    onChange={handleContext}
                     className="h-48 w-96 resize-none border border-black"
                     
                 />
+                <button type="submit">
+                    Submit
+                </button>
             </form>
 
             <div className="grid grid-cols-6 gap-4">
                 {keywordsMap}
             </div>
-        </>
+        </div>
     )
 }

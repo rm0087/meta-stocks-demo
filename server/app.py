@@ -6,7 +6,7 @@
 # from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
-from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, IncomeStatement, CashFlowsStatement, CommonShares
+from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, IncomeStatement, CashFlowsStatement, CommonShares, CoKeyAssoc
 from sqlalchemy import not_, or_
 import json
 import os
@@ -19,29 +19,32 @@ from config import app, db, api
 
 load_dotenv()
 
-@app.post('/companies')
-def get_all_companies():
-    data = request.json
-    try:
-        company = Company.query.filter(Company.ticker == data.upper()).first()
-        return jsonify(company.to_dict()), 200
-    except Exception as e:
-        return{'error': str(e)}, 404
-    
-@app.get('/companies/<string:ticker>')
+# @app.route('/companies', methods=['POST'])
+# def get_company2():
+#     data = request.json
+#     try:
+#         company = Company.query.filter(Company.ticker == data.upper()).first()
+#         return jsonify(company.to_dict()), 200
+#     except Exception as e:
+#         return{'error': str(e)}, 404
+
+@app.route('/companies/<string:ticker>', methods=['GET'])
 def get_company(ticker):
+    print(ticker)
     try:
         company = Company.query.filter(Company.ticker == ticker.upper()).first()
         return jsonify(company.to_dict()), 200
     except Exception as e:
         return{'error': str(e)}, 404
-    
+
+
 @app.route('/shares/<int:id>', methods=['GET'])
 def get_shares(id):
     shares = CommonShares.query.filter(CommonShares.company_id == id).all()
     if not shares:
         return jsonify({"error": "Shares not found"}), 404
     return jsonify([sh.to_dict() for sh in shares]), 200
+
 
 @app.route('/balance_sheets/<int:cik>', methods=['GET'])
 def get_balancesheets(cik):
@@ -50,6 +53,7 @@ def get_balancesheets(cik):
     if not balance_sheets:
         return jsonify({"error": "Balance sheets not found"}), 404
     return jsonify([bs.to_dict() for bs in balance_sheets]), 200
+
 
 @app.route('/income_statements/<int:cik>', methods=['GET'])
 def get_income_statements(cik):
@@ -60,6 +64,7 @@ def get_income_statements(cik):
         return jsonify({"error": "Balance sheets not found"}), 404
     return jsonify([income_statement.to_dict() for income_statement in income_statements]), 200
 
+
 @app.route('/cf_statements/<int:cik>', methods=['GET'])
 def get_cf_statements(cik):
     cf_statements = CashFlowsStatement.query.filter(CashFlowsStatement.company_cik == cik, 
@@ -69,6 +74,7 @@ def get_cf_statements(cik):
         return jsonify({"error": "Balance sheets not found"}), 404
     return jsonify([cf_statement.to_dict() for cf_statement in cf_statements]), 200
 
+
 @app.get('/companyfacts2/<string:ticker>')
 def get_companyfacts_ticker(ticker):
     company = Company.query.filter(Company.ticker == ticker.upper()).first()
@@ -77,23 +83,9 @@ def get_companyfacts_ticker(ticker):
         data = file.read()
     return data, 200, {'Content-Type': 'application/json'}
 
-@app.route('/api/companies/search', methods=['GET'])
-def search_companies():
-    query = request.args.get('query', '')
-    if query:
-        companies = Company.query.filter(
-            or_(
-                Company.ticker.ilike(f'%{query}%'),
-                Company.name.ilike(f'%{query}%')
-            )
-        ).limit(10).all()
-        return jsonify([company.to_dict() for company in companies]), 200 
-    return jsonify([]), 400
 
 @app.route('/quotes/<string:ticker>', methods=['GET'])
 def get_quotes(ticker: str):
-    
-    
     f_ticker = ticker.replace("-", ".")
     print(f_ticker)
     
@@ -112,62 +104,72 @@ def get_quotes(ticker: str):
     if not r.ok:
         return "Quote could not be retrieved", r.status_code
     return jsonify(r.json()), r.status_code
+
+
 @app.route('/keywords', methods=['GET'])
 def get_all_keywords():
-    
-    
     keywords = Keyword.query.all()
-    
     if not keywords:
         return jsonify({'error': 'keywords not found'}), 404
     keyword_list = sorted([keyword.to_dict() for keyword in keywords], key=lambda x:x['word'].lower())
-    
     return jsonify(keyword_list), 200
 
 
-
-
-
-
-app.route('/news', methods=['GET'])
-def get_news():
-    news_key = os.getenv('NEWS_API')
+@app.route('/association', methods=['POST'])
+def set_association():
+    data = request.json
+    c_id = int(data[0])
+    k_id = int(data[1])
+    con = data[2]
+    company = db.session.get(Company, c_id)
+    keyword = db.session.get(Keyword, k_id)
     
-    proxies = {
-        'http':os.getenv('PROXY_2')
-    }
+    assoc = CoKeyAssoc.query.filter(CoKeyAssoc.company_id==c_id, CoKeyAssoc.keyword_id==k_id).first()
+    
+    if assoc and len(assoc.context) > 0:
+        print(assoc)
+        assoc.context = assoc.context + [con]
+    else:
+        assoc = CoKeyAssoc(company_id=c_id, keyword_id=k_id, context=[con])
 
-    headers = {
-        'Accept': 'content/json',
-        'Content-Type': 'content/json',
-        'x-api-key':news_key
-    }
+    db.session.add(assoc)
+    db.session.commit()
+    return jsonify(f'Successfully added {keyword.word} to {company.name}'), 200
 
-    try:
-        r = requests.get(f'https://newsapi.org/v2/top-headalines?country=us&pageSize=100', proxies=proxies, headers=headers)
-        
-        if not r.ok:
-            return jsonify({
-                'statusCode': r.status_code,
-                'message': r.json()
-            })
-    except Exception as e:
-        print(str(e))
-
-
-
-
-
-
+@app.route('/api/companies/search', methods=['GET'])
+def search_companies():
+    query = request.args.get('query', '')
+    if query:
+        companies = Company.query.filter(
+            or_(
+                Company.ticker.ilike(f'%{query}%'),
+                Company.name.ilike(f'%{query}%')
+            )
+        ).limit(10).all()
+        return jsonify([company.to_dict() for company in companies]), 200 
+    return jsonify([]), 400
 
 
-
-
-
-
-
-
-
+# app.route('/news', methods=['GET'])
+# def get_news():
+#     news_key = os.getenv('NEWS_API')
+#     proxies = {
+#         'http':os.getenv('PROXY_2')
+#     }
+#     headers = {
+#         'Accept': 'content/json',
+#         'Content-Type': 'content/json',
+#         'x-api-key':news_key
+#     }
+#     try:
+#         r = requests.get(f'https://newsapi.org/v2/top-headalines?country=us&pageSize=100', proxies=proxies, headers=headers)
+#         if not r.ok:
+#             return jsonify({
+#                 'statusCode': r.status_code,
+#                 'message': r.json()
+#             })
+#     except Exception as e:
+#         print(str(e))
 
 
 # @app.post('/companies')
@@ -180,6 +182,7 @@ def get_news():
 #         return {'success': 'companies posted'},200
 #     except Exception as e:
 #         return {'error': str(e)}, 400
+
     
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

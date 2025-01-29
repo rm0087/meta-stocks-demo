@@ -16,8 +16,10 @@ company_keyword_assoc = db.Table(
 
 class CoKeyAssoc(db.Model, SerializerMixin):
     __tablename__ = 'co_keyword_table'
-    company_id = db.Column(db.Integer, db.ForeignKey('companies_table.id'), primary_key=True)
-    keyword_id = db.Column(db.Integer, db.ForeignKey('keywords_table.id'), primary_key=True)
+
+    id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('companies_table.id'))
+    keyword_id = db.Column(db.Integer, db.ForeignKey('keywords_table.id'))
     context = db.Column(db.JSON)
     
     company = db.relationship("Company", back_populates="keyword_associations")
