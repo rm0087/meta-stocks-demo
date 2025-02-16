@@ -24,7 +24,7 @@ export default function Financials({company, shares, price}){
         if (company) {
             const fetchStatements = async () => {
                 try {
-                    const response = await fetch(`/balance_sheets/${company.cik}`);
+                    const response = await fetch(`${serverUrl}/balance_sheets/${company.cik}`);
                     // const response2 = await fetch(`/income_statements/${company.cik}`);
                     // const response3 = await fetch(`/cf_statements/${company.cik}`);
                     
