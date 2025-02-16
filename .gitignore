@@ -59,11 +59,8 @@ jspm_packages
 .pytest_cache
 __pycache__
 
-# database
-# *.db
-# instance
+
 .vscode
-package-lock.json
 
 server/migrations
 server/json
@@ -71,6 +68,4 @@ server/backup
 server/z-*.*
 server/.env
 client/src/.env
-server/instance
 server/submissions
-
