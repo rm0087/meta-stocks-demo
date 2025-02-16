@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-
-# Standard library imports
-
-# Remote library imports
 # from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
@@ -14,23 +10,13 @@ from datetime import datetime, timedelta
 import requests
 from dotenv import load_dotenv
 from flask_cors import CORS
-# Local imports
 from config import app, db, api
 
 load_dotenv()
 CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type"]}})
-
-# @app.route('/companies', methods=['POST'])
-# def get_company2():
-#     data = request.json
-#     try:
-#         company = Company.query.filter(Company.ticker == data.upper()).first()
-#         return jsonify(company.to_dict()), 200
-#     except Exception as e:
-#         return{'error': str(e)}, 404
-
 port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
 app.run(host="0.0.0.0", port=port)
+
 
 @app.route('/companies/<string:ticker>', methods=['GET'])
 def get_company(ticker):
@@ -140,7 +126,7 @@ def set_association():
     db.session.commit()
     return jsonify(f'Successfully added {keyword.word} to {company.name}'), 200
 
-@app.route('/api/companies/search', methods=['GET'])
+@app.route('/api/companies/search', methods=['GET', 'OPTIONS'])
 def search_companies():
     query = request.args.get('query', '')
     if query:
@@ -186,6 +172,15 @@ def search_companies():
 #         return {'success': 'companies posted'},200
 #     except Exception as e:
 #         return {'error': str(e)}, 400
+
+# @app.route('/companies', methods=['POST'])
+# def get_company2():
+#     data = request.json
+#     try:
+#         company = Company.query.filter(Company.ticker == data.upper()).first()
+#         return jsonify(company.to_dict()), 200
+#     except Exception as e:
+#         return{'error': str(e)}, 404
 
     
 if __name__ == '__main__':
