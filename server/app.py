@@ -126,7 +126,7 @@ def set_association():
     db.session.commit()
     return jsonify(f'Successfully added {keyword.word} to {company.name}'), 200
 
-@app.route('/api/companies/search', methods=['GET', 'OPTIONS'])
+@app.route('/api/companies/search', methods=['GET'])
 def search_companies():
     query = request.args.get('query', '')
     if query:
