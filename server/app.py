@@ -12,11 +12,6 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from config import app, db, api
 
-load_dotenv()
-CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type"]}})
-port = int(os.environ.get("PORT", 10000))  # Default to 5000 if PORT is not set
-app.run(host="0.0.0.0", port=port)
-
 
 @app.route('/companies/<string:ticker>', methods=['GET'])
 def get_company(ticker):
@@ -184,5 +179,8 @@ def search_companies():
 
     
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
-
+    load_dotenv()
+    port = int(os.environ.get("PORT", 10000))  # Default to 5000 if PORT is not set
+    app.run(host="0.0.0.0", port=port)
+    CORS(app)
+    
