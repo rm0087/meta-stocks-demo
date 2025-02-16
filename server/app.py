@@ -14,7 +14,7 @@ from config import app, db, api
 
 load_dotenv()
 CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type"]}})
-port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+port = int(os.environ.get("PORT", 10000))  # Default to 5000 if PORT is not set
 app.run(host="0.0.0.0", port=port)
 
 
