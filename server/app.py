@@ -18,7 +18,7 @@ from flask_cors import CORS
 from config import app, db, api
 
 load_dotenv()
-CORS(app, origins=["https://meta-stocks-demo-1.onrender.com"])
+CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type"]}})
 
 # @app.route('/companies', methods=['POST'])
 # def get_company2():
