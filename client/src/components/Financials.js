@@ -14,6 +14,7 @@ export default function Financials({company, shares, price}){
     const[incApi, setIncApi] = useState([]);
     const[cfApi, setCfApi] = useState([]);
     // const[prefDivs, setPrefDvis] = useState(0)
+    const serverUrl = "https://meta-stocks-demo.onrender.com"
     
     
     function setMarketCap(shares, price) {
@@ -24,7 +25,7 @@ export default function Financials({company, shares, price}){
         if (company) {
             const fetchStatements = async () => {
                 try {
-                    const response = await fetch(`/balance_sheets/${company.cik}`);
+                    const response = await fetch(`${serverUrl}/balance_sheets/${company.cik}`);
                     // const response2 = await fetch(`/income_statements/${company.cik}`);
                     // const response3 = await fetch(`/cf_statements/${company.cik}`);
                     
