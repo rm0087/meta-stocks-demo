@@ -14,6 +14,10 @@ flask-restful = "*"
 flask-cors = "*"
 faker = "*"
 requests = "*"
+python-dotenv = "*"
+feedparser = "*"
 
 [requires]
 python_full_version = "3.8.13"
+
+[dev-packages]

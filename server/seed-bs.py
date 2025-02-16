@@ -21,8 +21,8 @@ with app.app_context():
    ##########################################################################
    
    r = randint(1,10165)
-   companies = Company.query.filter(Company.id <= 10165)
-   
+   # companies = Company.query.filter(Company.id == 27)
+   companies = Company.query.all()
    all_bs = []
    bs_count = 0
    
@@ -50,76 +50,86 @@ with app.app_context():
                'CurrentAssets',
                'CurrentLiabilities',
                'NoncurrentAssets',
-               'NoncurrentLiabilities'
+               'NoncurrentLiabilities',
+               'BalancesWithBanks',
+               'CashAndBankBalancesAtCentralBanks',
+               'CashAndCashEquivalents'
                ]
    
-   def make_bs(key:str, x):
+   def make_bs(key:str, entry, currency):
       global end_count, bs_count
-      if x.get('frame') and x.get('end') not in end_dates.values():
+      if entry.get('frame') and entry.get('end') not in end_dates.values():
          new_bs=BalanceSheet(
             company_cik = company.cik,
-            start = x.get('start'),
-            end =  x.get('end'),
-            total_assets = x.get('val'),
-            form = x.get('form'),
-            filed = x.get('filed'),
-            accn = x.get('accn'),
-            fp = x.get('fp'),
-            fy = x.get('fy'),
-            frame = x.get('frame'),
+            start = entry.get('start'),
+            end =  entry.get('end'),
+            total_assets = entry.get('val'),
+            form = entry.get('form'),
+            filed = entry.get('filed'),
+            accn = entry.get('accn'),
+            fp = entry.get('fp'),
+            fy = entry.get('fy'),
+            frame = entry.get('frame'),
+            currency = currency
          )
          all_bs.append(new_bs)
          bs_count += 1
          print(bs_count, key)
 
          end_count += 1
-         end_dates[end_count] = x.get('end')
+         end_dates[end_count] = entry.get('end')
       else:
          pass
 
    def amend_bs(key:str, bs):
       #GAAP
       if key == 'AssetsCurrent':
-         bs.assets_current = x.get('val')
+         bs.assets_current = entry.get('val')
       if key == 'AssetsNoncurrent':
-         bs.assets_noncurrent = x.get('val')
+         bs.assets_noncurrent = entry.get('val')
       if key == 'Liabilities':
-         bs.total_liabilities = x.get('val')
+         bs.total_liabilities = entry.get('val')
       if key == 'LiabilitiesCurrent':
-         bs.liabilities_current = x.get('val')
+         bs.liabilities_current = entry.get('val')
       if key == 'LiabilitiesNoncurrent':
-         bs.liabilities_noncurrent = x.get('val')
+         bs.liabilities_noncurrent = entry.get('val')
       if key == 'StockholdersEquity':
-         bs.total_stockholders_equity = x.get('val')
+         bs.total_stockholders_equity = entry.get('val')
       if key == 'LiabilitiesAndStockholdersEquity':
-         bs.total_liabilities_and_stockholders_equity = x.get('val')
+         bs.total_liabilities_and_stockholders_equity = entry.get('val')
       if key == 'StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest':
-         bs.total_stockholders_equity_nci = x.get('val')
+         bs.total_stockholders_equity_nci = entry.get('val')
       if key == 'Goodwill':
-         bs.goodwill = x.get('val')
+         bs.goodwill = entry.get('val')
       if key == 'Cash':
-         bs.cash = x.get('val')
+         bs.cash = entry.get('val')
       if key == 'CashAndCashEquivalentsAtCarryingValue':
-         bs.cash_and_equiv = x.get('val')
+         bs.cash_and_equiv = entry.get('val')
       if key == 'CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents':
-         bs.cash_all = x.get('val')
+         bs.cash_all = entry.get('val')
       if key == 'IntangibleAssetsNetExcludingGoodwill':
-         bs.intangible_assets = x.get('val')
+         bs.intangible_assets = entry.get('val')
       #IFRS
       if key == 'Assets': 
-         bs.total_assets = x.get('val')
+         bs.total_assets = entry.get('val')
       if key == 'Liabilities':
-         bs.total_liabilities = x.get('val')
+         bs.total_liabilities = entry.get('val')
       if key == 'Equity':
-         bs.total_stockholders_equity = x.get('val')
+         bs.total_stockholders_equity = entry.get('val')
       if key == 'CurrentAssets':
-         bs.assets_current = x.get('val')
+         bs.assets_current = entry.get('val')
       if key == 'CurrentLiabilities':
-         bs.liabilities_current = x.get('val')
+         bs.liabilities_current = entry.get('val')
       if key == 'NoncurrentAssets':
-         bs.assets_noncurrent = x.get('val')
+         bs.assets_noncurrent = entry.get('val')
       if key == 'NoncurrentLiabilities':
-         bs.liabilities_noncurrent = x.get('val')
+         bs.liabilities_noncurrent = entry.get('val')
+      if key == 'BalancesWithBanks':
+         bs.cash = entry.get('val')
+      if key == 'CashAndBankBalancesAtCentralBanks':
+         bs.cash = entry.get('val')
+      if key == 'CashAndCashEquivalents':
+         bs.cash = entry.get('val')
       print(bs, key)
 
    for company in companies:
@@ -135,26 +145,35 @@ with app.app_context():
          try:
             data = json.load(json_file)
             gaap = data.get('facts', {}).get('us-gaap')
+            ifrs = data.get('facts', {}).get('ifrs-full')
+            units = ""
             end_dates = {}
             end_count = 0
             
+            if gaap:
+               units = gaap
+            if ifrs:
+               units = ifrs
+            
             for key in main_keys:
-               if gaap.get(key):
-                  for x in gaap.get(key, {}).get('units', {}).get('USD', None):
-                     make_bs(key, x)
+               if units.get(key):
+                  for currency, values in units.get(key, {}).get('units', {}).items():
+                     for entry in values:
+                        make_bs(key, entry, currency)
                else:
                   pass
 
             co_bs_dict = {bs.frame: bs for bs in all_bs if bs.company_cik == company.cik}
                
             for key in all_keys:
-               if gaap.get(key):
-                  for x in gaap.get(key, {}).get('units', {}).get('USD', None):
-                     bs = co_bs_dict.get(x.get('frame'))
-                     if bs:
-                        amend_bs(key, bs)
-                     else:
-                        pass
+               if units.get(key):
+                  for currency, values in units.get(key, {}).get('units', {}).items():
+                     for entry in values:
+                        bs = co_bs_dict.get(entry.get('frame'))
+                        if bs:
+                           amend_bs(key, bs)
+                        else:
+                           pass
             
             no_l = [bs for bs in co_bs_dict.values() if bs.total_liabilities == None]
             no_tse = [bs for bs in co_bs_dict.values() if bs.total_stockholders_equity == None]

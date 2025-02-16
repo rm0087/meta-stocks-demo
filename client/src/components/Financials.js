@@ -25,25 +25,21 @@ export default function Financials({company, shares, price}){
             const fetchStatements = async () => {
                 try {
                     const response = await fetch(`/balance_sheets/${company.cik}`);
-                    const response2 = await fetch(`/income_statements/${company.cik}`);
-                    const response3 = await fetch(`/cf_statements/${company.cik}`);
+                    // const response2 = await fetch(`/income_statements/${company.cik}`);
+                    // const response3 = await fetch(`/cf_statements/${company.cik}`);
                     
-                    if (response.ok && response2.ok && response3.ok) {
+                    if (response.ok) {
                         const data = await response.json();
-                        const data2 = await response2.json();
-                        const data3 = await response3.json();
+                        // const data2 = await response2.json();
+                        // const data3 = await response3.json();
                         setApi(data);
-                        setIncApi(data2);
-                        setCfApi(data3);
-                 
-                        
                     } else {
                         setApi([])
                         setIncApi([])
                         setCfApi([])
                        
                         
-                        console.error('Failed to fetch financial statements:', response.status, response2.status, response3.status);
+                        console.error('Failed to fetch financial statements:', response.status);
                     }
                 } catch (error) {
                     console.error('Error fetching financial statements:', error);
@@ -264,7 +260,7 @@ export default function Financials({company, shares, price}){
             tooltip: {
                 callbacks: {
                     label: function(context) {
-                        const label1 = context.dataset.label + ': ' + incApi[0].currency + ' ' + formatNumber(context.parsed.y, 3);
+                        const label1 = context.dataset.label + ': ' + api[0].currency + ' ' + formatNumber(context.parsed.y, 3);
                        
                         return label1;
               }
@@ -342,10 +338,10 @@ export default function Financials({company, shares, price}){
                         <div className="flex flex-row justify-left">
                             <table>
                                 <tbody>
-                                <tr className=""><th className='font-bold text-left'>Assets:&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-left'>Liabilities:&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-left'>Stockholders Equity:&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-left'>Cash:&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='font-bold text-left'>Assets:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='font-bold text-left'>Liabilities:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='font-bold text-left'>Stockholders Equity:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
+                                <tr className=""><th className='font-bold text-left'>Cash:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1], 3) : ''}</th></tr>
                                 </tbody>
                             </table>
                             <table className="ml-5">
