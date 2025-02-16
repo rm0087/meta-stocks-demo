@@ -32,9 +32,9 @@ class Company(db.Model, SerializerMixin):
     __tablename__ = "companies_table"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    ticker = db.Column(db.String, nullable=False)
-    cik = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String)
+    ticker = db.Column(db.String)
+    cik = db.Column(db.Integer)
     exchange = db.Column(db.String)
     cik_10 = db.Column(db.String)
     sic = db.Column(db.Integer)
@@ -85,6 +85,7 @@ class BalanceSheet(db.Model, SerializerMixin):
     fp = db.Column(db.String)
     frame = db.Column(db.String)
     fy = db.Column(db.Integer)
+    currency = db.Column(db.String)
 
     # company = db.relationship('Company', back_populates='balance_sheets')
 
