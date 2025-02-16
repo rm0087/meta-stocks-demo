@@ -13,7 +13,7 @@ export default function App() {
     const [loading, setLoading] = useState(false);  // Loading state for making requests
     const [price, setPrice] = useState(0);
     const [shares, setShares] = useState(0);
-    const serverUrl = "https://meta-stocks-demo.onrender.com/"
+    const serverUrl = "https://meta-stocks-demo.onrender.com"
    
     // Function to handle input changes
     const handleInputChange = (event) => {
