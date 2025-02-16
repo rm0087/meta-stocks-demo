@@ -13,11 +13,12 @@ import os
 from datetime import datetime, timedelta
 import requests
 from dotenv import load_dotenv
-
+from flask_cors import CORS
 # Local imports
 from config import app, db, api
 
 load_dotenv()
+CORS(app, origins=["https://meta-stocks-demo-1.onrender.com"])
 
 # @app.route('/companies', methods=['POST'])
 # def get_company2():
