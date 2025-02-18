@@ -33,10 +33,11 @@ export default function Financials({company, shares, price}){
                         // const data2 = await response2.json();
                         // const data3 = await response3.json();
                         setApi(data);
+                        // setIncApi(data2);
                     } else {
-                        setApi([])
-                        setIncApi([])
-                        setCfApi([])
+                        setApi([]);
+                        // setIncApi([]);
+                        // setCfApi([]);
                        
                         
                         console.error('Failed to fetch financial statements:', response.status);
@@ -46,11 +47,8 @@ export default function Financials({company, shares, price}){
                 }
             };
             fetchStatements()
-
-            
-
         }
-
+    
       
     },[company])
 

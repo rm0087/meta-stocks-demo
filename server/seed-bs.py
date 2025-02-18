@@ -53,7 +53,8 @@ with app.app_context():
                'NoncurrentLiabilities',
                'BalancesWithBanks',
                'CashAndBankBalancesAtCentralBanks',
-               'CashAndCashEquivalents'
+               'CashAndCashEquivalents',
+               'CashAndEquivalentsExcludingAssetsHeldForSale'
                ]
    
    def make_bs(key:str, entry, currency):
@@ -130,6 +131,8 @@ with app.app_context():
          bs.cash = entry.get('val')
       if key == 'CashAndCashEquivalents':
          bs.cash = entry.get('val')
+      if key == 'CashAndEquivalentsExcludingAssetsHeldForSale':
+         bs.cash = entry.get('val')
       print(bs, key)
 
    for company in companies:
@@ -175,10 +178,12 @@ with app.app_context():
                         else:
                            pass
             
-            no_l = [bs for bs in co_bs_dict.values() if bs.total_liabilities == None]
-            no_tse = [bs for bs in co_bs_dict.values() if bs.total_stockholders_equity == None]
-            no_ce = [bs for bs in co_bs_dict.values() if bs.cash_and_equiv == None]
+            ## BEGIN HANDLING OF BALANCE SHEETS WITH MISSING VALUES #####################################################################
+            no_l = [bs for bs in co_bs_dict.values() if bs.total_liabilities == None] ## balance sheets with no liabilities
+            no_tse = [bs for bs in co_bs_dict.values() if bs.total_stockholders_equity == None] ## balance sheets with no stockholders equity
+            no_ce = [bs for bs in co_bs_dict.values() if bs.cash_and_equiv == None] ## balance sheets with no cash
             
+            ## balance sheets without total liabilities
             for bs in no_l:
                lc = bs.liabilities_current
                lnc = bs.liabilities_noncurrent
@@ -199,6 +204,7 @@ with app.app_context():
                else:
                   pass
             
+            ## balance sheets with no stockhoders equity
             for bs in no_tse:
                tlse = bs.total_liabilities_and_stockholders_equity
                l = bs.total_liabilities
@@ -212,7 +218,8 @@ with app.app_context():
                   print(f'{bs} added total_stockholders_equity')
                else:
                   pass
-
+            
+            ## balance sheets with no cash
             for bs in no_ce:
                c = bs.cash
                ca = bs.cash_all
@@ -225,7 +232,8 @@ with app.app_context():
                   print(f'{bs} added cash_and_equiv')
                else:
                   pass       
-            
+            ## END HANDLING OF BALANCE SHEETS WITH MISSING VALUES #####################################################################
+         
          except json.JSONDecodeError:
             pass
          except IntegrityError:
