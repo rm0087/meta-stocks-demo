@@ -17,19 +17,6 @@ from dotenv import load_dotenv
 # Local imports
 from config import app, db, api
 
-load_dotenv()
-
-# @app.route('/companies', methods=['POST'])
-# def get_company2():
-#     data = request.json
-#     try:
-#         company = Company.query.filter(Company.ticker == data.upper()).first()
-#         return jsonify(company.to_dict()), 200
-#     except Exception as e:
-#         return{'error': str(e)}, 404
-
-port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
-app.run(host="0.0.0.0", port=port)
 
 @app.route('/companies/<string:ticker>', methods=['GET'])
 def get_company(ticker):
@@ -186,7 +173,17 @@ def search_companies():
 #     except Exception as e:
 #         return {'error': str(e)}, 400
 
+
+# @app.route('/companies', methods=['POST'])
+# def get_company2():
+#     data = request.json
+#     try:
+#         company = Company.query.filter(Company.ticker == data.upper()).first()
+#         return jsonify(company.to_dict()), 200
+#     except Exception as e:
+#         return{'error': str(e)}, 404
+
     
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-
+    load_dotenv()
