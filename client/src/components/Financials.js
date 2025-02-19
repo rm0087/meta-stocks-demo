@@ -25,19 +25,19 @@ export default function Financials({company, shares, price}){
         if (company) {
             const fetchStatements = async () => {
                 try {
-                    const response = await fetch(`${serverUrl}/balance_sheets/${company.cik}`);
-                    // const response2 = await fetch(`/income_statements/${company.cik}`);
+                    const response = await fetch(`/balance_sheets/${company.cik}`);
+                    const response2 = await fetch(`/income_statements/${company.cik}`);
                     // const response3 = await fetch(`/cf_statements/${company.cik}`);
                     
                     if (response.ok) {
                         const data = await response.json();
-                        // const data2 = await response2.json();
+                        const data2 = await response2.json();
                         // const data3 = await response3.json();
                         setApi(data);
-                        // setIncApi(data2);
+                        setIncApi(data2);
                     } else {
                         setApi([]);
-                        // setIncApi([]);
+                        setIncApi([]);
                         // setCfApi([]);
                        
                         
