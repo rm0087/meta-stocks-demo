@@ -65,7 +65,7 @@ def get_balancesheets(cik):
 @app.route('/income_statements/<int:cik>', methods=['GET'])
 def get_income_statements(cik):
     income_statements = IncomeStatement.query.filter(IncomeStatement.company_cik == cik, 
-                                                     IncomeStatement.frame.like('%Q%')
+                                                     (IncomeStatement.period_days < 120) | (IncomeStatement.period_days == None)
                                                      ).order_by(IncomeStatement.end).all()
     if not income_statements:
         return jsonify({"error": "Balance sheets not found"}), 404
