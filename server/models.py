@@ -125,9 +125,11 @@ class IncomeStatement(db.Model, SerializerMixin):
     rev_key = db.Column(db.String)
     preferred_dividends = db.Column(db.Integer)
     eps = db.Column(db.Integer)
+    period_days = db.Column(db.Integer)
 
     # company = db.relationship('Company', back_populates='income_statements')
     # serialize_rules = ('-company.income_statements',)
+
 
 
 class CashFlowsStatement(db.Model, SerializerMixin):

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import time
+from datetime import datetime
 start_time = time.time()
 from random import randint
 import os
@@ -12,8 +13,15 @@ from sqlalchemy.exc import IntegrityError
 
 ## FUNCTIONS BEGIN #####################################################################################################
 
+def calculate_period_days(start_date:str, end_date:str)-> int:
+   start = datetime.strptime(start_date, '%Y-%m-%d')
+   end = datetime.strptime(end_date, '%Y-%m-%d')
+   difference = end - start
+   return difference.days
+   
+   
 def make_inc(key:str, json_entry:dict, currency:str):
-   global end_count, inc_count
+   
    new_inc_statement=IncomeStatement(
       company_cik = company.cik,
       start = json_entry.get('start'),
@@ -26,15 +34,18 @@ def make_inc(key:str, json_entry:dict, currency:str):
       fy = json_entry.get('fy'),
       frame = json_entry.get('frame'),
       key = key,
-      currency = currency
+      currency = currency,
+      # period_days = calculate_period_days(json_entry.get('start'), json_entry.get('end'))
    )
+  
+   new_inc_statement.period_days = calculate_period_days(new_inc_statement.start, new_inc_statement.end)
    income_statements.append(new_inc_statement)
-   inc_count += 1
-   print(inc_count, key, currency)
+   # print(key)
 
-   end_count += 1
-   end_dates[end_count] = json_entry.get('end')
-         
+   
+   end_dates.add(json_entry.get('end'))
+
+
 def amend_inc(key:str, inc, json_entry):
    if key == 'Revenues':
       inc.total_revenue = json_entry.get('val')
@@ -65,7 +76,7 @@ def amend_inc(key:str, inc, json_entry):
    if key =='EarningsPerShareBasic':
       inc.eps = json_entry.get('val')
    inc.rev_key = key
-   print(inc, key, inc.currency)
+   # print(key)
    
 def set_json_paths_for_inc_creation(path):
    for key in main_keys:
@@ -75,21 +86,20 @@ def set_json_paths_for_inc_creation(path):
 
          if path_units and path_units.get('USD', []):
             for json_entry in path_units.get('USD', []):
-               if json_entry.get('frame') is None and json_entry.get('form') == "10-K" and json_entry.get('end') not in end_dates.values():
+               if json_entry.get('frame') is not None and json_entry.get('form') != "8-K" and json_entry.get('end') not in end_dates:
                   make_inc(key, json_entry, 'USD')
-               if json_entry.get('frame') is not None and json_entry.get('form') == "10-Q":
-                        make_inc(key, json_entry, 'USD')
-         else:
-            for cur in curs:
-               if curs and path_units.get(cur, []):
-                  for json_entry in path_units.get(cur, []):
-                     if json_entry.get('frame') is None and json_entry.get('form') == "10-K" and json_entry.get('end') not in end_dates.values():
-                        make_inc(key, json_entry, cur)
-                     if json_entry.get('frame') is not None and json_entry.get('form') == "10-Q":
-                        make_inc(key, json_entry, cur)
-                     
-               else:
-                  pass
+               # if json_entry.get('frame') is not None and json_entry.get('form') == "10-Q":
+               #          make_inc(key, json_entry, 'USD')
+         # else:
+         #    for cur in curs:
+         #       if curs and path_units.get(cur, []):
+         #          for json_entry in path_units.get(cur, []):
+         #             if json_entry.get('frame') is not None and json_entry.get('form') == "10-K" and json_entry.get('end') not in end_dates.values():
+         #                make_inc(key, json_entry, cur)
+         #             if json_entry.get('frame') is not None and json_entry.get('form') == "10-Q":
+         #                make_inc(key, json_entry, cur)
+         #       else:
+         #          pass
 
 def set_json_paths_for_inc_modification(path):
    for key in all_keys:
@@ -123,10 +133,7 @@ def set_json_paths_for_inc_modification(path):
 ## FUNCTIONS END #####################################################################################################
 
 income_statements = []
-inc_count = 0
-
-company_tracker = {}
-company_count = 0
+company_tracker = set()
 
 main_keys = ['NetIncomeLoss',
                         'NetIncomeLossAvailableToCommonStockholdersBasic',
@@ -162,11 +169,12 @@ with app.app_context():
    db.session.commit()
 
    ##########################################################################
-   companies = [Company.query.filter(Company.id == 1).first()]
+   # companies = [Company.query.filter(Company.id == 1).first()]
    # companies = Company.query.all()
+   companies = Company.query.filter(Company.id <= 100).all()
    
    for company in companies:
-      if company.cik not in company_tracker.values():
+      if company.cik not in company_tracker:
          print(company.id, company.name, company.cik)
          db.session.refresh(company)
          
@@ -177,8 +185,7 @@ with app.app_context():
             data = json.load(json_file)
             gaap = data.get('facts', {}).get('us-gaap')
             ifrs = data.get('facts', {}).get('ifrs-full')
-            end_dates = {}
-            end_count = 0
+            end_dates = set()
             
             set_json_paths_for_inc_creation(gaap if gaap else ifrs)
             
@@ -200,33 +207,25 @@ with app.app_context():
                
                if rceat:
                   inc.total_revenue = rceat
-                  print(f'{inc} added total_revenues')
                elif rciat: 
                   inc.total_revenue = rciat
-                  print(f'{inc} added total_revenues')
                elif rnoie:
                   inc.total_revenue = rnoie
-                  print(f'{inc} added total_revenues')
                elif srn: 
                   inc.total_revenue = srn
-                  print(f'{inc} added total_revenues')
                elif srgn:
                   inc.total_revenue = srgn
-                  print(f'{inc} added total_revenues')
                elif srsn:
                   inc.total_revenue = srsn
-                  print(f'{inc} added total_revenues')
                elif idio:
                   inc.total_revenue = idio
-                  print(f'{inc} added total_revenues')
                elif ifrev:
                   inc.total_revenue = ifrev
-                  print(f'{inc} added total_revenues')
                else:
                   pass
             
             json_file.close()
-            print("JSON closed")
+            # print("JSON closed")
          
          except json.JSONDecodeError:
             # Company.query.filter(Company.cik == company.cik).delete()
@@ -243,8 +242,6 @@ with app.app_context():
       else:
          pass
       
-      
-
       if len(income_statements) > 50000:
          print(f'Committing {len(income_statements)} sheets to DB')
          db.session.add_all(income_statements)
@@ -252,8 +249,7 @@ with app.app_context():
          print(f'Committed {len(income_statements)} sheets to DB')
          income_statements.clear()
       
-      company_count += 1
-      company_tracker[company_count] = company.cik
+      company_tracker.add(company.cik)
       
    print("Committing remaining income statements...")
    if len(income_statements) > 0:
