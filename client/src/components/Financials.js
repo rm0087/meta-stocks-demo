@@ -14,6 +14,7 @@ export default function Financials({company, shares, price}){
     const[incApi, setIncApi] = useState([]);
     const[cfApi, setCfApi] = useState([]);
     // const[prefDivs, setPrefDvis] = useState(0)
+    const serverUrl = "https://meta-stocks-demo.onrender.com"
     
     
     function setMarketCap(shares, price) {
