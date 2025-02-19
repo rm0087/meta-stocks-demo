@@ -27,19 +27,16 @@ def create_q4_db_entry(q4_rev_sum, q4_inc_sum, end_date, cik):
 ## FUNCTIONS END #####################################################################################################
 if __name__ == '__main__':
    start_time = time.time()
-   income_statements = []
-   inc_count = 0
-   company_tracker = {}
-   company_count = 0
    errors = set()
    with app.app_context():
       print("Starting income statement data normalization...")
       ciks = db.session.execute(select(Company.cik)).scalars().all()
+      # incs = IncomeStatement.query.all()
       for cik in ciks:
          print(cik)
-         incs = IncomeStatement.query.filter(IncomeStatement.company_cik == cik).all()
-         incs_10ks = [inc for inc in incs if inc.period_days >= 320]
-         incs_10qs = [inc for inc in incs if inc.period_days <= 110]
+         cik_incs = IncomeStatement.query.filter(IncomeStatement.company_cik == cik).all()
+         incs_10ks = [inc for inc in cik_incs if inc.period_days >= 320]
+         incs_10qs = [inc for inc in cik_incs if inc.period_days <= 110]
          for inc_10k in incs_10ks:
             try:
                period_filings = [inc_10k]
