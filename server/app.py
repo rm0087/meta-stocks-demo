@@ -13,10 +13,27 @@ import os
 from datetime import datetime, timedelta
 import requests
 from dotenv import load_dotenv
-
+from flask_cors import CORS
 # Local imports
 from config import app, db, api
 
+<<<<<<< HEAD
+=======
+load_dotenv()
+CORS(app, origins=["https://meta-stocks-demo-1.onrender.com"])
+
+# @app.route('/companies', methods=['POST'])
+# def get_company2():
+#     data = request.json
+#     try:
+#         company = Company.query.filter(Company.ticker == data.upper()).first()
+#         return jsonify(company.to_dict()), 200
+#     except Exception as e:
+#         return{'error': str(e)}, 404
+
+port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+app.run(host="0.0.0.0", port=port)
+>>>>>>> 81ce9baf30001eea33d052e1058b5b6d06092ebe
 
 @app.route('/companies/<string:ticker>', methods=['GET'])
 def get_company(ticker):
