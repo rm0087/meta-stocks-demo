@@ -49,33 +49,44 @@ def make_inc(key:str, json_entry:dict, currency:str):
 def amend_inc(key:str, inc, json_entry):
    if key == 'Revenues':
       inc.total_revenue = json_entry.get('val')
+      inc.rev_key = key
    if key == 'RevenueFromContractWithCustomerExcludingAssessedTax':
       inc.rev_from_ceat = json_entry.get('val')
+      inc.rev_key = key
    if key == 'RevenuesNetOfInterestExpense':
       inc.rev_net_of_ie = json_entry.get('val')
+      inc.rev_key = key
    if key == 'RevenueFromContractWithCustomerIncludingAssessedTax':
       inc.rev_from_ciat = json_entry.get('val')
+      inc.rev_key = key
    if key == 'SalesRevenueNet':
       inc.sales_rev_net = json_entry.get('val')
+      inc.rev_key = key
    if key == 'SalesRevenueGoodsNet':
       inc.sales_rev_goods_net = json_entry.get('val')
+      inc.rev_key = key
    if key == 'SalesRevenueServicesNet':
       inc.sales_rev_serv_net = json_entry.get('val')
+      inc.rev_key = key
    if key == 'InterestAndDividendIncomeOperating':
       inc.interest_and_div_inc_op = json_entry.get('val')
+      inc.rev_key = key
    if key == 'ComprehensiveIncomeAttributableToOwnersOfParent':
       inc.net_income = json_entry.get('val')
    if key == 'Revenue':
       inc.ifrs_revenue = json_entry.get('val')
+      inc.rev_key = key
    if key == 'RevenueFromContractsWithCustomers':
       inc.total_revenue = json_entry.get('val')
+      inc.rev_key = key
    if key =='OperatingLeaseLeaseIncome':
       inc.total_revenue = json_entry.get('val')
+      inc.rev_key = key
    if key =='PreferredStockDividendsIncomeStatementImpact':
       inc.preferred_dividends = json_entry.get('val')
    if key =='EarningsPerShareBasic':
       inc.eps = json_entry.get('val')
-   inc.rev_key = key
+   
    # print(key)
    
 def set_json_paths_for_inc_creation(path):
@@ -148,10 +159,8 @@ all_keys =  [  'Revenues',
                         'SalesRevenueGoodsNet', 
                         'SalesRevenueServicesNet',
                         'InterestAndDividendIncomeOperating',
-                        # 'ProfitLoss',
                         'Revenue',
                         'RevenueFromContractsWithCustomers',
-                        # 'OperatingLeaseLeaseIncome',
                         'PreferredStockDividendsIncomeStatementImpact',
                         'EarningsPerShareBasic'
                         ]
@@ -189,8 +198,8 @@ with app.app_context():
             
             set_json_paths_for_inc_creation(gaap if gaap else ifrs)
             
-            co_inc_dict = {inc.frame: inc for inc in income_statements if inc.company_cik == company.cik}
-
+            co_inc_dict = {inc.frame: inc.accn for inc in income_statements if inc.company_cik == company.cik}
+            # print(co_inc_dict)
             set_json_paths_for_inc_modification(gaap if gaap else ifrs)
                   
             no_r = [inc for inc in co_inc_dict.values() if inc.total_revenue == None]
