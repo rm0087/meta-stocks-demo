@@ -11,11 +11,11 @@ Werkzeug = "2.2.2"
 flask-migrate = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
-flask-cors = "*"
 faker = "*"
 requests = "*"
 python-dotenv = "*"
 feedparser = "*"
+flask-cors = "*"
 
 [requires]
 python_full_version = "3.8.13"
