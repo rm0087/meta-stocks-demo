@@ -11,262 +11,150 @@ from models import db, Company, IncomeStatement
 from sqlalchemy import and_
 from sqlalchemy.exc import IntegrityError
 
-## FUNCTIONS BEGIN #####################################################################################################
+## DEFINITIONS BEGIN #####################################################################################################
+main_keys = ['NetIncomeLoss',
+             'NetIncomeLossAvailableToCommonStockholdersBasic',
+             'ComprehensiveIncomeAttributableToOwnersOfParent',
+            ]
+
+all_keys =  [  'Revenues',
+                           # 'RevenueFromContractWithCustomerExcludingAssessedTax', 
+                           # 'RevenuesNetOfInterestExpense', 
+                           # 'RevenueFromContractWithCustomerIncludingAssessedTax', 
+                           # 'SalesRevenueNet',
+                           # 'SalesRevenueGoodsNet', 
+                           # 'SalesRevenueServicesNet',
+                           # 'InterestAndDividendIncomeOperating',
+                           # 'Revenue',
+                           # 'RevenueFromContractsWithCustomers',
+                           # 'PreferredStockDividendsIncomeStatementImpact',
+                           # 'EarningsPerShareBasic'
+                           ]
+
+NET_INCOME_KEYS = {
+      'NetIncomeLoss':'net_income',
+      'NetIncomeLossAvailableToCommonStockholdersBasic':'net_income',
+      'ComprehensiveIncomeAttributableToOwnersOfParent':'net_income',
+   }
+
+ALL_KEYS = {
+      'Revenues': 'total_revenue',
+   }
 
 def calculate_period_days(start_date:str, end_date:str)-> int:
    start = datetime.strptime(start_date, '%Y-%m-%d')
    end = datetime.strptime(end_date, '%Y-%m-%d')
    difference = end - start
    return difference.days
-   
-   
-def make_inc(key:str, json_entry:dict, currency:str):
-   
-   new_inc_statement=IncomeStatement(
-      company_cik = company.cik,
-      start = json_entry.get('start'),
-      end =  json_entry.get('end'),
-      net_income = json_entry.get('val'),
-      form = json_entry.get('form'),
-      filed = json_entry.get('filed'),
-      accn = json_entry.get('accn'),
-      fp = json_entry.get('fp'),
-      fy = json_entry.get('fy'),
-      frame = json_entry.get('frame'),
-      key = key,
-      currency = currency,
-      # period_days = calculate_period_days(json_entry.get('start'), json_entry.get('end'))
-   )
-  
-   new_inc_statement.period_days = calculate_period_days(new_inc_statement.start, new_inc_statement.end)
-   income_statements.append(new_inc_statement)
-   # print(key)
-
-   
-   end_dates.add(json_entry.get('end'))
 
 
-def amend_inc(key:str, inc, json_entry):
-   if key == 'Revenues':
-      inc.total_revenue = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'RevenueFromContractWithCustomerExcludingAssessedTax':
-      inc.rev_from_ceat = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'RevenuesNetOfInterestExpense':
-      inc.rev_net_of_ie = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'RevenueFromContractWithCustomerIncludingAssessedTax':
-      inc.rev_from_ciat = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'SalesRevenueNet':
-      inc.sales_rev_net = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'SalesRevenueGoodsNet':
-      inc.sales_rev_goods_net = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'SalesRevenueServicesNet':
-      inc.sales_rev_serv_net = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'InterestAndDividendIncomeOperating':
-      inc.interest_and_div_inc_op = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'ComprehensiveIncomeAttributableToOwnersOfParent':
-      inc.net_income = json_entry.get('val')
-   if key == 'Revenue':
-      inc.ifrs_revenue = json_entry.get('val')
-      inc.rev_key = key
-   if key == 'RevenueFromContractsWithCustomers':
-      inc.total_revenue = json_entry.get('val')
-      inc.rev_key = key
-   if key =='OperatingLeaseLeaseIncome':
-      inc.total_revenue = json_entry.get('val')
-      inc.rev_key = key
-   if key =='PreferredStockDividendsIncomeStatementImpact':
-      inc.preferred_dividends = json_entry.get('val')
-   if key =='EarningsPerShareBasic':
-      inc.eps = json_entry.get('val')
-   
-   # print(key)
-   
-def set_json_paths_for_inc_creation(path):
-   for key in main_keys:
-      if path:
-         path_units = path.get(key, {}).get('units', {})
-         curs = list(path_units.keys())
-
-         if path_units and path_units.get('USD', []):
-            for json_entry in path_units.get('USD', []):
-               if json_entry.get('frame') is not None and json_entry.get('form') != "8-K" and json_entry.get('end') not in end_dates:
-                  make_inc(key, json_entry, 'USD')
-               # if json_entry.get('frame') is not None and json_entry.get('form') == "10-Q":
-               #          make_inc(key, json_entry, 'USD')
-         # else:
-         #    for cur in curs:
-         #       if curs and path_units.get(cur, []):
-         #          for json_entry in path_units.get(cur, []):
-         #             if json_entry.get('frame') is not None and json_entry.get('form') == "10-K" and json_entry.get('end') not in end_dates.values():
-         #                make_inc(key, json_entry, cur)
-         #             if json_entry.get('frame') is not None and json_entry.get('form') == "10-Q":
-         #                make_inc(key, json_entry, cur)
-         #       else:
-         #          pass
-
-def set_json_paths_for_inc_modification(path):
-   for key in all_keys:
-      if path:
-         path_units = path.get(key, {}).get('units', {})
-         curs = list(path_units.keys())
-
-         if path_units.get('USD'):
-            for json_entry in path_units['USD']:
-               inc = co_inc_dict.get(json_entry.get('frame'))
-               if inc and inc.currency == 'USD':
-                  amend_inc(key, inc, json_entry)
-               else:
-                  pass
-         elif path_units.get('USD/shares'):
-            for json_entry in path_units['USD/shares']:
-               inc = co_inc_dict.get(json_entry.get('frame'))
-               if inc:
-                  amend_inc(key, inc, json_entry)
-
-         else:
-            for cur in curs:
-               if path_units.get(cur):
-                     for json_entry in path_units[cur]:
-                        inc = co_inc_dict.get(json_entry.get('frame'))
-                        if inc and inc.currency == cur:
-                           amend_inc(key, inc, json_entry)
-                        else:
-                           pass
-
-## FUNCTIONS END #####################################################################################################
-
-income_statements = []
-company_tracker = set()
-
-main_keys = ['NetIncomeLoss',
-                        'NetIncomeLossAvailableToCommonStockholdersBasic',
-                        'ComprehensiveIncomeAttributableToOwnersOfParent',
-                        ]
-         
-all_keys =  [  'Revenues',
-                        'RevenueFromContractWithCustomerExcludingAssessedTax', 
-                        'RevenuesNetOfInterestExpense', 
-                        'RevenueFromContractWithCustomerIncludingAssessedTax', 
-                        'SalesRevenueNet',
-                        'SalesRevenueGoodsNet', 
-                        'SalesRevenueServicesNet',
-                        'InterestAndDividendIncomeOperating',
-                        'Revenue',
-                        'RevenueFromContractsWithCustomers',
-                        'PreferredStockDividendsIncomeStatementImpact',
-                        'EarningsPerShareBasic'
-                        ]
-
-max = 10165
-r = randint(1,10165)
-
-with app.app_context():
-   
-   print("Starting seed...")
-
-   ## Comment these out if you don't wish to delete table before beginning ##
-
-   db.session.query(IncomeStatement).delete()
-   db.session.commit()
-
-   ##########################################################################
-   # companies = [Company.query.filter(Company.id == 1).first()]
-   # companies = Company.query.all()
-   companies = Company.query.filter(Company.id <= 100).all()
-   
-   for company in companies:
-      if company.cik not in company_tracker:
-         print(company.id, company.name, company.cik)
-         db.session.refresh(company)
-         
-         file_path = f'json/CIK{company.cik_10}.json'
-         json_file = open(file_path,'r')
-         
-         try:
-            data = json.load(json_file)
-            gaap = data.get('facts', {}).get('us-gaap')
-            ifrs = data.get('facts', {}).get('ifrs-full')
-            end_dates = set()
-            
-            set_json_paths_for_inc_creation(gaap if gaap else ifrs)
-            
-            co_inc_dict = {inc.frame: inc.accn for inc in income_statements if inc.company_cik == company.cik}
-            # print(co_inc_dict)
-            set_json_paths_for_inc_modification(gaap if gaap else ifrs)
-                  
-            no_r = [inc for inc in co_inc_dict.values() if inc.total_revenue == None]
-            
-            for inc in no_r:
-               rceat = inc.rev_from_ceat
-               rnoie = inc.rev_net_of_ie
-               rciat = inc.rev_from_ciat
-               srn = inc.sales_rev_net
-               srgn = inc.sales_rev_goods_net
-               srsn = inc.sales_rev_serv_net
-               idio = inc.interest_and_div_inc_op
-               ifrev = inc.ifrs_revenue
-               
-               if rceat:
-                  inc.total_revenue = rceat
-               elif rciat: 
-                  inc.total_revenue = rciat
-               elif rnoie:
-                  inc.total_revenue = rnoie
-               elif srn: 
-                  inc.total_revenue = srn
-               elif srgn:
-                  inc.total_revenue = srgn
-               elif srsn:
-                  inc.total_revenue = srsn
-               elif idio:
-                  inc.total_revenue = idio
-               elif ifrev:
-                  inc.total_revenue = ifrev
-               else:
-                  pass
-            
-            json_file.close()
-            # print("JSON closed")
-         
-         except json.JSONDecodeError:
-            # Company.query.filter(Company.cik == company.cik).delete()
-            # db.session.commit()
-            # print(f'{company.id} - {company.name} deleted from company DB.')
-            pass
-         except IntegrityError:
-            print(f'{company.id} - {company.name} row already deleted')
-            pass
-         except Exception as e:
-            print(f'{str(e)}')
-            pass
-      
-      else:
+def create_income_statements(path):
+   for k in main_keys:
+      try:
+         path_units = path.get(k).get('units')
+         path_usd = path_units.get('USD')
+         if path_units and path_usd:
+            for json_obj in path_usd:
+                  accn = json_obj.get('accn')
+                  frame = json_obj.get('frame')
+                  if frame and accn:
+                     new_inc=IncomeStatement(
+                        company_cik = company.cik,
+                        start = json_obj.get('start'),
+                        end =  json_obj.get('end'),
+                        net_income = json_obj.get('val'),
+                        form = json_obj.get('form'),
+                        filed = json_obj.get('filed'),
+                        accn = json_obj.get('accn'),
+                        fp = json_obj.get('fp'),
+                        fy = json_obj.get('fy'),
+                        frame = json_obj.get('frame'),
+                     )
+                     new_inc.period_days = calculate_period_days(new_inc.start, new_inc.end)
+                     setattr(new_inc, 'key', k)
+                     co_inc_dict[frame+'-'+accn] = new_inc
+                     income_statements.append(new_inc)
+      except Exception as e:
+         # print(e)
          pass
-      
-      if len(income_statements) > 50000:
-         print(f'Committing {len(income_statements)} sheets to DB')
-         db.session.add_all(income_statements)
-         db.session.commit()
-         print(f'Committed {len(income_statements)} sheets to DB')
-         income_statements.clear()
-      
-      company_tracker.add(company.cik)
-      
-   print("Committing remaining income statements...")
-   if len(income_statements) > 0:
-      db.session.add_all(income_statements)
-      db.session.commit()
-      print(f'Committed all new income statements to DB')
+               
 
-   end_time = time.time()
-   elapsed = end_time - start_time
-   print(f'{elapsed} seconds elapsed')
-   print("Seed successful")
+def set_revenues(path):
+   for inc in co_inc_dict.values():
+      frame = inc.frame
+      accn = inc.accn
+      for k, db_attr in ALL_KEYS.items():
+         path_usd = path.get(k).get('units').get('USD')
+         if path_usd:
+            for json_obj in path_usd:
+               if json_obj.get('frame') == frame and json_obj.get('accn') == accn:
+                  setattr(inc, db_attr, json_obj.get('val'))
+
+def send_to_db():
+   print(f'Committing {len(income_statements)} sheets to DB')
+   db.session.add_all(income_statements)
+   db.session.commit()
+   income_statements.clear()
+
+## DEFINITIONS END #####################################################################################################
+
+
+if __name__ == '__main__':
+   income_statements = []
+   company_tracker = set()
+
+   with app.app_context():
+      print("Starting seed...")
+
+      ## Comment these out if you don't wish to delete table before beginning #################################
+      db.session.query(IncomeStatement).delete()
+      db.session.commit()
+      #########################################################################################################
+      
+      # companies = [Company.query.filter(Company.id == 19).first()]
+      # companies = Company.query.all()
+      companies = Company.query.filter(Company.id <= 200).all()
+      
+      for company in companies:
+         co_inc_dict = {}
+
+         if company.cik not in company_tracker:
+            company_tracker.add(company.cik)
+            # print(company.id, company.name, company.cik)
+            db.session.refresh(company)
+            
+            try:
+               file_path = f'json/CIK{company.cik_10}.json'
+               json_file = open(file_path,'r')
+               data = json.load(json_file)
+               gaap = data.get('facts', {}).get('us-gaap')
+               ifrs = data.get('facts', {}).get('ifrs-full')
+               path = ''
+               
+               if gaap:
+                  path = gaap
+               else:
+                  path = ifrs
+
+               create_income_statements(path)
+               # set_revenues(path)
+               
+               json_file.close()
+
+            except Exception as e:
+               print(f'{company.name} - {str(e)}')
+            # except json.JSONDecodeError as e:
+            #    print(f'{str(e)}')
+            # except IntegrityError as e:
+            #    print(f'{str(e)}')
+            
+         if len(income_statements) > 50000:
+            send_to_db()
+            
+      if len(income_statements) > 0:
+         send_to_db()
+
+      end_time = time.time()
+      elapsed = end_time - start_time
+      print(f'{elapsed} seconds elapsed')
+      print("Seed successful")
