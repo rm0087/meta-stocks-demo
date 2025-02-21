@@ -101,6 +101,7 @@ class IncomeStatement(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     company_cik = db.Column(db.Integer, db.ForeignKey('companies_table.cik'), nullable=False)
+    
     total_revenue = db.Column(db.Integer)
     rev_from_ceat = db.Column(db.Integer)
     rev_net_of_ie = db.Column(db.Integer)
@@ -110,6 +111,10 @@ class IncomeStatement(db.Model, SerializerMixin):
     sales_rev_serv_net = db.Column(db.Integer)
     interest_and_div_inc_op = db.Column(db.Integer)
     net_income = db.Column(db.Integer)
+    preferred_dividends = db.Column(db.Integer)
+    eps = db.Column(db.Integer)
+    operating_income = db.Column(db.Integer)
+
     ifrs_revenue = db.Column(db.Integer)
     accn = db.Column(db.String)
     start = db.Column(db.String)
@@ -123,8 +128,6 @@ class IncomeStatement(db.Model, SerializerMixin):
     accounting_standard = db.Column(db.String)
     key = db.Column(db.String)
     rev_key = db.Column(db.String)
-    preferred_dividends = db.Column(db.Integer)
-    eps = db.Column(db.Integer)
     period_days = db.Column(db.Integer)
 
     # company = db.relationship('Company', back_populates='income_statements')
