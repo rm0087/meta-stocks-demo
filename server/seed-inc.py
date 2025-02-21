@@ -44,6 +44,10 @@ ALL_KEYS = {
    'RevenueFromContractWithCustomerExcludingAssessedTax': 'rev_from_ceat', 
 }
 
+OP_INC_KEYS = {
+   'OperatingIncomeLoss': 'operating_income'
+}
+
 def calculate_period_days(start_date:str, end_date:str)-> int:
    start = datetime.strptime(start_date, '%Y-%m-%d')
    end = datetime.strptime(end_date, '%Y-%m-%d')
@@ -98,6 +102,7 @@ def create_income_statements(path):
                setattr(new_inc, 'key', k)
                
                co_inc_dict[co_inc_key] = new_inc
+               income_statements.append(co_inc_dict[co_inc_key])
                set_revenues(path=path, co_inc_key=co_inc_key)
             except Exception as e:
                print(f'Error processing JSON object: {e}')
@@ -106,8 +111,6 @@ def create_income_statements(path):
          print(f"Error processing key {k} - {company.ticker}: {e}")
          continue        
            
-
-
 
 def set_revenues(path, co_inc_key: str):
    for k, db_attr in ALL_KEYS.items():
@@ -136,12 +139,44 @@ def set_revenues(path, co_inc_key: str):
                setattr(inc, 'total_revenue', json_obj.get('val'))
             else:
                setattr(inc, db_attr, json_obj.get('val'))
-            income_statements.append(co_inc_dict[json_inc_key])
+
+            set_operating_income(path=path, co_inc_key=json_inc_key)
+            # income_statements.append(co_inc_dict[json_inc_key])
             
       except Exception as e:
          # print(f'{k} - {e} - {company.ticker}')
          continue
 
+def set_operating_income(path: dict, co_inc_key: str):
+   for k, db_attr in OP_INC_KEYS.items():
+      try:
+         path_usd = path.get(k).get('units',{}).get('USD',[])
+         if not path_usd:
+            continue
+         
+         reversed_path = reversed(path_usd)
+         for json_obj in reversed_path:
+            json_frame = json_obj.get('frame', None)
+            json_end = json_obj.get('end', None)
+            
+            if not (json_frame and json_end):
+               continue
+            
+            json_inc_key = json_frame+"-"+json_end
+            if json_inc_key != co_inc_key:
+               continue
+            
+            inc = co_inc_dict[json_inc_key]
+            if not inc:
+               continue
+            
+            setattr(inc, db_attr, json_obj.get('val'))
+
+            
+            
+      except Exception as e:
+         # print(f'{k} - {e} - {company.ticker}')
+         continue
 
 def send_to_db():
    current_time = time.time()
@@ -186,8 +221,8 @@ if __name__ == '__main__':
                json_file = open(file_path,'r')
                data = json.load(json_file)
                
-               gaap = data.get('facts').get('us-gaap', None)
-               ifrs = data.get('facts').get('ifrs-full', None)
+               gaap = data.get('facts',{}).get('us-gaap', {})
+               ifrs = data.get('facts',{}).get('ifrs-full', {})
                
                if not gaap and not ifrs:
                   continue
