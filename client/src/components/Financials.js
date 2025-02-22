@@ -8,15 +8,12 @@ export default function Financials({company, shares, price}){
     
     let assetsData, liabilitiesData, stockholdersData, revenueData,revenueLabels, cashData, opCfData, opCfLabels, invCfData, invCfLabels, finCfData, finCfLabels, netCfData, netCfLabels, goodwillData, goodwillLabels, netIncomeData, netIncomeLabels; // declare chart/bar data
     let assetsLabels, primaryLabels; // declare chart/bar labels
-   
+    let opIncData, opIncLabels;
 
     const[api, setApi] = useState([]);
     const[incApi, setIncApi] = useState([]);
     const[cfApi, setCfApi] = useState([]);
-    // const[prefDivs, setPrefDvis] = useState(0)
-    const serverUrl = "https://meta-stocks-demo.onrender.com"
-    
-    
+   
     function setMarketCap(shares, price) {
         return shares * price
     }
@@ -83,6 +80,8 @@ export default function Financials({company, shares, price}){
     netIncomeData = incApi.map(inc => inc.net_income)
     netIncomeLabels = incApi.map(inc => inc.end)
 
+    opIncData = incApi.map(inc => inc.operating_income)
+    opIncLabels = incApi.map(inc => inc.end)
     
 
     
@@ -156,7 +155,7 @@ export default function Financials({company, shares, price}){
         return dataObj
     }
 
-    function revData(labels,data, data2){
+    function revData(labels,data, data2,data3){
         const dataObj = {
             labels: labels,
             datasets: [
@@ -180,6 +179,16 @@ export default function Financials({company, shares, price}){
                     pointBorderWidth: .5,
                     tension: 0.4
                 },
+                {
+                    label: 'Operating Income',
+                    data: data3,
+                    fill: false,
+                    borderColor: '#ffee00',
+                    pointBackgroundColor: '#ffee00',
+                    pointBorderColor: 'rgb(255, 255, 255)',
+                    pointBorderWidth: .5,
+                    tension: 0.4
+                }
             
             ]
         };
@@ -389,7 +398,7 @@ export default function Financials({company, shares, price}){
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Income Statement History</h2>
-                    <Line data={revData(netIncomeLabels, revenueData, netIncomeData)} options={options}/>
+                    <Line data={revData(netIncomeLabels, revenueData, netIncomeData, opIncData)} options={options}/>
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Cashflows History</h2>
