@@ -19,7 +19,7 @@ main_keys = [
 ]
 
 all_keys =  [  
-   'Revenues',
+   # 'Revenues',
    # 'RevenueFromContractWithCustomerExcludingAssessedTax', 
    # 'RevenuesNetOfInterestExpense', 
    # 'RevenueFromContractWithCustomerIncludingAssessedTax', 
@@ -39,7 +39,7 @@ NET_INCOME_KEYS = {
    'ComprehensiveIncomeAttributableToOwnersOfParent':'net_income',
 }
 
-ALL_KEYS = {
+REV_KEYS = {
    'Revenues': 'total_revenue',
    'RevenueFromContractWithCustomerExcludingAssessedTax': 'rev_from_ceat', 
 }
@@ -103,7 +103,6 @@ def create_income_statements():
                
                co_inc_dict[co_inc_key] = new_inc
                income_statements.append(co_inc_dict[co_inc_key])
-               
             except Exception as e:
                print(f'Error processing JSON object: {e}')
                continue
@@ -114,7 +113,7 @@ def create_income_statements():
 
 
 def set_revenues(co_inc_key: str):
-   for k, db_attr in ALL_KEYS.items():
+   for k, db_attr in REV_KEYS.items():
       try:
          path_usd = path.get(k).get('units',{}).get('USD',[])
          if not path_usd:
@@ -142,6 +141,7 @@ def set_revenues(co_inc_key: str):
       except Exception as e:
          # print(f'{k} - {e} - {company.ticker}')
          continue
+
 
 def set_operating_income(co_inc_key: str):
    for k, db_attr in OP_INC_KEYS.items():
@@ -179,12 +179,12 @@ def send_to_db():
    db.session.commit()
    income_statements.clear()
 
+
 def truncate_num(num, decimals):
    factor = 10 ** decimals
    return math.floor(num * factor) / factor
 
 ## DEFINITIONS END #####################################################################################################
-
 
 if __name__ == '__main__':
    income_statements = []
@@ -225,7 +225,7 @@ if __name__ == '__main__':
                for key in co_inc_dict.keys():
                   set_revenues(key)
                   set_operating_income(key)
-
+               
                json_file.close()
 
             except Exception as e:
