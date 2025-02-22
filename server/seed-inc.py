@@ -55,7 +55,7 @@ def calculate_period_days(start_date:str, end_date:str)-> int:
    return difference.days
 
 
-def create_income_statements(path):
+def create_income_statements():
    for k in main_keys:
       try:
          path_units = path.get(k,{}).get('units',{})
@@ -103,16 +103,17 @@ def create_income_statements(path):
                
                co_inc_dict[co_inc_key] = new_inc
                income_statements.append(co_inc_dict[co_inc_key])
-               set_revenues(path=path, co_inc_key=co_inc_key)
+               
             except Exception as e:
                print(f'Error processing JSON object: {e}')
                continue
+            
       except Exception as e:
          print(f"Error processing key {k} - {company.ticker}: {e}")
-         continue        
-           
+         continue
 
-def set_revenues(path, co_inc_key: str):
+
+def set_revenues(co_inc_key: str):
    for k, db_attr in ALL_KEYS.items():
       try:
          path_usd = path.get(k).get('units',{}).get('USD',[])
@@ -131,23 +132,18 @@ def set_revenues(path, co_inc_key: str):
             if json_inc_key != co_inc_key:
                continue
             
-            inc = co_inc_dict[json_inc_key]
-            if not inc:
-               continue
-            
-            if not inc.total_revenue:
+            inc = co_inc_dict[co_inc_key]
+
+            if inc.total_revenue == None:
                setattr(inc, 'total_revenue', json_obj.get('val'))
             else:
                setattr(inc, db_attr, json_obj.get('val'))
-
-            set_operating_income(path=path, co_inc_key=json_inc_key)
-            # income_statements.append(co_inc_dict[json_inc_key])
             
       except Exception as e:
          # print(f'{k} - {e} - {company.ticker}')
          continue
 
-def set_operating_income(path: dict, co_inc_key: str):
+def set_operating_income(co_inc_key: str):
    for k, db_attr in OP_INC_KEYS.items():
       try:
          path_usd = path.get(k).get('units',{}).get('USD',[])
@@ -166,17 +162,14 @@ def set_operating_income(path: dict, co_inc_key: str):
             if json_inc_key != co_inc_key:
                continue
             
-            inc = co_inc_dict[json_inc_key]
-            if not inc:
-               continue
-            
+            inc = co_inc_dict[co_inc_key]
+          
             setattr(inc, db_attr, json_obj.get('val'))
 
-            
-            
       except Exception as e:
          # print(f'{k} - {e} - {company.ticker}')
          continue
+
 
 def send_to_db():
    current_time = time.time()
@@ -205,7 +198,7 @@ if __name__ == '__main__':
       db.session.commit()
       #########################################################################################################
       
-      # companies = [Company.query.filter(Company.id == 19).first()]
+      # companies = [Company.query.filter(Company.id == 2153).first()]
       companies = Company.query.all()
       # companies = Company.query.filter(Company.id <= 200).all()
       
@@ -228,7 +221,10 @@ if __name__ == '__main__':
                   continue
                path = gaap if gaap else ifrs
                
-               create_income_statements(path)
+               create_income_statements()
+               for key in co_inc_dict.keys():
+                  set_revenues(key)
+                  set_operating_income(key)
 
                json_file.close()
 

@@ -34,7 +34,7 @@ export default function App() {
     const fetchSuggestions = async (searchQuery) => {
         setLoading(true);
         try {
-            const response = await fetch(`${serverUrl}/api/companies/search?query=${searchQuery}`);
+            const response = await fetch(`api/companies/search?query=${searchQuery}`);
         
         // Check if the response is ok (status code 200)
             if (response.ok) {
@@ -57,7 +57,7 @@ export default function App() {
         setSuggestions([])
     
         try {
-            const response = await fetch(`${serverUrl}/companies/${companyTicker}`, {
+            const response = await fetch(`companies/${companyTicker}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function App() {
     useEffect(()=>{
         const fetchPrice = async () => {
             try {
-                const response = await fetch(`${serverUrl}/quotes/${company.ticker}`)
+                const response = await fetch(`quotes/${company.ticker}`)
 
                 if (!response.ok) {
                     setPrice(0)
@@ -103,7 +103,7 @@ export default function App() {
             setSuggestions([])
             if (company){
                 try {
-                    const response = await fetch(`${serverUrl}/shares/${company.id}`, {
+                    const response = await fetch(`shares/${company.id}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -124,8 +124,8 @@ export default function App() {
             }
         };
 
-        fetchPrice()
-        fetchShares()
+        // fetchPrice()
+        // fetchShares()
 
     },[company])
     
@@ -135,7 +135,7 @@ export default function App() {
         setSuggestions([])
     
         try {
-            const response = await fetch(`${serverUrl}/companies/${e.target.value}`, {
+            const response = await fetch(`companies/${e.target.value}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
