@@ -3,89 +3,56 @@ import { Bar, Line } from 'react-chartjs-2';
 // import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement } from 'chart.js';
 import 'chart.js/auto'
 
-// facts["us-gaap"].CashAndCashEquivalentsAtCarryingValue.units
-export default function Financials({company, shares, price}){
-    
-    let assetsData, liabilitiesData, stockholdersData, revenueData,revenueLabels, cashData, opCfData, opCfLabels, invCfData, invCfLabels, finCfData, finCfLabels, netCfData, netCfLabels, goodwillData, goodwillLabels, netIncomeData, netIncomeLabels; // declare chart/bar data
-    let assetsLabels, primaryLabels; // declare chart/bar labels
-    let opIncData, opIncLabels;
 
+export default function Financials({company, shares, price}){
     const[api, setApi] = useState([]);
     const[incApi, setIncApi] = useState([]);
     const[cfApi, setCfApi] = useState([]);
-   
+    const[assetsData, setAssetsData] = useState([]);
+    const[liabilitiesData, setLiabilitiesData] = useState([]);
+    const[stockholdersData, setStockholdersData] = useState([]);
+    const[cashData, setCashData] = useState([]);
+    const[goodwillData, setGoodwillData] = useState([]);
+    const[netIncomeData, setNetIncomeData] = useState([]);
+    const[revenueData, setRevenueData] = useState([]);
+    const[opIncData, setOpIncData] = useState([]);
+    const[assetsLabels, setAssetsLabels] = useState([]);
+    const[netIncomeLabels, setNetIncomeLabels] = useState([]);
+
+
+    const fetchStatements = async () => {
+        try {
+            const response = await fetch(`/balance_sheets/${company.cik}`);
+            const response2 = await fetch(`/income_statements/${company.cik}`);
+            // const response3 = await fetch(`/cf_statements/${company.cik}`);
+            
+            if (response.ok) {
+                const data = await response.json();
+                const data2 = await response2.json();
+                // const data3 = await response3.json();
+                setApi(data);
+                setIncApi(data2);
+                
+                
+            } else {
+                setApi([]);
+                setIncApi([]);
+                // setCfApi([]);
+               
+                
+                console.error('Failed to fetch financial statements:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching financial statements:', error);
+        }
+    };
+
+
     function setMarketCap(shares, price) {
         return shares * price
     }
-
-    useEffect(() =>{
-        if (company) {
-            const fetchStatements = async () => {
-                try {
-                    const response = await fetch(`/balance_sheets/${company.cik}`);
-                    const response2 = await fetch(`/income_statements/${company.cik}`);
-                    // const response3 = await fetch(`/cf_statements/${company.cik}`);
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        const data2 = await response2.json();
-                        // const data3 = await response3.json();
-                        setApi(data);
-                        setIncApi(data2);
-                    } else {
-                        setApi([]);
-                        setIncApi([]);
-                        // setCfApi([]);
-                       
-                        
-                        console.error('Failed to fetch financial statements:', response.status);
-                    }
-                } catch (error) {
-                    console.error('Error fetching financial statements:', error);
-                }
-            };
-            fetchStatements()
-        }
     
-      
-    },[company])
-
-//// 1.) Create data and labels for bar and other charts ////////////////////////////////////////////////////////////////////////////////////////////////
-    assetsData = api.map(bs => bs.total_assets)
-    assetsLabels = api.map(bs => bs.end)
-    liabilitiesData = api.map(bs => bs.total_liabilities)
-    stockholdersData = api.map(bs => bs.total_stockholders_equity)
-    primaryLabels = assetsLabels
-
-    revenueData = incApi.map(inc => inc.total_revenue)
-    revenueLabels = incApi.map(inc => inc.end)
-
-    opCfData = cfApi.map(cf => cf.opr_cf)
-    opCfLabels = cfApi.map(cf => cf.end)
-
-    invCfData = cfApi.map(cf => cf.inv_cf)
-    invCfLabels = cfApi.map(cf => cf.end)
-
-    finCfData = cfApi.map(cf => cf.fin_cf)
-    finCfLabels = cfApi.map(cf => cf.end)
-
-    netCfData = cfApi.map(cf => cf.net_cf)
-    netCfLabels = cfApi.map(cf => cf.end)
-
-    cashData = api.map(bs => bs.cash_and_equiv)
-
-    goodwillData = api.map(bs => bs.goodwill)
-    goodwillLabels = api.map(bs => bs.end)
-
-    netIncomeData = incApi.map(inc => inc.net_income)
-    netIncomeLabels = incApi.map(inc => inc.end)
-
-    opIncData = incApi.map(inc => inc.operating_income)
-    opIncLabels = incApi.map(inc => inc.end)
     
-
-    
-
     function formatNumber(num, digits=3) {
         if (typeof num !== 'number' || isNaN(num)) {
             return 0;
@@ -103,7 +70,45 @@ export default function Financials({company, shares, price}){
         }
     }
 
-    
+
+    useEffect(() =>{
+        if (api.length > 0) {
+            setAssetsLabels(api.map(bs => bs.end));
+            setAssetsData(api.map(bs => bs.total_assets));
+            setLiabilitiesData(api.map(bs => bs.total_liabilities));
+            setStockholdersData(api.map(bs => bs.total_stockholders_equity));
+            setCashData(api.map(bs => bs.cash_and_equiv));
+        } else {
+            setAssetsLabels([]);
+            setAssetsData([]);
+            setLiabilitiesData([]);
+            setStockholdersData([]);
+            setCashData([]);
+        }
+        
+
+        if (incApi.length > 0) {
+            setNetIncomeLabels(incApi.map(inc => inc.end));
+            setNetIncomeData(incApi.map(inc => inc.net_income));
+            setRevenueData(incApi.map(inc => inc.total_revenue));
+            setOpIncData(incApi.map(inc => inc.operating_income));
+            // goodwillData = api.map(bs => bs.goodwill);
+        } else {
+            setNetIncomeLabels([]);
+            setNetIncomeData([]);
+            setRevenueData([]);
+            setOpIncData([]);
+        }
+    },[api])
+
+    useEffect(() =>{
+        if (company){
+            fetchStatements()
+        }
+    },[company])
+
+        
+//// 1.) Create data and labels for bar and other charts ////////////////////////////////////////////////////////////////////////////////////////////////
     // define data for LINE graphs
     function lineData(labels, data, data2, data3, data4){
         const dataObj = {
@@ -155,6 +160,7 @@ export default function Financials({company, shares, price}){
         return dataObj
     }
 
+
     function revData(labels,data, data2,data3){
         const dataObj = {
             labels: labels,
@@ -195,44 +201,46 @@ export default function Financials({company, shares, price}){
         return dataObj
     }
 
-    function cfData(labels, data, data2, data3){
-        const dataObj = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Operating Cashflows',
-                    data: data,
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    pointBackgroundColor: 'rgb(75, 192, 162)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: 1,
-                    tension: 0.3
-                },
-                {
-                    label: 'Investing Cashflows',
-                    data: data2,
-                    fill: false,
-                    borderColor: 'rgb(0, 0, 0)',
-                    pointBackgroundColor: 'rgb(0, 0, 0)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.3
-                },
-                {
-                    label: `Financing Cashflows`,
-                    data: data3,
-                    fill: false,
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointBackgroundColor: 'rgb(255, 0, 0)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.3
-                }
-            ]
-        }
-        return dataObj
-    }
+
+    // function cfData(labels, data, data2, data3){
+    //     const dataObj = {
+    //         labels: labels,
+    //         datasets: [
+    //             {
+    //                 label: 'Operating Cashflows',
+    //                 data: data,
+    //                 fill: false,
+    //                 borderColor: 'rgb(75, 192, 192)',
+    //                 pointBackgroundColor: 'rgb(75, 192, 162)',
+    //                 pointBorderColor: 'rgb(255, 255, 255)',
+    //                 pointBorderWidth: 1,
+    //                 tension: 0.3
+    //             },
+    //             {
+    //                 label: 'Investing Cashflows',
+    //                 data: data2,
+    //                 fill: false,
+    //                 borderColor: 'rgb(0, 0, 0)',
+    //                 pointBackgroundColor: 'rgb(0, 0, 0)',
+    //                 pointBorderColor: 'rgb(255, 255, 255)',
+    //                 pointBorderWidth: .5,
+    //                 tension: 0.3
+    //             },
+    //             {
+    //                 label: `Financing Cashflows`,
+    //                 data: data3,
+    //                 fill: false,
+    //                 borderColor: 'rgb(255, 0, 0)',
+    //                 pointBackgroundColor: 'rgb(255, 0, 0)',
+    //                 pointBorderColor: 'rgb(255, 255, 255)',
+    //                 pointBorderWidth: .5,
+    //                 tension: 0.3
+    //             }
+    //         ]
+    //     }
+    //     return dataObj
+    // }
+
 
     // define options for LINE graphs
     const options = {
@@ -298,6 +306,7 @@ export default function Financials({company, shares, price}){
         },
     }
     
+
     // Define data for BAR graphs
     function barData(labels, data, dataSetLabel, backgroundColor = 'rgba(75, 192, 192, 0.2)', borderColor = 'rgba(75, 192, 192, 1)', borderWidth = 1){
         const dataObj = {
@@ -314,6 +323,7 @@ export default function Financials({company, shares, price}){
         };
         return dataObj
     }
+
 
     // Define options for BAR graphs
     function barOptions(header){
@@ -394,7 +404,7 @@ export default function Financials({company, shares, price}){
             <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Balance Sheet History</h2>
-                    <Line data={lineData(primaryLabels, assetsData, liabilitiesData, stockholdersData, cashData)} options={options}/>
+                    <Line data={lineData(assetsLabels, assetsData, liabilitiesData, stockholdersData, cashData)} options={options}/>
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Income Statement History</h2>
@@ -402,7 +412,7 @@ export default function Financials({company, shares, price}){
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Cashflows History</h2>
-                    <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/>
+                    {/* <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/> */}
                 </div>
             </div>  
         </>
