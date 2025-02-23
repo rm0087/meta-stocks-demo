@@ -19,27 +19,47 @@ export default function Financials({company, shares, price}){
     const[assetsLabels, setAssetsLabels] = useState([]);
     const[netIncomeLabels, setNetIncomeLabels] = useState([]);
 
+    const[company2, setCompany2] = useState({});
+    const[company2IncApi, setCompany2IncApi] = useState ([]);
+    const[company2BsApi, setCompany2BsApi] = useState ([]);
 
     const fetchStatements = async () => {
         try {
             const response = await fetch(`/balance_sheets/${company.cik}`);
             const response2 = await fetch(`/income_statements/${company.cik}`);
             // const response3 = await fetch(`/cf_statements/${company.cik}`);
-            
             if (response.ok) {
                 const data = await response.json();
                 const data2 = await response2.json();
                 // const data3 = await response3.json();
                 setApi(data);
                 setIncApi(data2);
-                
-                
             } else {
                 setApi([]);
                 setIncApi([]);
                 // setCfApi([]);
-               
-                
+                console.error('Failed to fetch financial statements:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching financial statements:', error);
+        }
+    };
+
+    const fetchStatements2 = async () => {
+        try {
+            const response = await fetch(`/balance_sheets/${company.cik}`);
+            const response2 = await fetch(`/income_statements/${company.cik}`);
+            // const response3 = await fetch(`/cf_statements/${company.cik}`);
+            if (response.ok) {
+                const data = await response.json();
+                const data2 = await response2.json();
+                // const data3 = await response3.json();
+                setCompany2BsApi(data);
+                setCompany2IncApi(data2);
+            } else {
+                setCompany2BsApi([]);
+                setCompany2IncApi([]);
+                // setCfApi([]);
                 console.error('Failed to fetch financial statements:', response.status);
             }
         } catch (error) {
@@ -70,7 +90,7 @@ export default function Financials({company, shares, price}){
         }
     }
 
-
+    
     useEffect(() =>{
         if (api.length > 0) {
             setAssetsLabels(api.map(bs => bs.end));
@@ -101,6 +121,7 @@ export default function Financials({company, shares, price}){
         }
     },[api])
 
+    
     useEffect(() =>{
         if (company){
             fetchStatements()
@@ -109,100 +130,102 @@ export default function Financials({company, shares, price}){
 
         
 //// 1.) Create data and labels for bar and other charts ////////////////////////////////////////////////////////////////////////////////////////////////
-    // define data for LINE graphs
-    function lineData(labels, data, data2, data3, data4){
-        const dataObj = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Assets',
-                    data: data,
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    pointBackgroundColor: 'rgb(75, 192, 192)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.4
-                },
-                {
-                    label: 'Liabilities',
-                    data: data2,
-                    fill: false,
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointBackgroundColor: 'rgb(255, 0, 0)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.4
-                },
-                {
-                    label: `Stockholders' Equity`,
-                    data: data3,
-                    fill: false,
-                    borderColor: 'rgb(0, 0, 0)',
-                    pointBackgroundColor: 'rgb(0, 0, 0)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.4
-                },
-                {
-                    label: `Cash and Equivalents`,
-                    data: data4,
-                    fill: false,
-                    borderColor: 'rgb(0, 128, 0)',
-                    pointBackgroundColor: 'rgb(0, 128, 0)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.4
-                }
-            
-            ]
-        };
+    function lineData(statemenObj){
+        const dataObj = statemenObj;
         return dataObj
     }
 
-
-    function revData(labels,data, data2,data3){
-        const dataObj = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Net Income',
-                    data: data2,
-                    fill: false,
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointBackgroundColor: 'rgb(255, 0, 0)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.4
-                }, 
-                {
-                    label: 'Revenue',
-                    data: data,
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    pointBackgroundColor: 'rgb(75, 192, 192)',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.4
-                },
-                {
-                    label: 'Operating Income',
-                    data: data3,
-                    fill: false,
-                    borderColor: '#ffee00',
-                    pointBackgroundColor: '#ffee00',
-                    pointBorderColor: 'rgb(255, 255, 255)',
-                    pointBorderWidth: .5,
-                    tension: 0.4
-                }
-            
-            ]
-        };
-        return dataObj
-    }
+    const incStatementGraphObj = {
+        // labels: = An array of dates, 
+        // datasets: = An array of objects. Each object defines the settings for each line on the graph.
+        labels: netIncomeLabels,
+        datasets: [
+            {
+                label: 'Net Income',
+                data: netIncomeData,
+                fill: false,
+                borderColor: 'rgb(255, 0, 0)',
+                pointBackgroundColor: 'rgb(255, 0, 0)',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: .5,
+                tension: 0.4
+            }, 
+            {
+                label: 'Revenue',
+                data: revenueData,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                pointBackgroundColor: 'rgb(75, 192, 192)',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: .5,
+                tension: 0.4
+            },
+            {
+                label: 'Operating Income',
+                data: opIncData,
+                fill: false,
+                borderColor: '#ffee00',
+                pointBackgroundColor: '#ffee00',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: .5,
+                tension: 0.4
+            }
+        
+        ]
+    };
 
 
-    // function cfData(labels, data, data2, data3){
+    const balanceSheetDataObj = {
+        // labels: = An array of dates, 
+        // datasets: = An array of objects. Each object defines the settings for each line on the graph.
+        labels: assetsLabels,
+        datasets: [
+            {
+                label: 'Assets',
+                data: assetsData,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                pointBackgroundColor: 'rgb(75, 192, 192)',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: .5,
+                tension: 0.4
+            },
+            {
+                label: 'Liabilities',
+                data: liabilitiesData,
+                fill: false,
+                borderColor: 'rgb(255, 0, 0)',
+                pointBackgroundColor: 'rgb(255, 0, 0)',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: .5,
+                tension: 0.4
+            },
+            {
+                label: `Stockholders' Equity`,
+                data: stockholdersData,
+                fill: false,
+                borderColor: 'rgb(0, 0, 0)',
+                pointBackgroundColor: 'rgb(0, 0, 0)',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: .5,
+                tension: 0.4
+            },
+            {
+                label: `Cash and Equivalents`,
+                data: cashData,
+                fill: false,
+                borderColor: 'rgb(0, 128, 0)',
+                pointBackgroundColor: 'rgb(0, 128, 0)',
+                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderWidth: .5,
+                tension: 0.4
+            }
+        
+        ]
+    };
+
+
+    // function cfData(cashFlowsDataObj){
     //     const dataObj = {
     //         labels: labels,
     //         datasets: [
@@ -342,35 +365,30 @@ export default function Financials({company, shares, price}){
         return optionsObj
     }
 
-    // {/* <Bar data={barData(cashLabels, cashData, "Cash")} options={barOptions("Cash History")} /> */}
-    // {/* <p>${company && cashPath[cashPath.length - 1].val.toLocaleString('en-US')} Cash & Equivialents as of: {company && cashPath[cashPath.length - 1].end}</p> */}
 
 //// 2.) Render component in JSX ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // ## BAR DATA TEMPLATE ##: function barData(labels, data, dataSetLabel, backgroundColor = 'rgba(75, 192, 192, 0.2)', borderColor = 'rgba(75, 192, 192, 1)', borderWidth = 1)
     return(
         <>  
             <div id ="stats" className="w-[95%] flex flex-row border rounded">
                 <div className="w-[33%] px-5 py-2 text-gray-50 font-mono tracking-tight text-xs">
                         <p className='text-lg font-bold tracking-normal'>🔑 Financials</p>
-                        
                         <div className="flex flex-row justify-left">
                             <table>
                                 <tbody>
-                                <tr className=""><th className='font-bold text-left'>Assets:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-left'>Liabilities:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-left'>Stockholders Equity:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-left'>Cash:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-left'>Assets:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-left'>Liabilities:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-left'>Stockholders Equity:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-left'>Cash:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1], 3) : ''}</th></tr>
                                 </tbody>
                             </table>
                             <table className="ml-5">
-                            <tbody>
-                                <tr className=""><th className='font-bold text-left'>Revenue (Q):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && revenueData.length > 0 ? formatNumber(revenueData[revenueData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-left'>Net Income (Q):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && netIncomeData.length > 0 ? formatNumber(netIncomeData[netIncomeData.length - 1], 3) : ''}</th></tr>
-                                <tr className=""><th className='font-bold text-right'>&nbsp;</th><th className="text-right font-medium"></th></tr>
-                                <tr className=""><th className='font-bold text-right'>&nbsp;</th><th className="text-right font-medium"></th></tr>
+                                <tbody>
+                                    <tr className=""><th className='font-bold text-left'>Revenue (Q):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && revenueData.length > 0 ? formatNumber(revenueData[revenueData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-left'>Net Income (Q):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && netIncomeData.length > 0 ? formatNumber(netIncomeData[netIncomeData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-right'>&nbsp;</th><th className="text-right font-medium"></th></tr>
+                                    <tr className=""><th className='font-bold text-right'>&nbsp;</th><th className="text-right font-medium"></th></tr>
                                 </tbody>
                             </table>
-                        
                         </div>
                             <p className='text-base text-xs italic p-1 text-left'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
                         
@@ -404,11 +422,11 @@ export default function Financials({company, shares, price}){
             <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Balance Sheet History</h2>
-                    <Line data={lineData(assetsLabels, assetsData, liabilitiesData, stockholdersData, cashData)} options={options}/>
+                    <Line data={lineData(balanceSheetDataObj)} options={options}/>
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Income Statement History</h2>
-                    <Line data={revData(netIncomeLabels, revenueData, netIncomeData, opIncData)} options={options}/>
+                    <Line data={lineData(incStatementGraphObj)} options={options}/>
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Cashflows History</h2>
