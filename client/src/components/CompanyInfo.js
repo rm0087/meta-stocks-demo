@@ -1,11 +1,15 @@
 import React from "react";
 
-export default function CompanyInfo({company}) {
+export default function CompanyInfo({company, filings}) {
 
-
+    
+    const filingsList = filings.map((filing,index)=> {
+        return (
+        <tr key={index}><td>{filing.date} - <a target="_blank" href={filing.url}>Form {filing.form}</a></td></tr>)})
+        
     return (
-        <div className="w-full flex justify-center mt-5">
-            <div className="w-[95%] ">
+        <div className="w-full justify-center mt-5">
+            <div className="w-[95%] flex flex-row justify-center">
             <div className="w-[47%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
             <div className="px-5 py-2">
                 <h2 className="text-lg font-bold">🏢 Company Info.</h2>
@@ -19,6 +23,19 @@ export default function CompanyInfo({company}) {
                         <tr className=""><th className='font-bold text-left'>Industry:&nbsp;</th><th className="text-left font-medium">{company && company.sic_description && company.sic_description}</th></tr>
                     </tbody>
                 </table>
+            </div>
+            </div>
+            <div className="w-[47%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
+            <div className="px-5 py-2">
+                <h2 className="text-lg font-bold">🏢 Filings</h2>
+                <table>
+                    <tbody>
+                        {filingsList}
+                    </tbody>
+                </table>
+
+
+
             </div>
             </div>
             </div>

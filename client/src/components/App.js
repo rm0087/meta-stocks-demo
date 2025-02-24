@@ -13,6 +13,7 @@ export default function App() {
     const [loading, setLoading] = useState(false);  // Loading state for making requests
     const [price, setPrice] = useState(0);
     const [shares, setShares] = useState(0);
+    const [filings, setFilings] = useState([])
     const serverUrl = "https://meta-stocks-demo.onrender.com"
    
     // Function to handle input changes
@@ -123,10 +124,29 @@ export default function App() {
                 }
             }
         };
-
+        const fetchFilings = async () => {
+            try{
+                const response = await fetch (`filings/${company.cik_10}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to retrieve filings');
+                }
+                const data = await response.json()
+                setFilings(data)
+                console.log(data)
+            } catch (error) {
+                setFilings([])
+                console.error('Error retrieving filings', error)
+            }
+        }
         // fetchPrice()
         // fetchShares()
-
+        fetchFilings()
     },[company])
     
     const fetchCompany = async (e) => {
@@ -212,10 +232,12 @@ export default function App() {
                     <h1 id = "co-header" className="font-mono font-bold text-xl">{company ? `${company.ticker} - ${company.name} - $${price}` : "Search for a company"}</h1>
                     <span className="flex flex-row"></span>
                 </div>
+
+                
             </form>
             
             <div id="wrapper" className="flex flex-col items-center w-full h-full bg-gray-800 pb-5">
-                <CompanyInfo company={company}/> 
+                <CompanyInfo company={company} filings={filings}/> 
                 <Keywords company={company} />
                 <Financials company={company} shares={shares} price={price}/>
             </div>

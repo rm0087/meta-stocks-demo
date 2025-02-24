@@ -138,8 +138,48 @@ def search_companies():
         return jsonify([company.to_dict() for company in companies]), 200 
     return jsonify([]), 400
 
+@app.route('/filings/<string:cik_10>')
+def get_filings(cik_10:str):
+    company = Company.query.filter(Company.cik_10 == cik_10).first()
+    headers = {
+        'User-Agent':'Raymond Michetti michetti.ray@gmail.com'
+    }
+    r = requests.get(f'https://data.sec.gov/submissions/CIK{cik_10}.json', headers=headers)
 
+    if not r.ok:
+        return jsonify([]), r.status_code
+    
+    data = json.loads(r.content)
+    filings = []
+    
+    try:
+        i = 0
+        
+        while i < 5:
+            filing = {
+                'form' : data.get('filings', {}).get('recent', {}).get('form', [])[i],
+                
+                'accn' : data.get('filings', {}).get('recent', {}).get('accessionNumber', [])[i],
+                'doc' : data.get('filings', {}).get('recent', {}).get('primaryDocument', [])[i],
+                'url' : ""
+            }
+            date_str = data.get('filings', {}).get('recent', {}).get('acceptanceDateTime', [])[i]
+            formatted_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%Y-%m-%d %H:%M')
+            filing['date'] = formatted_date
+            filing['accn'] = filing['accn'].replace("-", "")
+            filing['url'] = f"https://www.sec.gov/Archives/edgar/data/{company.cik}/{filing['accn']}/{filing['doc']}"
+            # print(filing)
+            # print(i)
+            filings.append(filing)
+            i += 1
+    except Exception as e:
+        return jsonify([]), r.status_code
+    
+    return jsonify(filings), r.status_code
+    print
 
+    
+    
 
 # app.route('/news', methods=['GET'])
 # def get_news():
