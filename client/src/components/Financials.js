@@ -131,8 +131,7 @@ export default function Financials({company, shares, price}){
         
 //// 1.) Create data and labels for bar and other charts ////////////////////////////////////////////////////////////////////////////////////////////////
     function lineData(statemenObj){
-        const dataObj = statemenObj;
-        return dataObj
+        return statemenObj
     }
 
     const incStatementGraphObj = {
@@ -422,16 +421,16 @@ export default function Financials({company, shares, price}){
             <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Balance Sheet History</h2>
-                    <Line data={lineData(balanceSheetDataObj)} options={options}/>
+                    <Line data={balanceSheetDataObj} options={options}/>
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Income Statement History</h2>
-                    <Line data={lineData(incStatementGraphObj)} options={options}/>
+                    <Line data={incStatementGraphObj} options={options}/>
                 </div>
-                <div className = "border border-white rounded w-[90%] h-full">
+                {/* <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Cashflows History</h2>
-                    {/* <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/> */}
-                </div>
+                    <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/>
+                </div> */}
             </div>  
         </>
     )
