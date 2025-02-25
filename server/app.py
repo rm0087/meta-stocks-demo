@@ -150,52 +150,61 @@ def get_filings(cik_10:str):
         return jsonify([]), r.status_code
     
     data = json.loads(r.content)
-    latest = []
-    
+
     all_filings = {
         'latest':[],
         'fin':[],
         'insiders':[],
         'institutions':[]
     }
+
     try:
         i = 0
+        recent_filings = data.get('filings', {}).get('recent', {})
         
-        while i < len(data.get('filings', {}).get('recent', {}).get('form', [])):
-
+        while i < len(recent_filings.get('form', [])):
+            form = recent_filings.get('form', [])[i]
+            accn = recent_filings.get('accessionNumber', [])[i]
+            doc = recent_filings.get('primaryDocument', [])[i]
+            reportDate = recent_filings.get('reportDate', [])[i]
             filing = {
-                'form' : data.get('filings', {}).get('recent', {}).get('form', [])[i],
-                'accn' : data.get('filings', {}).get('recent', {}).get('accessionNumber', [])[i],
-                'doc' : data.get('filings', {}).get('recent', {}).get('primaryDocument', [])[i],
-                'url' : ""
+                'form' : form,
+                'accn' : accn,
+                'doc' : doc,
+                'url' : "",
+                'reportDate': reportDate
             }
-
             date_str = data.get('filings', {}).get('recent', {}).get('acceptanceDateTime', [])[i]
             formatted_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%Y-%m-%d %H:%M')
             filing['date'] = formatted_date
             filing['accn'] = filing['accn'].replace("-", "")
             filing['url'] = f"https://www.sec.gov/Archives/edgar/data/{company.cik}/{filing['accn']}/{filing['doc']}"
             f = filing['form']
+            
             # print(filing)
             # print(i)
             
+            if form in ("8-K", "6-K", "8-K/A", "6-K/A"):
+               filing['form'] = "Form" + " " + form
             if i < 5:
                 all_filings['latest'].append(filing)
             if len(all_filings['fin']) < 5:
-                if data.get('filings', {}).get('recent', {}).get('form', [])[i] in ("10-K", "10-Q", "20-F"):
+                if form in ("10-K", "10-K/A", "10-Q", "10-Q/A", "20-F", "20-F/A"):
                     filing['form'] = f'Form {f}'
                     all_filings['fin'].append(filing)
             if len(all_filings['insiders']) < 5:
-                if data.get('filings', {}).get('recent', {}).get('form', [])[i] in ("3", "4", "144"):
+                if form in ("3", "4", "144", "3/A", "4/A", "144/A"):
                     filing['form'] = f'Form {f}'
                     all_filings['insiders'].append(filing)
             if len(all_filings['institutions']) < 5:
-                if data.get('filings', {}).get('recent', {}).get('form', [])[i] in ("SCHEDULE 13G", "SCHEDULE 13D", "SC 13G"):
+                if form in ("SCHEDULE 13G", "SCHEDULE 13D", "SC 13G", "SC 13G/A", "SCHEDULE 13G/A", "SCHEDULE 13D/A",):
                     all_filings['institutions'].append(filing)
             if len(all_filings['latest']) + len(all_filings['fin']) + len(all_filings['insiders']) + len(all_filings['institutions']) == 20:
                 return jsonify(all_filings), r.status_code
             i += 1
+
         return jsonify(all_filings), r.status_code
+    
     except Exception as e:
         return jsonify(all_filings), r.status_code
     
