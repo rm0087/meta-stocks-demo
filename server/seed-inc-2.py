@@ -184,6 +184,7 @@ def truncate_num(num, decimals):
    factor = 10 ** decimals
    return math.floor(num * factor) / factor
 
+
 ## DEFINITIONS END #####################################################################################################
 
 if __name__ == '__main__':
