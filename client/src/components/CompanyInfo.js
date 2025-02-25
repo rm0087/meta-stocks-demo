@@ -11,28 +11,28 @@ export default function CompanyInfo({company, filings}) {
         
             const latest = filings?.latest?.map((filing,index)=> {
                 return (
-                    <tr key={index}><td>{filing.date} - <a target="_blank" href={filing.url}>{filing.form}</a></td></tr>
+                    <tr className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm whitespace-nowrap">{filing.form}</a></td></tr>
                 )
             })
             setLatestFilings(latest)
 
             const fins = filings?.fin?.map((filing,index)=> {
                 return (
-                    <tr key={index}><td>{filing.date} - <a target="_blank" href={filing.url}>{filing.form}</a></td></tr>
+                    <tr className="whitespace-nowrap" key={index}><td>{filing.reportDate} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></tr>
                 )
             })
             setFinFilings(fins)
 
             const insiders = filings?.insiders?.map((filing,index)=> {
                 return (
-                    <tr key={index}><td>{filing.date} - <a target="_blank" href={filing.url}>{filing.form}</a></td></tr>
+                    <tr className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></tr>
                 )
             })
             setInsiderFilings(insiders)
 
             const institutionals = filings?.institutions?.map((filing,index)=> {
                 return (
-                    <tr key={index}><td>{filing.date} - <a target="_blank" href={filing.url}>{filing.form}</a></td></tr>
+                    <tr className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></tr>
                 )
             })
             setInstitutionalFilings(institutionals)
@@ -40,10 +40,11 @@ export default function CompanyInfo({company, filings}) {
     },[filings])
     
     
+    // https://www.sec.gov/edgar/search/#/dateRange=custom&ciks={CIK10}
     
     return (
-        <div className="w-full justify-center mt-5">
-            <div className="w-[95%] flex flex-row justify-center">
+        <div className="w-[100%] flex justify-center mt-5">
+            <div className="w-[95%] flex flex-row ">
             <div className="w-[25%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
             <div className="px-5 py-2">
                 <h2 className="text-lg font-bold">🏢 Company Info.</h2>
@@ -59,32 +60,33 @@ export default function CompanyInfo({company, filings}) {
                 </table>
             </div>
             </div>
-            <div className="w-[75%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
+            <div className="w-[50%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white ml-5">
             <div className="px-5 py-2">
-                
-                <h2 className="text-lg font-bold">🏢 Filings</h2>
-                <div className="md:grid grid-cols-6 gap-4 place-items-center w-full h-full text-gray-50 font-mono text-xs">
+                <span className="flex flex-row">
+                <h2 className="text-lg font-bold">🏢 Filings</h2><a rel="norefferer" target= "_blank" href = {"https://www.sec.gov/edgar/search/#/dateRange=10y&ciks="+company.cik_10}>View all</a>
+                </span> 
+                <div className="md:grid grid-cols-2 gap-4 place-items-left w-full h-full text-gray-50 font-mono text-xs">
                     <table className="">
                         <tbody>
-                            <h2 className="font-bold text-sm">Latest</h2>
+                            <h2 className="font-bold text-base">Latest (all)</h2>
                             {latestFilings}
                         </tbody>
                     </table>
                     <table>
                         <tbody>
-                            <h2 className="font-bold text-sm">Financial Reports</h2>
+                            <h2 className="font-bold text-base">Financial Reports</h2>
                             {finFilings}
                         </tbody>
                     </table>
                     <table>
                         <tbody>
-                            <h2 className="font-bold text-sm">Insiders</h2>
+                            <h2 className="font-bold text-base">Insiders</h2>
                             {insiderFilings}
                         </tbody>
                     </table>
                     <table>
                         <tbody>
-                            <h2 className="font-bold text-sm">Institutions</h2>
+                            <h2 className="font-bold text-base">Institutions</h2>
                             {institutionalFilings}
                         </tbody>
                     </table>

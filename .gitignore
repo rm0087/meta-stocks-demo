@@ -61,7 +61,7 @@ __pycache__
 
 
 .vscode
-
+.env
 server/migrations
 server/acct-jsons/*
 server/json/*
