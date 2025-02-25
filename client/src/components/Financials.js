@@ -388,9 +388,7 @@ export default function Financials({company, shares, price}){
                                     <tr className=""><th className='font-bold text-right'>&nbsp;</th><th className="text-right font-medium"></th></tr>
                                 </tbody>
                             </table>
-                        </div>
-                            <p className='text-base text-xs italic p-1 text-left'>Latest financial statements as of:&nbsp;{company && assetsLabels[assetsLabels.length - 1]} </p>
-                        
+                        </div> 
                 </div>
 
                 <div className="w-[33%] px-5 py-2 ml-12 font-mono tracking-tight text-gray-50 text-xs">  
@@ -421,10 +419,15 @@ export default function Financials({company, shares, price}){
             <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Balance Sheet History</h2>
+                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                    <h3 className="text-center text-xs">As of: {assetsLabels && assetsLabels[assetsLabels.length -1]}</h3>
                     <Line data={balanceSheetDataObj} options={options}/>
                 </div>
                 <div className = "border border-white rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Income Statement History</h2>
+                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                    <h3 className="text-center text-xs">As of: {assetsLabels && netIncomeLabels[netIncomeLabels.length -1]}</h3>
+                    
                     <Line data={incStatementGraphObj} options={options}/>
                 </div>
                 {/* <div className = "border border-white rounded w-[90%] h-full">
