@@ -3,7 +3,7 @@ import React from "react";
 export default function CompanyInfo({company, filings}) {
 
     
-    const filingsList = filings.map((filing,index)=> {
+    const filingsList = filings && filings.latest.map((filing,index)=> {
         return (
         <tr key={index}><td>{filing.date} - <a target="_blank" href={filing.url}>Form {filing.form}</a></td></tr>)})
         

@@ -13,7 +13,7 @@ export default function App() {
     const [loading, setLoading] = useState(false);  // Loading state for making requests
     const [price, setPrice] = useState(0);
     const [shares, setShares] = useState(0);
-    const [filings, setFilings] = useState([])
+    const [filings, setFilings] = useState({})
     const serverUrl = "https://meta-stocks-demo.onrender.com"
    
     // Function to handle input changes
@@ -125,6 +125,7 @@ export default function App() {
             }
         };
         const fetchFilings = async () => {
+            setFilings([])
             try{
                 const response = await fetch (`filings/${company.cik_10}`, {
                     method: 'GET',
@@ -137,10 +138,13 @@ export default function App() {
                     throw new Error('Failed to retrieve filings');
                 }
                 const data = await response.json()
+                if (data == {}) {
+                    setFilings(["No filings to show."])
+                }
                 setFilings(data)
                 console.log(data)
             } catch (error) {
-                setFilings([])
+                setFilings({})
                 console.error('Error retrieving filings', error)
             }
         }
