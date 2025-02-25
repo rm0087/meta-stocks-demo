@@ -82,75 +82,77 @@ export default function App() {
     };
 
     useEffect(()=>{
-        const fetchPrice = async () => {
-            try {
-                const response = await fetch(`quotes/${company.ticker}`)
-
-                if (!response.ok) {
-                    setPrice(0)
-                    throw new Error('Failed to retrieve quote')
-                    
-                }
-                const data = await response.json()
-                setPrice(data.bars?.[company.ticker?.replace("-", ".")]?.[0]?.c)
-              
-            } catch (error) {
-                console.error('Error retrieving price', error)
-            }
-        };
-
-        const fetchShares = async () => {
-            setQuery('');
-            setSuggestions([])
-            if (company){
+        if (company) {
+            const fetchPrice = async () => {
                 try {
-                    const response = await fetch(`shares/${company.id}`, {
+                    const response = await fetch(`quotes/${company.ticker}`)
+
+                    if (!response.ok) {
+                        setPrice(0)
+                        throw new Error('Failed to retrieve quote')
+                        
+                    }
+                    const data = await response.json()
+                    setPrice(data.bars?.[company.ticker?.replace("-", ".")]?.[0]?.c)
+                
+                } catch (error) {
+                    console.error('Error retrieving price', error)
+                }
+            };
+
+            const fetchShares = async () => {
+                setQuery('');
+                setSuggestions([])
+                if (company){
+                    try {
+                        const response = await fetch(`shares/${company.id}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('Failed to find shares');
+                        }
+                
+                        const data = await response.json();
+                        setShares(data[0]?.historical_shares);
+                    
+                    } catch (error) {
+                        console.error('Error searching shares:', error);
+                    }
+                }
+            };
+            const fetchFilings = async () => {
+                setFilings([])
+                try{
+                    const response = await fetch (`filings/${company.cik_10}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
                     });
-                    
                     if (!response.ok) {
-                        throw new Error('Failed to find shares');
+                        throw new Error('Failed to retrieve filings');
                     }
-            
-                    const data = await response.json();
-                    setShares(data[0]?.historical_shares);
-                
+                    const data = await response.json()
+                    if (data == {}) {
+                        setFilings(["No filings to show."])
+                    }
+                    setFilings(data)
+                    console.log(data)
                 } catch (error) {
-                    console.error('Error searching shares:', error);
+                    setFilings({})
+                    console.error('Error retrieving filings', error)
                 }
             }
-        };
-        const fetchFilings = async () => {
-            setFilings([])
-            try{
-                const response = await fetch (`filings/${company.cik_10}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to retrieve filings');
-                }
-                const data = await response.json()
-                if (data == {}) {
-                    setFilings(["No filings to show."])
-                }
-                setFilings(data)
-                console.log(data)
-            } catch (error) {
-                setFilings({})
-                console.error('Error retrieving filings', error)
-            }
+            // fetchPrice()
+            // fetchShares()
+            fetchFilings()
         }
-        // fetchPrice()
-        // fetchShares()
-        fetchFilings()
     },[company])
     
     const fetchCompany = async (e) => {
