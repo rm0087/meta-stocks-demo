@@ -60,8 +60,7 @@ jspm_packages
 __pycache__
 
 
-.vscode
-.env
+
 server/migrations
 server/acct-jsons/*
 server/json/*
@@ -69,4 +68,6 @@ server/backup
 server/z-*.*
 server/.env
 client/src/.env
-server/submissions
+server/submissions.env
+.vscode
+.env
