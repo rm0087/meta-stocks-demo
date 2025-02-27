@@ -25,7 +25,11 @@ export default function Keywords({ company }) {
         <>
             <div className="w-[100%] flex justify-center">
                 <div className="w-[95%]">
+
                 <div className="w-[47%] mt-5 tracking-tight border border rounded font-mono tracking-tight text-xs text-white">
+
+
+
                     <div className="px-5 py-2">
                         <h2 className="text-lg font-bold">🖇️ MetaTags</h2>
                         <li className="flex flex-row">

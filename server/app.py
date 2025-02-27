@@ -47,8 +47,8 @@ def get_balancesheets(cik):
 
 @app.route('/income_statements/<int:cik>', methods=['GET'])
 def get_income_statements(cik):
-    income_statements = IncomeStatement.query.filter(IncomeStatement.company_cik == cik,
-                                                     (IncomeStatement.period_days < 120) | (IncomeStatement.period_days == None), 
+    income_statements = IncomeStatement.query.filter(IncomeStatement.company_cik == cik, 
+                                                     (IncomeStatement.period_days < 120) | (IncomeStatement.period_days == None)
                                                      ).order_by(IncomeStatement.end).all()
     if not income_statements:
         return jsonify({"error": "Balance sheets not found"}), 404
@@ -141,6 +141,7 @@ def search_companies():
 
 @app.route('/filings/<string:cik_10>')
 def get_filings(cik_10:str):
+
     
     company = Company.query.filter(Company.cik_10 == cik_10).first()
     
@@ -171,7 +172,6 @@ def get_filings(cik_10:str):
             accn = recent_filings.get('accessionNumber', [])[i]
             doc = recent_filings.get('primaryDocument', [])[i]
             reportDate = recent_filings.get('reportDate', [])[i]
-            
             filing = {
                 'form' : form,
                 'accn' : accn,
@@ -179,7 +179,6 @@ def get_filings(cik_10:str):
                 'url' : "",
                 'reportDate': reportDate
             }
-            
             date_str = data.get('filings', {}).get('recent', {}).get('acceptanceDateTime', [])[i]
             formatted_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%Y-%m-%d %H:%M')
             filing['date'] = formatted_date
@@ -192,19 +191,20 @@ def get_filings(cik_10:str):
             
             if form in ("8-K", "6-K", "8-K/A", "6-K/A"):
                filing['form'] = "Form" + " " + form
-            
+
             if i < 5:
                 all_filings['latest'].append(filing)
-            
+
             if len(all_filings['fin']) < 5:
                 if form in ("10-K", "10-K/A", "10-Q", "10-Q/A", "20-F", "20-F/A"):
                     filing['form'] = f'Form {f}'
                     all_filings['fin'].append(filing)
-            
+
             if len(all_filings['insiders']) < 5:
                 if form in ("3", "4", "144", "3/A", "4/A", "144/A"):
                     filing['form'] = f'Form {f}'
                     all_filings['insiders'].append(filing)
+
             
             if len(all_filings['institutions']) < 5:
                 if form in ("SCHEDULE 13G", "SCHEDULE 13D", "SC 13G", "SC 13G/A", "SCHEDULE 13G/A", "SCHEDULE 13D/A",):

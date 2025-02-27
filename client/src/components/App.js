@@ -151,6 +151,7 @@ export default function App() {
             }
 
             document.title = `${company.ticker} - MetaStocks`
+
             // fetchPrice()
             // fetchShares()
             fetchFilings()
