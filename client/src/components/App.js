@@ -149,6 +149,9 @@ export default function App() {
                     console.error('Error retrieving filings', error)
                 }
             }
+
+            document.title = `${company.ticker} - MetaStocks`
+
             // fetchPrice()
             // fetchShares()
             fetchFilings()

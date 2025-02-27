@@ -11,6 +11,7 @@ from sqlalchemy import not_, or_
 import json
 import os
 from datetime import datetime, timedelta
+import time
 import requests
 from dotenv import load_dotenv
 from flask_cors import CORS
@@ -37,7 +38,7 @@ def get_shares(id):
 
 @app.route('/balance_sheets/<int:cik>', methods=['GET'])
 def get_balancesheets(cik):
-    balance_sheets = BalanceSheet.query.filter(BalanceSheet.company_cik == cik
+    balance_sheets = BalanceSheet.query.filter(BalanceSheet.company_cik == cik,
                                                ).order_by(BalanceSheet.end).all()
     if not balance_sheets:
         return jsonify({"error": "Balance sheets not found"}), 404
@@ -140,10 +141,14 @@ def search_companies():
 
 @app.route('/filings/<string:cik_10>')
 def get_filings(cik_10:str):
+
+    
     company = Company.query.filter(Company.cik_10 == cik_10).first()
+    
     headers = {
         'User-Agent':'Raymond Michetti michetti.ray@gmail.com'
     }
+    
     r = requests.get(f'https://data.sec.gov/submissions/CIK{cik_10}.json', headers=headers)
 
     if not r.ok:
@@ -186,21 +191,28 @@ def get_filings(cik_10:str):
             
             if form in ("8-K", "6-K", "8-K/A", "6-K/A"):
                filing['form'] = "Form" + " " + form
+
             if i < 5:
                 all_filings['latest'].append(filing)
+
             if len(all_filings['fin']) < 5:
                 if form in ("10-K", "10-K/A", "10-Q", "10-Q/A", "20-F", "20-F/A"):
                     filing['form'] = f'Form {f}'
                     all_filings['fin'].append(filing)
+
             if len(all_filings['insiders']) < 5:
                 if form in ("3", "4", "144", "3/A", "4/A", "144/A"):
                     filing['form'] = f'Form {f}'
                     all_filings['insiders'].append(filing)
+
+            
             if len(all_filings['institutions']) < 5:
                 if form in ("SCHEDULE 13G", "SCHEDULE 13D", "SC 13G", "SC 13G/A", "SCHEDULE 13G/A", "SCHEDULE 13D/A",):
                     all_filings['institutions'].append(filing)
+            
             if len(all_filings['latest']) + len(all_filings['fin']) + len(all_filings['insiders']) + len(all_filings['institutions']) == 20:
                 return jsonify(all_filings), r.status_code
+            
             i += 1
 
         return jsonify(all_filings), r.status_code

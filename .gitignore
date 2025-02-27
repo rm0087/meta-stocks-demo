@@ -59,9 +59,6 @@ jspm_packages
 .pytest_cache
 __pycache__
 
-
-.vscode
-.env
 server/migrations
 server/acct-jsons/*
 server/json/*
@@ -69,4 +66,6 @@ server/backup
 server/z-*.*
 server/.env
 client/src/.env
-server/submissions
+.vscode
+.env
+

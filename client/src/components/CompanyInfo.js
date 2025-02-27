@@ -11,28 +11,30 @@ export default function CompanyInfo({company, filings}) {
         
             const latest = filings?.latest?.map((filing,index)=> {
                 return (
-                    <tr className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm whitespace-nowrap">{filing.form}</a></td></tr>
+                    <li className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm whitespace-nowrap">{filing.form}</a></td></li>
                 )
             })
             setLatestFilings(latest)
 
             const fins = filings?.fin?.map((filing,index)=> {
                 return (
-                    <tr className="whitespace-nowrap" key={index}><td>{filing.reportDate} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></tr>
+
+                    <li className="whitespace-nowrap" key={index}><td>{filing.reportDate} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></li>
                 )
             })
             setFinFilings(fins)
 
             const insiders = filings?.insiders?.map((filing,index)=> {
                 return (
-                    <tr className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></tr>
+
+                    <li className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></li>
                 )
             })
             setInsiderFilings(insiders)
 
             const institutionals = filings?.institutions?.map((filing,index)=> {
                 return (
-                    <tr className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></tr>
+                    <li className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></li>
                 )
             })
             setInstitutionalFilings(institutionals)
@@ -58,6 +60,7 @@ export default function CompanyInfo({company, filings}) {
                         <tr className=""><th className='font-bold text-left'>Industry:&nbsp;</th><th className="text-left font-medium">{company && company.sic_description && company.sic_description}</th></tr>
                     </tbody>
                 </table>
+
             </div>
             </div>
             <div className="w-[50%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white ml-5">
@@ -94,8 +97,40 @@ export default function CompanyInfo({company, filings}) {
 
 
             </div>
+
             </div>
             </div>
+            <div className="w-[50%] font-mono tracking-tight text-xs border rounded text-white ml-5">
+                <div className="px-5 py-2">
+                    <div className="flex flex-row justify-between items-center mb-4">
+                    <h2 className="text-lg font-bold">🏢 Filings</h2>
+                    <a rel="noreferrer" target="_blank" href={"https://www.sec.gov/edgar/search/#/dateRange=10y&ciks="+company.cik_10}>  (View all) </a>
+                    </div>
+                    
+                    <div className="flex flex-row justify-center">
+                        <div className="px-5 w-[25%]">
+                            <h2 className="font-bold text-base">Latest</h2>
+                            <div>{latestFilings}</div>
+                        </div>
+                        
+                        <div className="px-5 w-[25%]">
+                            <h2 className="font-bold text-base">Financial Reports</h2>
+                            <div>{finFilings}</div>
+                        </div>
+                        
+                        <div className="px-5 w-[25%]">
+                            <h2 className="font-bold text-base">Insiders</h2>
+                            <div>{insiderFilings}</div>
+                        </div>
+                        
+                        <div className="px-5 w-[25%]">
+                            <h2 className="font-bold text-base">Institutions</h2>
+                            <div>{institutionalFilings}</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
         </div>
     )
 }
