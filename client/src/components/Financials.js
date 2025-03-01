@@ -440,7 +440,7 @@ export default function Financials({company, shares, price}){
             <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
                 
                 {/* BALANCE SHEET CHART*/}
-                <div className = "border border-white rounded w-[90%] h-full">
+                <div className = "border border-white rounded w-[90%] p-1 h-full">
                     
                     <span className="flex flex-row justify-center">
                         
@@ -499,7 +499,7 @@ export default function Financials({company, shares, price}){
 
 
                 {/* INCOME STATEMENT CHART*/}
-                <div className = "border border-white rounded w-[90%] h-full">
+                <div className = "border border-white rounded w-[90%] p-1 h-full">
                     
                     <div className="flex flex-row justify-center ">
                         

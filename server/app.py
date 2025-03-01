@@ -4,6 +4,8 @@
 
 # Remote library imports
 # from flask_migrate import Migrate
+from urllib.parse import unquote
+import anthropic
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
 from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, IncomeStatement, CashFlowsStatement, CommonShares, CoKeyAssoc
@@ -172,18 +174,27 @@ def get_filings(cik_10:str):
             accn = recent_filings.get('accessionNumber', [])[i]
             doc = recent_filings.get('primaryDocument', [])[i]
             reportDate = recent_filings.get('reportDate', [])[i]
+            txt = accn + ".txt"
+            url_prefix = f"https://www.sec.gov/Archives/edgar/data/{company.cik}/"
+            url_suffix = accn.replace("-", "") + "/"
+            url = url_prefix + url_suffix
+            date_str = data.get('filings', {}).get('recent', {}).get('acceptanceDateTime', [])[i]
+            formatted_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%Y-%m-%d %H:%M') 
+
             filing = {
                 'form' : form,
                 'accn' : accn,
+                'filingDate' : formatted_date,
+                'reportDate': reportDate,
+                'fullFilingUrl': url + accn + "-index.html",
                 'doc' : doc,
-                'url' : "",
-                'reportDate': reportDate
+                'urlPrefix' : url,
+                'txt' : txt,
             }
-            date_str = data.get('filings', {}).get('recent', {}).get('acceptanceDateTime', [])[i]
-            formatted_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%Y-%m-%d %H:%M')
-            filing['date'] = formatted_date
-            filing['accn'] = filing['accn'].replace("-", "")
-            filing['url'] = f"https://www.sec.gov/Archives/edgar/data/{company.cik}/{filing['accn']}/{filing['doc']}"
+            
+            # filing_url_accn = filing['accn'].replace("-", "")
+            # filing['url'] = f"https://www.sec.gov/Archives/edgar/data/{company.cik}/{filing_url_accn}/"
+            
             f = filing['form']
             
             # print(filing)
@@ -219,6 +230,64 @@ def get_filings(cik_10:str):
     
     except Exception as e:
         return jsonify(all_filings), r.status_code
+    
+@app.route('/ai/analyze', methods=["GET"])
+def get_ai_analysis():
+    txt_url = request.args.get('url', '')
+    decoded_url = unquote(txt_url)
+    print(decoded_url)
+    headers = {
+        'User-Agent': 'Raymond Michetti michetti.ray@gmail.com'
+    }
+    try:
+        summary_text = ""
+        response = requests.get(decoded_url, headers=headers)
+        print(response.status_code)
+        if response.status_code != 200:
+            return jsonify({
+                "error": f"Failed to retrieve content: HTTP {response.status_code}"
+            }), 500
+        
+        content = response.text
+        
+        client = anthropic.Anthropic(
+            api_key= os.getenv('CLAUDE_KEY')
+        )
+        with client.messages.stream(
+                model="claude-3-haiku-20240307",
+                max_tokens=1000,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f'Please summarize following SEC document: {content}'
+                    }
+                ]
+            ) as stream:
+                # Collect the streamed content
+                for text in stream.text_stream:
+                    summary_text += text
+                
+                # Get the final message for metadata
+                final_message = stream.get_final_message()
+        
+                summary_response = {
+                    "summary": summary_text,
+                    "model": final_message.model,
+                    "usage": {
+                        "input_tokens": final_message.usage.input_tokens,
+                        "output_tokens": final_message.usage.output_tokens
+                    },
+                    "original_url": decoded_url,
+                    "content_length": len(content)
+                }
+                return jsonify(summary_response), 200
+        
+    except requests.RequestException as e:
+        return jsonify({
+            "error": f"Failed to retrieve content: {str(e)}"
+        }), 500
+    
+    
     
 
     

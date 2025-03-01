@@ -7,34 +7,80 @@ export default function CompanyInfo({company, filings}) {
     const [institutionalFilings, setInstitutionalFilings] = useState([]);
     
 
+
+    const fetchAiAnalysis = async (txtUrl) => {
+        console.log(txtUrl)
+        try {
+            const response = await fetch(`ai/analyze?url=${encodeURIComponent(txtUrl)}`, {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json'
+              },
+            });
+            
+            if (!response.ok) {
+              throw new Error(`Failed to retrieve AI: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log(data); // This will now log {message: "your-txt-url-value"}
+            return data;
+          } catch (error) {
+            console.error('Error retrieving AI', error);
+          }
+        
+}
+
     useEffect(()=>{
         
             const latest = filings?.latest?.map((filing,index)=> {
+                const primaryUrl = filing.urlPrefix + filing.doc
+                const txtUrl = filing.urlPrefix + filing.txt
                 return (
-                    <li className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm whitespace-nowrap">{filing.form}</a></td></li>
+                    <span className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
+                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
+                    </span>
                 )
+
             })
             setLatestFilings(latest)
 
             const fins = filings?.fin?.map((filing,index)=> {
+                const primaryUrl = filing.urlPrefix + filing.doc
+                const txtUrl = filing.urlPrefix + filing.txt
                 return (
 
-                    <li className="whitespace-nowrap" key={index}><td>{filing.reportDate} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></li>
+                    <span className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
+                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.reportDate} - {filing.form}</a>
+                    </span>
                 )
             })
             setFinFilings(fins)
 
             const insiders = filings?.insiders?.map((filing,index)=> {
+                const primaryUrl = filing.urlPrefix + filing.doc
+                const txtUrl = filing.urlPrefix + filing.txt
                 return (
 
-                    <li className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></li>
+                    <span className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
+                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
+                    </span>
+
                 )
             })
             setInsiderFilings(insiders)
 
             const institutionals = filings?.institutions?.map((filing,index)=> {
+                const primaryUrl = filing.urlPrefix + filing.doc
+                const txtUrl = filing.urlPrefix + filing.txt
                 return (
-                    <li className="whitespace-nowrap" key={index}><td>{filing.date} - <a target="_blank" rel="noreferrer" href={filing.url} className="text-sm">{filing.form}</a></td></li>
+                    <span className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
+                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
+                    </span>
                 )
             })
             setInstitutionalFilings(institutionals)
