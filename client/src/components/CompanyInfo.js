@@ -50,6 +50,7 @@ export default function CompanyInfo({company, filings}) {
                 const primaryUrl = filing.urlPrefix + filing.doc
                 const txtUrl = filing.urlPrefix + filing.txt
                 return (
+
                     <span className="flex flex-row items-center">
                         <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
                         <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.reportDate} - {filing.form}</a>
@@ -62,10 +63,12 @@ export default function CompanyInfo({company, filings}) {
                 const primaryUrl = filing.urlPrefix + filing.doc
                 const txtUrl = filing.urlPrefix + filing.txt
                 return (
+
                     <span className="flex flex-row items-center">
                         <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
                         <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
                     </span>
+
                 )
             })
             setInsiderFilings(insiders)
@@ -103,6 +106,44 @@ export default function CompanyInfo({company, filings}) {
                         <tr className=""><th className='font-bold text-left'>Industry:&nbsp;</th><th className="text-left font-medium">{company && company.sic_description && company.sic_description}</th></tr>
                     </tbody>
                 </table>
+
+            </div>
+            </div>
+            <div className="w-[50%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white ml-5">
+            <div className="px-5 py-2">
+                <span className="flex flex-row">
+                <h2 className="text-lg font-bold">🏢 Filings</h2><a rel="norefferer" target= "_blank" href = {"https://www.sec.gov/edgar/search/#/dateRange=10y&ciks="+company.cik_10}>View all</a>
+                </span> 
+                <div className="md:grid grid-cols-2 gap-4 place-items-left w-full h-full text-gray-50 font-mono text-xs">
+                    <table className="">
+                        <tbody>
+                            <h2 className="font-bold text-base">Latest (all)</h2>
+                            {latestFilings}
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                            <h2 className="font-bold text-base">Financial Reports</h2>
+                            {finFilings}
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                            <h2 className="font-bold text-base">Insiders</h2>
+                            {insiderFilings}
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                            <h2 className="font-bold text-base">Institutions</h2>
+                            {institutionalFilings}
+                        </tbody>
+                    </table>
+                </div>               
+
+
+            </div>
+
             </div>
             </div>
             <div className="w-[50%] font-mono tracking-tight text-xs border rounded text-white ml-5">
