@@ -310,7 +310,9 @@ export default function Financials({company, shares, price}){
         scales: {
             x: {
                 ticks: {
+
                     stepSize: 5,
+
                 },
                 grid: {
                     color: 'rgba(255, 255, 255, 0.03)' // Adjust alpha (opacity) here
@@ -324,8 +326,10 @@ export default function Financials({company, shares, price}){
                     autoSkip: false
                 },
                 grid: {
+
                     color: 'rgba(255, 255, 255, .03)', // Adjust alpha (opacity) here
                     offset: false
+
                 }
             }
         },
@@ -366,6 +370,7 @@ export default function Financials({company, shares, price}){
         };
         return optionsObj
     }
+
 
     ////////// OLD FINANCIAL BAR
     // <div id ="stats" className="w-[95%] flex flex-row border rounded">
@@ -440,10 +445,21 @@ export default function Financials({company, shares, price}){
                     <span className="flex flex-row justify-center">
                         
                         <span className="text-xs p-5 w-[33%] whitespace-nowrap">
+
+
+//// 2.) Render component in JSX ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    return(
+        <>  
+            <div id ="stats" className="w-[95%] flex flex-row border rounded">
+                <div className="w-[33%] px-5 py-2 text-gray-50 font-mono tracking-tight text-xs">
+                        <p className='text-lg font-bold tracking-normal'>🔑 Financials</p>
+                        <div className="flex flex-row justify-left">
+
                             <table>
                                 <tbody>
                                     <tr className=""><th className='font-bold text-left'>Assets:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && assetsData.length > 0 ? formatNumber(assetsData[assetsData.length - 1], 3) : ''}</th></tr>
                                     <tr className=""><th className='font-bold text-left'>Liabilities:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && liabilitiesData.length > 0 ? formatNumber(liabilitiesData[liabilitiesData.length - 1], 3) : ''}</th></tr>
+
                                     <tr className=""><th className='font-bold text-left'>S/E:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
                                     <tr className=""><th className='font-bold text-left'>Cash:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1], 3) : ''}</th></tr>
                                 </tbody>
@@ -462,8 +478,24 @@ export default function Financials({company, shares, price}){
                     </span>
                     
                     <Line data={balanceSheetDataObj} options={options}/>
+
+                                    <tr className=""><th className='font-bold text-left'>Stockholders Equity:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && stockholdersData.length > 0 ? formatNumber(stockholdersData[stockholdersData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-left'>Cash:&nbsp;</th><th className="text-right font-medium">{api.length > 0 && api[0].currency ? api[0].currency : ''} {company && cashData.length > 0 ? formatNumber(cashData[cashData.length - 1], 3) : ''}</th></tr>
+                                </tbody>
+                            </table>
+                            <table className="ml-5">
+                                <tbody>
+                                    <tr className=""><th className='font-bold text-left'>Revenue (Q):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && revenueData.length > 0 ? formatNumber(revenueData[revenueData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-left'>Net Income (Q):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''} {company && netIncomeData.length > 0 ? formatNumber(netIncomeData[netIncomeData.length - 1], 3) : ''}</th></tr>
+                                    <tr className=""><th className='font-bold text-right'>&nbsp;</th><th className="text-right font-medium"></th></tr>
+                                    <tr className=""><th className='font-bold text-right'>&nbsp;</th><th className="text-right font-medium"></th></tr>
+                                </tbody>
+                            </table>
+                        </div> 
+
                 </div>
                 
+
 
 
                 {/* INCOME STATEMENT CHART*/}
@@ -492,6 +524,47 @@ export default function Financials({company, shares, price}){
                         </span>
                     
                     </div>
+                    
+                    <Line data={incStatementGraphObj} options={options}/>
+                </div>
+
+
+                <div className="w-[33%] px-5 py-2 ml-12 font-mono tracking-tight text-gray-50 text-xs">  
+                    <p className='text-lg font-bold tracking-normal'>📊 Valuation</p>
+                    <table className="w-[75%]">
+                        <tbody>
+                            <tr className=""><th className='font-bold text-left'>Market Capitalization:&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}{" " + formatNumber(setMarketCap(shares, price))}</th></tr>
+                            <tr className=""><th className='font-bold text-left'>Earnings per Share (EPS):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}{company && incApi && incApi[incApi.length - 1]?.eps?  " " + incApi[incApi.length - 1].eps.toFixed(2) : 0}</th></tr>
+                            <tr className=""><th className='font-bold text-left'>Price-to-Earnings ratio (P/E):&nbsp;</th><th className="text-right font-medium">{company && incApi && incApi[incApi.length - 1]?.eps? (price / incApi[incApi.length - 1].eps).toFixed(2) : 0}</th></tr>
+                            <tr className=""><th className='font-bold text-left'>Price-to-Sales ratio (P/S):&nbsp;</th><th className="text-right font-medium">{company && incApi.length > 0 ? ((shares * price) / (incApi[incApi.length - 1].total_revenue * 4)).toFixed(2) : ''}</th></tr>
+                            {/* <tr className=""><th className=' font-bold text-left'>Enterprise Value (EV):&nbsp;</th><th className="text-right font-medium">{incApi.length > 0 && incApi[0].currency ? incApi[0].currency : ''}</th></tr> */}
+                            </tbody>
+                        </table>
+                </div>
+
+                <div className="w-[33%] px-5 py-2 ml-12 text-gray-50 font-mono tracking-tight text-xs">
+                        <p className='text-lg font-bold tracking-normal'>Shares Info.</p>
+                        <table>
+                        <tbody>
+                            <tr className=""><th className='font-bold text-left'>Shares Outstanding:&nbsp;</th><th className="text-right font-medium">{shares && formatNumber(shares)}</th></tr>
+                            {/* <tr className=""><th className='font-bold text-left'>Borrow Rate %:&nbsp;</th><th className="content-center"></th></tr>
+                            <tr className=""><th className='font-bold text-left'>Short Float %:&nbsp;</th><th className="content-center"></th></tr> */}
+                        </tbody>
+                        </table>
+                </div>
+
+            </div>
+            <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
+                <div className = "border border-white rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Balance Sheet History</h2>
+                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                    <h3 className="text-center text-xs">As of: {assetsLabels && assetsLabels[assetsLabels.length -1]}</h3>
+                    <Line data={balanceSheetDataObj} options={options}/>
+                </div>
+                <div className = "border border-white rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Income Statement History</h2>
+                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                    <h3 className="text-center text-xs">As of: {assetsLabels && netIncomeLabels[netIncomeLabels.length -1]}</h3>
                     
                     <Line data={incStatementGraphObj} options={options}/>
                 </div>
