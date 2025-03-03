@@ -143,7 +143,6 @@ export default function App() {
                         setFilings(["No filings to show."])
                     }
                     setFilings(data)
-                    console.log(data)
                 } catch (error) {
                     setFilings({})
                     console.error('Error retrieving filings', error)
