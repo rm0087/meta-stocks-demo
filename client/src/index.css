@@ -99,3 +99,73 @@ body{
   padding-top: 0px;
   width: 100%;
 }
+
+
+
+.popup-container {
+  /* This ensures the trigger button positions correctly */
+  position: relative;
+}
+
+.modal-overlay {
+  /* Fixed positioning removes it from the document flow */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Higher z-index ensures it's above other elements */
+  z-index: 9999;
+  /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Centering the modal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content.book-page {
+  /* Makes sure this positions relative to the overlay */
+  position: relative;
+  background-color: #fff8da;
+  padding: 30px;
+  border-radius: 5px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  /* Book page styling */
+  border-left: 1px solid #d3d3d3;
+  background-image: linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 10%);
+}
+
+.modal-content p {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.modal-content li {
+  list-style-type: decimal;
+  margin: 5px;
+}
+
+.modal-content ol {
+  margin-bottom: 5px;
+}
+
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.page-content {
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+}

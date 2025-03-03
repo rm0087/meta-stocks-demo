@@ -4,11 +4,13 @@
 
 # Remote library imports
 # from flask_migrate import Migrate
+import re
+import markdown
 from urllib.parse import unquote
 import anthropic
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
-from models import Company, Keyword, company_keyword_assoc, Note, BalanceSheet, IncomeStatement, CashFlowsStatement, CommonShares, CoKeyAssoc
+from models import Company, Keyword, company_keyword_assoc, AISummary, Note, BalanceSheet, IncomeStatement, CashFlowsStatement, CommonShares, CoKeyAssoc
 from sqlalchemy import not_, or_
 import json
 import os
@@ -19,6 +21,71 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 # Local imports
 from config import app, db, api
+
+def filter_encoded_images(text):
+    # Pattern to match uuencoded files
+    # This matches content starting with "begin" and ending with "end"
+    uuencode_pattern = re.compile(r'<TEXT>\s*begin\s+\d+\s+\S+\s+[\s\S]*?end\s*</TEXT>', re.MULTILINE)
+    
+    # Filter out the encoded image sections
+    filtered_text = uuencode_pattern.sub('', text)
+    
+    return filtered_text
+
+def remove_encoded_blocks(text):
+    # Remove content between <TEXT> tags that appears to be encoded
+    text_tag_pattern = r'<TEXT>\s*begin [^<]+</TEXT>'
+    
+    # Replace with a placeholder
+    cleaned_text = re.sub(text_tag_pattern, '<TEXT>[ENCODED CONTENT REMOVED]</TEXT>', text, flags=re.DOTALL)
+    
+    return cleaned_text
+def clean_encoded_content(text):
+    patterns = [
+        # UUEncoded content
+        r'begin \d+ [^\n]+\.[a-zA-Z0-9]+\n(?:[M-_][^\n]*\n)+(?:end|`)',
+        
+        # Base64 encoded data (common patterns)
+        r'data:[^;]+;base64,[a-zA-Z0-9+/=]+',
+        
+        # Long strings of seemingly random characters that might be encoded data
+        r'(?:[A-Za-z0-9+/=]{50,})',
+        
+        # Hexadecimal data dumps
+        r'(?:(?:[0-9A-F]{2}\s){8,}(?:[0-9A-F]{2}))',
+    ]
+    
+    cleaned_text = text
+    for pattern in patterns:
+        cleaned_text = re.sub(pattern, '[BINARY CONTENT REMOVED]', cleaned_text, flags=re.DOTALL)
+    
+    return cleaned_text
+
+def normalize_whitespace(text):
+    # Replace multiple whitespace characters with a single space
+    normalized_text = re.sub(r'\s+', ' ', text)
+    # Remove leading and trailing whitespace
+    normalized_text = normalized_text.strip()
+    return normalized_text
+
+def remove_html_tags(html_text):
+    # Remove HTML tags
+    clean_text = re.sub(r'<.*?>', '', html_text)
+    
+    # Optional: Replace multiple whitespaces with a single space
+    clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+    
+    return clean_text
+
+
+def remove_binary_content(text):
+    # Pattern to match uuencoded content (begins with "begin" and contains encoded lines)
+    uuencode_pattern = r'begin \d+ [^\n]+\.jpg\n(?:[M-_][^\n]*\n)+(?:end|`)'
+    
+    # Remove uuencoded content
+    cleaned_text = re.sub(uuencode_pattern, '[IMAGE CONTENT REMOVED]', text, flags=re.DOTALL)
+    
+    return cleaned_text
 
 @app.route('/companies/<string:ticker>', methods=['GET'])
 def get_company(ticker):
@@ -192,13 +259,7 @@ def get_filings(cik_10:str):
                 'txt' : txt,
             }
             
-            # filing_url_accn = filing['accn'].replace("-", "")
-            # filing['url'] = f"https://www.sec.gov/Archives/edgar/data/{company.cik}/{filing_url_accn}/"
-            
             f = filing['form']
-            
-            # print(filing)
-            # print(i)
             
             if form in ("8-K", "6-K", "8-K/A", "6-K/A"):
                filing['form'] = "Form" + " " + form
@@ -234,26 +295,42 @@ def get_filings(cik_10:str):
 @app.route('/ai/analyze', methods=["GET"])
 def get_ai_analysis():
     txt_url = request.args.get('url', '')
-    decoded_url = unquote(txt_url)
-    print(decoded_url)
+    unq_url = unquote(txt_url)
+    decoded_url = unq_url
+    cik2 = re.sub(r'^https://www.sec.gov/Archives/edgar/data/([^/]*)(?:/.*)?$', r'\1', decoded_url)
+    
+    print("Initiating LLM request.")
+    with app.app_context():
+        summary = AISummary.query.filter(AISummary.url == decoded_url).first()
+        if summary:
+            print("Local AI summary found. Request complete.")
+            return jsonify(summary.to_dict()), 200
+
     headers = {
         'User-Agent': 'Raymond Michetti michetti.ray@gmail.com'
     }
+
     try:
-        summary_text = ""
         response = requests.get(decoded_url, headers=headers)
-        print(response.status_code)
+        
         if response.status_code != 200:
             return jsonify({
                 "error": f"Failed to retrieve content: HTTP {response.status_code}"
             }), 500
         
-        content = response.text
+        print("Encoding request.")
+        raw_txt = response.text
+        content = filter_encoded_images(raw_txt)
+        # print(content)
         
+        print("Sending content to LLM.")
         client = anthropic.Anthropic(
             api_key= os.getenv('CLAUDE_KEY')
         )
+
+        summary_text = ""
         with client.messages.stream(
+                # model="claude-3-7-sonnet-20250219",
                 model="claude-3-haiku-20240307",
                 max_tokens=1000,
                 messages=[
@@ -263,15 +340,13 @@ def get_ai_analysis():
                     }
                 ]
             ) as stream:
-                # Collect the streamed content
                 for text in stream.text_stream:
                     summary_text += text
                 
-                # Get the final message for metadata
                 final_message = stream.get_final_message()
         
                 summary_response = {
-                    "summary": summary_text,
+                    "summary": markdown.markdown(summary_text),
                     "model": final_message.model,
                     "usage": {
                         "input_tokens": final_message.usage.input_tokens,
@@ -280,19 +355,34 @@ def get_ai_analysis():
                     "original_url": decoded_url,
                     "content_length": len(content)
                 }
-                return jsonify(summary_response), 200
+
+                with app.app_context():
+                    new_ai = AISummary(
+                        co_cik = cik2,
+                        url = summary_response['original_url'],
+                        content_length = summary_response['content_length'],
+                        summary = summary_response['summary'],
+                        model = summary_response['model'],
+                        input_tokens = summary_response['usage']['input_tokens'],
+                        output_tokens = summary_response['usage']['output_tokens'],
+                    )
+                    db.session.add(new_ai)
+                    db.session.commit()
+                    print("LLM request complete")
+                    return jsonify(new_ai.to_dict()), 200
         
     except requests.RequestException as e:
         return jsonify({
             "error": f"Failed to retrieve content: {str(e)}"
         }), 500
     
-    
-    
+  
+if __name__ == '__main__':
+    load_dotenv()
+    app.run(port=5555, debug=True)
 
-    
-    
 
+##### ARCHIVED ##############
 # app.route('/news', methods=['GET'])
 # def get_news():
 #     news_key = os.getenv('NEWS_API')
@@ -335,9 +425,4 @@ def get_ai_analysis():
 #         return jsonify(company.to_dict()), 200
 #     except Exception as e:
 #         return{'error': str(e)}, 404
-
-    
-if __name__ == '__main__':
-    load_dotenv()
-    app.run(port=5555, debug=True)
     

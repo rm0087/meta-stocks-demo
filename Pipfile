@@ -17,6 +17,7 @@ python-dotenv = "*"
 feedparser = "*"
 flask-cors = "*"
 anthropic = "*"
+markdown = "*"
 
 [requires]
 python_full_version = "3.8.13"

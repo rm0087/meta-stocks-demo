@@ -5,13 +5,73 @@ export default function CompanyInfo({company, filings}) {
     const [finFilings, setFinFilings] = useState([])
     const [insiderFilings, setInsiderFilings] = useState([]);
     const [institutionalFilings, setInstitutionalFilings] = useState([]);
-    
+    const [isOpen, setIsOpen] = useState(false);
+    const [aiSummary, setAiSummary] = useState(null)
 
+    function AiPopup(){
 
-    const fetchAiAnalysis = async (txtUrl) => {
-        console.log(txtUrl)
+        return (
+            <div>
+              {/* The Modal/Popup */}
+              {isOpen && (
+                <div className="modal-overlay" onClick={() => setIsOpen(false)}>
+                  <div className="modal-content book-page" onClick={e => e.stopPropagation()}>
+                    <button 
+                      className="close-button" 
+                      onClick={() => {setIsOpen(false); setAiSummary(null)}}
+                    >
+                      ×
+                    </button>
+                    <div className="page-content">
+                      {aiSummary ? (
+                        <div>
+                            <div className="flex flex-row">
+                                <div className="w-[25%] flex justify-start">
+                                    {aiSummary.filing && 
+                                        <div className="flex flex-col">
+                                            <span className="flex flex-col">
+                                                <h3 className="text-xs font-bold">Filing Date: </h3>
+                                                <h4 className="text-xs">{aiSummary?.filing?.filingDate}</h4>
+                                            </span>
+                                            <span className="flex flex-col">
+                                                <h3 className="text-xs font-bold">Reporting for: </h3>
+                                                <h4 className="text-xs">{aiSummary?.filing?.reportDate}</h4>
+                                            </span>
+                                        </div> 
+                                    }
+                                </div>
+                                <div className="w-[50%] flex flex-col justify-center">
+                                    <h1 className="flex font-bold text-xl text-center justify-center">{aiSummary.filing && company.name}</h1>
+                                    <h2 className="flex text-sm text-center justify-center">{aiSummary.filing && "Ticker: " + company.ticker}</h2>
+                                    <h2 className="flex font-bold text-center justify-center">{aiSummary.filing && aiSummary.title}</h2>
+                                </div>
+                                <div className="w-[25%] flex justify-end">
+                                    {aiSummary.filing && <a className="text-xs" href={aiSummary?.filing?.urlPrefix + aiSummary?.filing?.doc} rel="noreferrer" target="_blank">Read Full Filing</a>}
+                                </div>
+                            </div>
+                            <div dangerouslySetInnerHTML={{__html: aiSummary.summary}}/>
+                        </div>
+                      ) : (
+                        <div>Loading AI Summary... This could take a minute... or two...</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+        );
+    }
+
+    const fetchAiAnalysis = async (filing) => {
+        // console.log(txtUrl)
+        // console.log(filing)
+        setAiSummary(null)
+        setIsOpen(true)
+
+        const fullUrl = filing.urlPrefix + filing.txt
+        // console.log(fullUrl)
         try {
-            const response = await fetch(`ai/analyze?url=${encodeURIComponent(txtUrl)}`, {
+            const response = await fetch(`ai/analyze?url=${encodeURIComponent(fullUrl)}`, {
               method: 'GET',
               headers: {
                 'Accept': 'application/json'
@@ -19,27 +79,35 @@ export default function CompanyInfo({company, filings}) {
             });
             
             if (!response.ok) {
-              throw new Error(`Failed to retrieve AI: ${response.status}`);
+              throw new Error(`Failed to retrieve AI summary: ${response.status}`);
             }
             
-            const data = await response.json();
-            console.log(data); // This will now log {message: "your-txt-url-value"}
-            return data;
+            const aiResponse = await response.json();
+            
+            setAiSummary({
+                title: filing.form,
+                summary: aiResponse.summary,
+                filing: filing
+            })
+            
           } catch (error) {
             console.error('Error retrieving AI', error);
+            setAiSummary({summary:"<p>Summary cannot be displayed at this time. Please try a different filing.</p>", filing: null})
           }
         
 }
 
     useEffect(()=>{
-        
+            setIsOpen(false)
+            setAiSummary(null)
+
             const latest = filings?.latest?.map((filing,index)=> {
                 const primaryUrl = filing.urlPrefix + filing.doc
                 const txtUrl = filing.urlPrefix + filing.txt
                 return (
-                    <span className="flex flex-row items-center">
-                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
-                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
+                    <span  key={index} className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(filing)}></img>
+                        <a className="whitespace-nowrap"  target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
                     </span>
                 )
 
@@ -50,10 +118,9 @@ export default function CompanyInfo({company, filings}) {
                 const primaryUrl = filing.urlPrefix + filing.doc
                 const txtUrl = filing.urlPrefix + filing.txt
                 return (
-
-                    <span className="flex flex-row items-center">
-                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
-                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.reportDate} - {filing.form}</a>
+                    <span key={index} className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(filing)}></img>
+                        <a className="whitespace-nowrap" target="_blank" rel="noreferrer" href={primaryUrl}>{filing.reportDate} - {filing.form}</a>
                     </span>
                 )
             })
@@ -63,12 +130,10 @@ export default function CompanyInfo({company, filings}) {
                 const primaryUrl = filing.urlPrefix + filing.doc
                 const txtUrl = filing.urlPrefix + filing.txt
                 return (
-
-                    <span className="flex flex-row items-center">
-                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
-                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
+                    <span key={index} className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(filing)}></img>
+                        <a className="whitespace-nowrap" target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
                     </span>
-
                 )
             })
             setInsiderFilings(insiders)
@@ -77,9 +142,9 @@ export default function CompanyInfo({company, filings}) {
                 const primaryUrl = filing.urlPrefix + filing.doc
                 const txtUrl = filing.urlPrefix + filing.txt
                 return (
-                    <span className="flex flex-row items-center">
-                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(txtUrl)}></img>
-                        <a className="whitespace-nowrap" key={index} target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
+                    <span key={index} className="flex flex-row items-center">
+                        <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(filing)}></img>
+                        <a className="whitespace-nowrap" target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
                     </span>
                 )
             })
@@ -92,6 +157,7 @@ export default function CompanyInfo({company, filings}) {
     
     return (
         <div className="w-[100%] flex justify-center mt-5">
+            {isOpen? <AiPopup/>: null}
             <div className="w-[95%] flex flex-row ">
             <div className="w-[25%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
             <div className="px-5 py-2">
@@ -146,7 +212,7 @@ export default function CompanyInfo({company, filings}) {
 
             </div>
             </div>
-            <div className="w-[50%] font-mono tracking-tight text-xs border rounded text-white ml-5">
+            <div className="w-[75%] font-mono tracking-tight text-xs border rounded text-white ml-5">
                 <div className="px-5 py-2">
                     <div className="flex flex-row justify-between items-center mb-4">
                     <h2 className="text-lg font-bold">🏢 Filings</h2>

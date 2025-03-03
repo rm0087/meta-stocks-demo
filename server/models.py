@@ -88,7 +88,6 @@ class BalanceSheet(db.Model, SerializerMixin):
     currency = db.Column(db.String)
 
     # company = db.relationship('Company', back_populates='balance_sheets')
-
     # serialize_rules = ('-company.balance_sheets',)
 
     __table_args__ = (
@@ -212,6 +211,20 @@ class Article(db.Model, SerializerMixin):
     source_url = db.Column(db.String)
     title = db.Column(db.String)
     content = db.Column(db.Text)
+
+class AISummary(db.Model, SerializerMixin):
+    __tablename__ = "ai_summaries_table"
+
+    id = db.Column(db.Integer, primary_key=True)
+    co_cik = db.Column(db.Integer)
+    url = db.Column(db.String)
+    content_length = db.Column(db.Integer)
+    summary = db.Column(db.Text)
+    model = db.Column(db.String)
+    input_tokens = db.Column(db.Integer)
+    output_tokens = db.Column(db.Integer)
+
+    serialize_only = ('summary',)
     
     
 
