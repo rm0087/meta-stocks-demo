@@ -142,12 +142,19 @@ body{
 
 .modal-content p {
   margin-top: 20px;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .modal-content li {
   list-style-type: decimal;
   margin: 5px;
+  font-weight:lighter;
+}
+
+.modal-content ul {
+  list-style-type: decimal;
+  margin: 5px;
+  font-weight:100;
 }
 
 .modal-content ol {
