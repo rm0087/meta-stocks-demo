@@ -46,10 +46,19 @@ export default function CompanyInfo({company, filings}) {
                                     <h2 className="flex font-bold text-center justify-center">{aiSummary.filing && aiSummary.title}</h2>
                                 </div>
                                 <div className="w-[25%] flex justify-end">
-                                    {aiSummary.filing && <a className="text-xs" href={aiSummary?.filing?.urlPrefix + aiSummary?.filing?.doc} rel="noreferrer" target="_blank">Read Full Filing</a>}
+                                    {aiSummary.filing && <a className="text-xs text-red-700 font-bold underline" href={aiSummary?.filing?.urlPrefix + aiSummary?.filing?.doc} rel="noreferrer" target="_blank">Read Full Filing</a>}
                                 </div>
                             </div>
                             <div dangerouslySetInnerHTML={{__html: aiSummary.summary}}/>
+                            <span className="flex flex-col justify-center">
+                                {
+                                    aiSummary.filing && 
+                                        <>
+                                            <a className="mt-5 text-sm text-red-700 text-center font-bold underline" href={aiSummary?.filing?.urlPrefix + aiSummary?.filing?.doc} rel="noreferrer" target="_blank">Read Full Filing</a>
+                                            <h3 className="text-center text-xs font-bold">This AI summary is not intended to be a replacement/substitution for reading through the original filing documents. Please make sure you read the original filing documents in their entirety!</h3>
+                                        </>
+                                }
+                            </span>
                         </div>
                       ) : (
                         <div>Loading AI Summary... This could take a minute... or two...</div>
@@ -105,7 +114,7 @@ export default function CompanyInfo({company, filings}) {
                 const primaryUrl = filing.urlPrefix + filing.doc
                 const txtUrl = filing.urlPrefix + filing.txt
                 return (
-                    <span  key={index} className="flex flex-row items-center">
+                    <span  key={index} className="flex items-center">
                         <img className="border rounded m-1" src="ai-icon.png" onClick={(e) => fetchAiAnalysis(filing)}></img>
                         <a className="whitespace-nowrap"  target="_blank" rel="noreferrer" href={primaryUrl}>{filing.filingDate} - {filing.form}</a>
                     </span>
@@ -159,58 +168,55 @@ export default function CompanyInfo({company, filings}) {
         <div className="w-[100%] flex justify-center mt-5">
             {isOpen? <AiPopup/>: null}
             <div className="w-[95%] flex flex-row ">
-            <div className="w-[25%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
-            <div className="px-5 py-2">
-                <h2 className="text-lg font-bold">🏢 Company Info.</h2>
-                <table>
-                    <tbody>
-                        <tr className=""><th className='font-bold text-left'>Name:&nbsp;</th><th className="text-left font-medium">{company && company.name && company.name}</th></tr>
-                        <tr className=""><th className='font-bold text-left'>Ticker:&nbsp;</th><th className="text-left font-medium">{company && company.ticker && company.ticker}</th></tr>
-                        {/* <tr className=""><th className='font-bold text-left'>CIK ID#:&nbsp;</th><th className="text-left font-medium">{company && company.cik && company.cik}</th></tr>
-                        <tr className=""><th className='font-bold text-left'>Exchange:&nbsp;</th><th className="text-left font-medium">{company && company.exchange && company.exchange}</th></tr> */}
-                        <tr className=""><th className='font-bold text-left'>Sector:&nbsp;</th><th className="text-left font-medium">{company && company.owner_org && company.owner_org.slice(3)}</th></tr>
-                        <tr className=""><th className='font-bold text-left'>Industry:&nbsp;</th><th className="text-left font-medium">{company && company.sic_description && company.sic_description}</th></tr>
-                    </tbody>
-                </table>
+                <div className="w-[25%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
+                    <div className="px-5 py-2">
+                        <h2 className="text-lg font-bold">🏢 Company Info.</h2>
+                        <table>
+                            <tbody>
+                                <tr className=""><th className='font-bold text-left'>Name:&nbsp;</th><th className="text-left font-medium">{company && company.name && company.name}</th></tr>
+                                <tr className=""><th className='font-bold text-left'>Ticker:&nbsp;</th><th className="text-left font-medium">{company && company.ticker && company.ticker}</th></tr>
+                                {/* <tr className=""><th className='font-bold text-left'>CIK ID#:&nbsp;</th><th className="text-left font-medium">{company && company.cik && company.cik}</th></tr>
+                                <tr className=""><th className='font-bold text-left'>Exchange:&nbsp;</th><th className="text-left font-medium">{company && company.exchange && company.exchange}</th></tr> */}
+                                <tr className=""><th className='font-bold text-left'>Sector:&nbsp;</th><th className="text-left font-medium">{company && company.owner_org && company.owner_org.slice(3)}</th></tr>
+                                <tr className=""><th className='font-bold text-left'>Industry:&nbsp;</th><th className="text-left font-medium">{company && company.sic_description && company.sic_description}</th></tr>
+                            </tbody>
+                        </table>
 
-            </div>
-            </div>
-            <div className="w-[100%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white ml-5">
-            <div className="px-5 py-2">
-                <span className="flex flex-row">
-                <h2 className="text-lg font-bold">🏢 Filings</h2><a rel="norefferer" target= "_blank" href = {"https://www.sec.gov/edgar/search/#/dateRange=10y&ciks="+company.cik_10}>View all</a>
-                </span> 
-                <div className="flex flex-row place-items-left w-full h-full text-gray-50 font-mono text-xs">
-                    <table className="w-[25%]">
-                        <tbody>
-                            <h2 className="font-bold text-base">Latest (all)</h2>
-                            {latestFilings}
-                        </tbody>
-                    </table>
-                    <table className="w-[25%]">
-                        <tbody>
-                            <h2 className="font-bold text-base">Financial Reports</h2>
-                            {finFilings}
-                        </tbody>
-                    </table>
-                    <table className="w-[25%]">
-                        <tbody>
-                            <h2 className="font-bold text-base">Insiders</h2>
-                            {insiderFilings}
-                        </tbody>
-                    </table>
-                    <table className="w-[25%]">
-                        <tbody>
-                            <h2 className="font-bold text-base">Institutions</h2>
-                            {institutionalFilings}
-                        </tbody>
-                    </table>
-                </div>               
-
-
-            </div>
-
-            </div>
+                    </div>
+                </div>
+                <div className="w-[100%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white ml-5">
+                    <div className="px-5 py-2">
+                        <span className="flex flex-row">
+                            <h2 className="text-lg font-bold">🏢 Filings</h2><a rel="norefferer" target= "_blank" href = {"https://www.sec.gov/edgar/search/#/dateRange=10y&ciks="+company.cik_10}>View all</a>
+                        </span> 
+                        <div className="flex place-items-left w-full h-full text-gray-50 font-mono text-xs">
+                            <div className="w-[25%] max-h-48 overflow-y-scroll flex flex-col max-w-xs">
+                              
+                                    <h2 className="font-bold text-base">Latest (all)</h2>
+                                    {latestFilings}
+                                
+                            </div>
+                            <table className="ml-5 w-[25%]">
+                                <tbody>
+                                    <h2 className="font-bold text-base">Financial Reports</h2>
+                                    {finFilings}
+                                </tbody>
+                            </table>
+                            <table className="w-[25%]">
+                                <tbody>
+                                    <h2 className="font-bold text-base">Insiders</h2>
+                                    {insiderFilings}
+                                </tbody>
+                            </table>
+                            <table className="w-[25%]">
+                                <tbody>
+                                    <h2 className="font-bold text-base">Institutions</h2>
+                                    {institutionalFilings}
+                                </tbody>
+                            </table>
+                        </div>               
+                    </div>
+                </div>
             </div>
         </div>
     )

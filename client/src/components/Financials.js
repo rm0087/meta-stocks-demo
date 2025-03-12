@@ -371,8 +371,35 @@ export default function Financials({company, shares, price}){
         return optionsObj
     }
 
+//// 2.) Render component in JSX ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    return(
+        <>   
+            <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
+                <div className = "border border-white rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Balance Sheet History</h2>
+                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                    <h3 className="text-center text-xs">As of: {assetsLabels && assetsLabels[assetsLabels.length -1]}</h3>
+                    <Line data={balanceSheetDataObj} options={options}/>
+                </div>
+                <div className = "border border-white rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Income Statement History</h2>
+                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                    <h3 className="text-center text-xs">As of: {assetsLabels && netIncomeLabels[netIncomeLabels.length -1]}</h3>
+                    
+                    <Line data={incStatementGraphObj} options={options}/>
+                </div>
 
-    ////////// OLD FINANCIAL BAR
+                {/* <div className = "border border-white rounded w-[90%] h-full">
+                    <h2 className="text-center font-bold">Cashflows History</h2>
+                    <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/>
+                </div> */}
+
+            </div>  
+        </>
+    )
+}
+
+ ////////// OLD FINANCIAL BAR
     // <div id ="stats" className="w-[95%] flex flex-row border rounded">
     //     <div className="w-[33%] px-5 py-2 text-gray-50 font-mono tracking-tight text-xs">
     //             <p className='text-lg font-bold tracking-normal'>🔑 Financials</p>
@@ -421,39 +448,3 @@ export default function Financials({company, shares, price}){
     //     </div>
 
     // </div>
-
-//// 2.) Render component in JSX ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    return(
-        <>  
-            
-            
-                
-
-
-
-                {/* INCOME STATEMENT CHART*/}
-                
-            <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
-                <div className = "border border-white rounded w-[90%] h-full">
-                    <h2 className="text-center font-bold">Balance Sheet History</h2>
-                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
-                    <h3 className="text-center text-xs">As of: {assetsLabels && assetsLabels[assetsLabels.length -1]}</h3>
-                    <Line data={balanceSheetDataObj} options={options}/>
-                </div>
-                <div className = "border border-white rounded w-[90%] h-full">
-                    <h2 className="text-center font-bold">Income Statement History</h2>
-                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
-                    <h3 className="text-center text-xs">As of: {assetsLabels && netIncomeLabels[netIncomeLabels.length -1]}</h3>
-                    
-                    <Line data={incStatementGraphObj} options={options}/>
-                </div>
-
-                {/* <div className = "border border-white rounded w-[90%] h-full">
-                    <h2 className="text-center font-bold">Cashflows History</h2>
-                    <Line data={cfData(opCfLabels, opCfData, invCfData, finCfData,)} options={options}/>
-                </div> */}
-
-            </div>  
-        </>
-    )
-}
