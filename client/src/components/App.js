@@ -151,7 +151,7 @@ export default function App() {
 
             document.title = `${company.ticker} - MetaStocks`
 
-            // fetchPrice()
+            fetchPrice()
             // fetchShares()
             fetchFilings()
         }
@@ -244,7 +244,7 @@ export default function App() {
                 
             </form>
             
-            <div id="wrapper" className="flex flex-col items-center w-full h-full bg-gray-800 pb-5">
+            <div id="wrapper" className="flex flex-col items-center w-full h-full pb-5">
                 <CompanyInfo company={company} filings={filings}/> 
                 <Keywords company={company} />
                 <Financials company={company} shares={shares} price={price}/>
