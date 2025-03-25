@@ -168,7 +168,7 @@ export default function CompanyInfo({company, filings}) {
         <div className="w-[100%] flex justify-center mt-5">
             {isOpen? <AiPopup/>: null}
             <div className="w-[95%] flex flex-row ">
-                <div className="w-[25%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white">
+                <div className="w-[25%] font-mono tracking-tight text-xs border-2 rounded">
                     <div className="px-5 py-2">
                         <h2 className="text-lg font-bold">🏢 Company Info.</h2>
                         <table>
@@ -184,33 +184,33 @@ export default function CompanyInfo({company, filings}) {
 
                     </div>
                 </div>
-                <div className="w-[100%] font-mono tracking-tight font-mono tracking-tight text-xs border rounded text-white ml-5">
+                <div className="w-[100%] font-mono tracking-tight font-mono tracking-tight text-xs border-2 rounded ml-5">
                     <div className="px-5 py-2">
                         <span className="flex flex-row">
                             <h2 className="text-lg font-bold">🏢 Filings</h2><a rel="norefferer" target= "_blank" href = {"https://www.sec.gov/edgar/search/#/dateRange=10y&ciks="+company.cik_10}>View all</a>
                         </span> 
-                        <div className="flex place-items-left w-full h-full text-gray-50 font-mono text-xs">
+                        <div className="flex place-items-left w-full h-full text-sm tracking-wide">
                             <div className="w-[25%] max-h-48 overflow-y-scroll flex flex-col max-w-xs">
                               
-                                    <h2 className="font-bold text-base">Latest (all)</h2>
+                                    <h2 className="font-bold">Latest (all)</h2>
                                     {latestFilings}
                                 
                             </div>
                             <table className="ml-5 w-[25%]">
                                 <tbody>
-                                    <h2 className="font-bold text-base">Financial Reports</h2>
+                                    <h2 className="font-bold ">Financial Reports</h2>
                                     {finFilings}
                                 </tbody>
                             </table>
                             <table className="w-[25%]">
                                 <tbody>
-                                    <h2 className="font-bold text-base">Insiders</h2>
+                                    <h2 className="font-bold">Insiders</h2>
                                     {insiderFilings}
                                 </tbody>
                             </table>
                             <table className="w-[25%]">
                                 <tbody>
-                                    <h2 className="font-bold text-base">Institutions</h2>
+                                    <h2 className="font-bold">Institutions</h2>
                                     {institutionalFilings}
                                 </tbody>
                             </table>

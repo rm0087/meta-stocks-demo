@@ -26,7 +26,7 @@ export default function Keywords({ company }) {
             <div className="w-[100%] flex justify-center">
                 <div className="w-[95%]">
 
-                <div className="w-[47%] mt-5 tracking-tight border border rounded font-mono tracking-tight text-xs text-white">
+                <div className="w-[47%] mt-5 tracking-tight border-2 rounded font-mono tracking-tight text-xs">
 
 
 

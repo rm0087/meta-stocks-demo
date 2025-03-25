@@ -145,7 +145,7 @@ export default function Financials({company, shares, price}){
                 fill: false,
                 borderColor: 'rgb(255, 0, 0)',
                 pointBackgroundColor: 'rgb(255, 0, 0)',
-                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderColor: 'rgb(0, 0, 0)',
                 pointBorderWidth: .5,
                 tension: 0.4
             }, 
@@ -155,7 +155,7 @@ export default function Financials({company, shares, price}){
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 pointBackgroundColor: 'rgb(75, 192, 192)',
-                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderColor: 'rgb(0, 0, 0)',
                 pointBorderWidth: .5,
                 tension: 0.4
             },
@@ -165,7 +165,7 @@ export default function Financials({company, shares, price}){
                 fill: false,
                 borderColor: '#ffee00',
                 pointBackgroundColor: '#ffee00',
-                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderColor: 'rgb(0, 0, 0)',
                 pointBorderWidth: .5,
                 tension: 0.4
             }
@@ -185,7 +185,7 @@ export default function Financials({company, shares, price}){
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 pointBackgroundColor: 'rgb(75, 192, 192)',
-                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderColor: 'rgb(0, 0, 0)',
                 pointBorderWidth: .5,
                 tension: 0.4
             },
@@ -195,7 +195,7 @@ export default function Financials({company, shares, price}){
                 fill: false,
                 borderColor: 'rgb(255, 0, 0)',
                 pointBackgroundColor: 'rgb(255, 0, 0)',
-                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderColor: 'rgb(0, 0, 0)',
                 pointBorderWidth: .5,
                 tension: 0.4
             },
@@ -205,7 +205,7 @@ export default function Financials({company, shares, price}){
                 fill: false,
                 borderColor: 'rgb(0, 0, 0)',
                 pointBackgroundColor: 'rgb(0, 0, 0)',
-                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderColor: 'rgb(0, 0, 0)',
                 pointBorderWidth: .5,
                 tension: 0.4
             },
@@ -215,7 +215,7 @@ export default function Financials({company, shares, price}){
                 fill: false,
                 borderColor: 'rgb(0, 128, 0)',
                 pointBackgroundColor: 'rgb(0, 128, 0)',
-                pointBorderColor: 'rgb(255, 255, 255)',
+                pointBorderColor: 'rgb(0, 0, 0)',
                 pointBorderWidth: .5,
                 tension: 0.4
             }
@@ -315,7 +315,7 @@ export default function Financials({company, shares, price}){
 
                 },
                 grid: {
-                    color: 'rgba(255, 255, 255, 0.03)' // Adjust alpha (opacity) here
+                    color: 'rgba(0, 0, 0, 0)' // Adjust alpha (opacity) here
                 }
             },
             y: {
@@ -327,7 +327,7 @@ export default function Financials({company, shares, price}){
                 },
                 grid: {
 
-                    color: 'rgba(255, 255, 255, .03)', // Adjust alpha (opacity) here
+                    color: 'rgba(0, 0, 0, 0.15)', // Adjust alpha (opacity) here
                     offset: false
 
                 }
@@ -374,14 +374,14 @@ export default function Financials({company, shares, price}){
 //// 2.) Render component in JSX ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     return(
         <>   
-            <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full text-gray-50 font-mono text-lg">
-                <div className = "border border-white rounded w-[90%] h-full">
+            <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full font-mono text-lg">
+                <div className = "border-2 rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Balance Sheet History</h2>
                     <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
                     <h3 className="text-center text-xs">As of: {assetsLabels && assetsLabels[assetsLabels.length -1]}</h3>
                     <Line data={balanceSheetDataObj} options={options}/>
                 </div>
-                <div className = "border border-white rounded w-[90%] h-full">
+                <div className = "border-2 rounded w-[90%] h-full">
                     <h2 className="text-center font-bold">Income Statement History</h2>
                     <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
                     <h3 className="text-center text-xs">As of: {assetsLabels && netIncomeLabels[netIncomeLabels.length -1]}</h3>
