@@ -127,7 +127,7 @@ body{
 .modal-content.book-page {
   /* Makes sure this positions relative to the overlay */
   position: relative;
-  background-color: #fff8da;
+  background-color: #ffffff;
   padding: 30px;
   border-radius: 5px;
   max-width: 600px;
@@ -137,7 +137,7 @@ body{
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   /* Book page styling */
   border-left: 1px solid #d3d3d3;
-  background-image: linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 10%);
+  /* background-image: linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 10%); */
 }
 
 .modal-content p {

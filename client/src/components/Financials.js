@@ -288,7 +288,7 @@ export default function Financials({company, shares, price}){
                 display: true,
                 position: 'top',
                 labels: {
-                    color: '#FFFFFF',
+                    color: '#000000',
                     usePointStyle: true,
                     pointStyle: 'rect',
                     font: {
@@ -376,15 +376,39 @@ export default function Financials({company, shares, price}){
         <>   
             <div id ="cash-graph-div" className="md:grid grid-cols-2 gap-4 place-items-center mt-5 w-full h-full font-mono text-lg">
                 <div className = "border-2 rounded w-[90%] h-full">
-                    <h2 className="text-center font-bold">Balance Sheet History</h2>
-                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
-                    <h3 className="text-center text-xs">As of: {assetsLabels && assetsLabels[assetsLabels.length -1]}</h3>
+                    <div className="flex flex-row">
+                        <div className="w-1/3 text-sm p-3">
+                            <div className="flex flex-row"><span className="font-bold">Assets:</span><span className="text-right">{assetsData && formatNumber(assetsData[assetsData.length -1])}</span></div>
+                            <div className="flex flex-row"><span className="font-bold">Liabilities:</span><span className="text-right">{liabilitiesData && formatNumber(liabilitiesData[liabilitiesData.length -1])}</span></div>
+                            <div className="flex flex-row"><span className="font-bold">S/H Equity:</span><span className="text-right">{stockholdersData && formatNumber(stockholdersData[stockholdersData.length -1])}</span></div>
+                        </div>
+                        <div className="w-1/3 p-1">
+                            <h2 className="text-center font-bold">Balance Sheet History</h2>
+                            <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                            <h3 className="text-center text-xs">As of: {assetsLabels && assetsLabels[assetsLabels.length -1]}</h3>
+                        </div>
+                        <div className="w-1/3 text-sm p-3 flex justify-end">
+                            <div className="flex flex-row"><span className="font-bold">Cash:</span><span>{cashData && formatNumber(cashData[cashData.length -1])}</span></div>
+                        </div>
+                    </div>
                     <Line data={balanceSheetDataObj} options={options}/>
                 </div>
                 <div className = "border-2 rounded w-[90%] h-full">
-                    <h2 className="text-center font-bold">Income Statement History</h2>
-                    <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
-                    <h3 className="text-center text-xs">As of: {assetsLabels && netIncomeLabels[netIncomeLabels.length -1]}</h3>
+                    <div className="flex flex-row">
+                        <div className="w-1/3 text-sm p-3">
+                            <div className="flex flex-row"><span className="font-bold">Revenue:</span><span className="text-right">{revenueData && formatNumber(revenueData[revenueData.length -1])}</span></div>
+                            <div className="flex flex-row"><span className="font-bold">Operating Income:</span><span className="text-right">{opIncData && formatNumber(opIncData[opIncData.length -1])}</span></div>
+                            <div className="flex flex-row"><span className="font-bold">Net Income:</span><span className="text-right">{netIncomeData && formatNumber(netIncomeData[netIncomeData.length -1])}</span></div>
+                        </div>
+                        <div className="w-1/3 p-1">
+                            <h2 className="text-center font-bold">Income Statement History</h2>
+                            <h3 className="text-center text-sm">{company? company.name : "Company"}</h3>
+                            <h3 className="text-center text-xs">As of: {netIncomeLabels && netIncomeLabels[netIncomeLabels.length -1]}</h3>
+                        </div>
+                        <div className="w-1/3 text-sm p-3 flex justify-end">
+                            
+                        </div>
+                    </div>
                     
                     <Line data={incStatementGraphObj} options={options}/>
                 </div>
