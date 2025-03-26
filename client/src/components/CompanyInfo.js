@@ -189,7 +189,7 @@ export default function CompanyInfo({company, filings}) {
                         <span className="flex flex-row">
                             <h2 className="text-lg font-bold">🏢 Filings</h2><a rel="norefferer" target= "_blank" href = {"https://www.sec.gov/edgar/search/#/dateRange=10y&ciks="+company.cik_10}>View all</a>
                         </span> 
-                        <div className="flex place-items-left w-full h-full text-sm tracking-wide">
+                        <div className="flex place-items-left w-full h-full text-xs tracking-wide">
                             <div className="w-[25%] max-h-48 overflow-y-scroll flex flex-col max-w-xs">
                               
                                     <h2 className="font-bold">Latest (all)</h2>

@@ -246,7 +246,7 @@ export default function App() {
             
             <div id="wrapper" className="flex flex-col items-center w-full h-full pb-5">
                 <CompanyInfo company={company} filings={filings}/> 
-                <Keywords company={company} />
+                {/* <Keywords company={company} /> */}
                 <Financials company={company} shares={shares} price={price}/>
             </div>
         </>
